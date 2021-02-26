@@ -1,61 +1,63 @@
-import 'dart:js';
+
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:summative/constant.dart';
+import 'package:summative/forgot_pass.dart';
 import 'package:summative/signup_screen.dart';
-import 'package:summative/welcome_screen.dart';
+import 'package:summative/homepage.dart';
+import 'package:summative/forgot_pass.dart';
 
 class Signin_screen extends StatefulWidget{
   @override
 
-   __Sigin_screenState createState() =>  __Sigin_screenState();
+   __Signin_screenState createState() =>  __Signin_screenState();
 }
 
-Widget buildusername(){
+Widget buildemail(){
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: <Widget>[
       Text(
-        "Username",
+        "Email",
         style: TextStyle(
-          color: Colors.white,
-          fontSize: 15,
-          fontWeight: FontWeight.normal
+            color: Colors.white,
+            fontSize: 15,
+            fontWeight: FontWeight.normal
         ),
       ),
       SizedBox(height: 10),
       Container(
         alignment: Alignment.centerLeft,
         decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(30),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black26,
-              blurRadius: 6,
-              offset: Offset(0,2)
-            )
-          ]
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.black26,
+                  blurRadius: 6,
+                  offset: Offset(0,2)
+              )
+            ]
         ),
         height: 60,
         child: TextField(
-          keyboardType: TextInputType.name ,
+          keyboardType: TextInputType.emailAddress ,
           style: TextStyle(
-            color: Colors.black87
+              color: Colors.black87
           ),
           decoration: InputDecoration(
-            border: InputBorder.none,
-            contentPadding: EdgeInsets.only(top: 14),
-            prefixIcon: Icon(
-              Icons.perm_identity_sharp,
-              color: kPrimaryColor,
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.only(top: 14),
+              prefixIcon: Icon(
+                Icons.email_sharp,
+                color: kPrimaryColor,
 
-            ),
-            hintText: "Username",
-            hintStyle: TextStyle(
-              color: Colors.black87
-            )
+              ),
+              hintText: "Email Address",
+              hintStyle: TextStyle(
+                  color: Colors.black87
+              )
           ),
         ),
       )
@@ -143,6 +145,7 @@ Widget buildloginbtn(){
       onPressed: () {
 
       },
+      padding: EdgeInsets.all(15),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(30)
       ),
@@ -159,11 +162,7 @@ Widget buildloginbtn(){
 }
 Widget buildsignupbtn(){
   return GestureDetector(
-    onTap: (){
-    Navigator.push(context, MaterialPageRoute(builder: (context){
-      return Signup_screen();
-    }));
-  },
+    onTap: () {},
     child: RichText(
       text: TextSpan(
         children: [
@@ -190,7 +189,7 @@ Widget buildsignupbtn(){
 
   );
 }
-class  __Sigin_screenState extends State<Signin_screen>{
+class  __Signin_screenState extends State<Signin_screen>{
   @override
 
   Widget build(BuildContext context) {
@@ -240,12 +239,92 @@ class  __Sigin_screenState extends State<Signin_screen>{
                            ),
                          ),
                          SizedBox(height: 200),
-                         buildusername(),
+                         buildemail(),
                          SizedBox(height: 20),
                          buildpassword(),
-                         buildforgot_password(),
-                         buildloginbtn(),
-                         buildsignupbtn()
+                         //buildforgot_password(),
+                         //buildloginbtn(),
+                     Container(
+                       alignment: Alignment.centerRight,
+                       child: FlatButton(
+                         onPressed: ()  {
+                           Navigator.push(context, MaterialPageRoute(builder: (context){
+                             return Forgot_screen();
+                           }));
+
+                         },
+                         padding: EdgeInsets.only(right: 0),
+                         child: Text(
+                           'Forgot Password?',
+                           style: TextStyle(
+                               decoration: TextDecoration.underline,
+                               color: Colors.white,
+                               fontWeight: FontWeight.bold
+                           ),
+                         ),
+                       ),
+                     ),
+                     Container(
+                       padding: EdgeInsets.fromLTRB(80, 60, 80, 60),
+                       width: double.infinity,
+                       child: RaisedButton(
+                         elevation: 5,
+
+                         onPressed: () {
+                           Navigator.push(context, MaterialPageRoute(builder: (context){
+                             return Homepage_screen();
+                           }));
+
+                         },
+                         padding: EdgeInsets.all(15),
+                         shape: RoundedRectangleBorder(
+                             borderRadius: BorderRadius.circular(30)
+                         ),
+                         color: kPrimaryColor2,
+                         child: Text(
+                           "SIGN IN",
+                           style: TextStyle(
+                               color: Colors.black,
+                               fontSize: 18
+                           ),
+                         ),
+                       ),
+                     ),
+                         Container(
+                           child: GestureDetector(
+                             onTap: (){
+                               Navigator.push(context, MaterialPageRoute(builder: (context){
+                                 return Signup_screen();
+                               }));
+                             },
+                             child: RichText(
+                               text: TextSpan(
+                                   children: [
+                                     TextSpan(
+                                         text: "Don't have an account?  ",
+                                         style: TextStyle(
+                                             color: Colors.white,
+                                             fontSize: 15,
+                                             fontWeight: FontWeight.w400
+                                         )
+                                     ),
+                                     TextSpan(
+                                         text: "Sign Up",
+                                         style: TextStyle(
+                                             decoration: TextDecoration.underline,
+                                             color: Colors.white,
+                                             fontSize: 15,
+                                             fontWeight: FontWeight.bold
+                                         )
+                                     )
+                                   ]
+                               ),
+                             ),
+
+                           ),
+                         ),
+
+                         //buildsignupbtn()
                        ],
 
                      )
