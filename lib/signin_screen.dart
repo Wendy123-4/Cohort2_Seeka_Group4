@@ -249,7 +249,7 @@ class  __Signin_screenState extends State<Signin_screen>{
                        child: FlatButton(
                          onPressed: ()  {
                            Navigator.push(context, MaterialPageRoute(builder: (context){
-                             return Forgot_screen();
+                             return forgotscreen();
                            }));
 
                          },
