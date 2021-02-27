@@ -1,6 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:summative/constant.dart';
-import 'package:summative/login_screen.dart';
 import 'package:summative/signin_screen.dart';
 
 
@@ -16,7 +16,8 @@ class WelcomeScreen extends StatelessWidget {
           Expanded(
               child: Container(
                 decoration: BoxDecoration(
-                  image: DecorationImage(image: AssetImage("assets/images/5.png")),
+
+                  image: DecorationImage(image: AssetImage("assets/images/5.png"), colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn)) ,
                   color: kPrimaryColor,
                 ),
               ),
@@ -78,7 +79,7 @@ class WelcomeScreen extends StatelessWidget {
                     ),
                   ),),),)
                 ],
-              ))
+              ),)
         ],
       ),
     );
