@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:summative/constant.dart';
-import 'package:summative/signin_screen.dart';
 
 class Signup_screen extends StatefulWidget{
   @override

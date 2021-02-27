@@ -1,10 +1,7 @@
-import 'dart:js';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:summative/constant.dart';
-import 'package:summative/signup_screen.dart';
-import 'package:summative/welcome_screen.dart';
 
 class Signin_screen extends StatefulWidget{
   @override
@@ -157,12 +154,13 @@ Widget buildloginbtn(){
     ),
   );
 }
-Widget buildsignupbtn(){
+Widget buildSignupBtn(){
   return GestureDetector(
     onTap: (){
-    Navigator.push(context, MaterialPageRoute(builder: (context){
-      return Signup_screen();
-    }));
+    // Navigator.push(context, MaterialPageRoute(builder: (context){
+    //   return Signup_screen();
+    // }
+    // ));
   },
     child: RichText(
       text: TextSpan(
@@ -245,7 +243,7 @@ class  __Sigin_screenState extends State<Signin_screen>{
                          buildpassword(),
                          buildforgot_password(),
                          buildloginbtn(),
-                         buildsignupbtn()
+                         buildSignupBtn()
                        ],
 
                      )
