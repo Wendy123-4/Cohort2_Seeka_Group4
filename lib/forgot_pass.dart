@@ -50,7 +50,7 @@ class _forgotscreenState extends State<forgotscreen> {
                 child: GestureDetector(
                   onTap: (){
                     Navigator.push(context, MaterialPageRoute(builder: (context){
-                      return Signin_screen();
+                      return SignIn();
                     }));
                   },
                   child: RichText(

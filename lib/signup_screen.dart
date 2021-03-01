@@ -273,7 +273,7 @@ class  __Signup_screenState extends State<Signup_screen>{
                     child: RaisedButton(
                       elevation: 5,
                       onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context){
-    return Signin_screen();
+    return SignIn();
     }));
   },
                       padding: EdgeInsets.all(15),
@@ -293,7 +293,7 @@ class  __Signup_screenState extends State<Signup_screen>{
                         Container(
                           child: GestureDetector(
                             onTap: () {Navigator.push(context, MaterialPageRoute(builder: (context){
-                              return Signin_screen();
+                              return SignIn();
                             }));
                             },
                             child: RichText(
