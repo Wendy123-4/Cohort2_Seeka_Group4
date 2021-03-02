@@ -1,4 +1,4 @@
-# Summative
+# Summative Prototype
 Seeka Money Lending App
 ============
 
