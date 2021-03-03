@@ -350,6 +350,8 @@ class HomePage extends StatelessWidget {
                     // nextButton,
                     SizedBox(height: 10),
                     dashboard,
+
+
                   ],
                 )
               ],
