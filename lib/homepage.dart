@@ -276,7 +276,10 @@ class HomePage extends StatelessWidget {
     );
 
     // Next Button
-
+    Widget nextButton = RaisedButton(
+      onPressed: () {},
+      child: const Text('Skip', style: TextStyle(fontSize: 20)),
+    );
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -322,6 +325,7 @@ class HomePage extends StatelessWidget {
                     categoryCard1,
                     categoryCard2,
                     categoryCard3,
+                    nextButton,
                   ],
                 )
               ],
