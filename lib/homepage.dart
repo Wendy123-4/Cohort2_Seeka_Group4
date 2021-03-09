@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:summative/Dashboard.dart';
 import 'package:summative/constant.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -281,6 +282,27 @@ class HomePage extends StatelessWidget {
       child: const Text('Skip', style: TextStyle(fontSize: 20)),
     );
 
+
+    // Test Button
+    Widget dashboard = RaisedButton(
+      elevation: 5,
+      onPressed: () {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) {
+              return Dashboard();
+            }));
+      },
+      padding: EdgeInsets.all(15),
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30)),
+      color: kPrimaryColor2,
+      child: Text(
+        "HOMEPAGE",
+        style:
+        TextStyle(color: Colors.black, fontSize: 18),
+      ),
+    );
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -325,7 +347,9 @@ class HomePage extends StatelessWidget {
                     categoryCard1,
                     categoryCard2,
                     categoryCard3,
-                    nextButton,
+                    // nextButton,
+                    SizedBox(height: 10),
+                    dashboard,
                   ],
                 )
               ],
