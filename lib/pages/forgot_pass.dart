@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:summative/constant.dart';
-import 'package:summative/signin_screen.dart';
-import 'package:summative/signup_screen.dart';
+import 'package:summative/controllers/constant.dart';
+import 'package:summative/pages/resetlink_confirmation.dart';
+import 'package:summative/pages/signin_screen.dart';
+import 'package:summative/pages/signup_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class forgotscreen extends StatefulWidget {
   @override
@@ -10,6 +12,10 @@ class forgotscreen extends StatefulWidget {
 }
 
 class _forgotscreenState extends State<forgotscreen> {
+
+  String _email;
+  final auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,9 +36,12 @@ class _forgotscreenState extends State<forgotscreen> {
 
         child: SingleChildScrollView(
           child: Column(
+
             children: <Widget>[
+              SizedBox(height: 30),
               Container(
-                padding: EdgeInsets.fromLTRB(0, 250.0, 0, 0),
+                padding: EdgeInsets.symmetric(horizontal: 25, vertical: 50),
+
                 child: Text("Forgot password ?",
                   style: TextStyle(
                       color: Colors.white,
@@ -41,11 +50,93 @@ class _forgotscreenState extends State<forgotscreen> {
                   ),
                 ),
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 150),
               Container(
                   padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                  child: buildemail()),
-              buildsendlinkbtn(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+
+                    children: <Widget>[
+                      Text(
+                        "Email",
+                        style: TextStyle(
+                            color: Colors.white, fontSize: 15, fontWeight: FontWeight.normal),
+                      ),
+                      SizedBox(height: 10),
+                      Container(
+                        alignment: Alignment.centerLeft,
+
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.black26, blurRadius: 6, offset: Offset(0, 2))
+                            ]),
+                        height: 60,
+                        child: TextFormField(
+
+                          keyboardType: TextInputType.emailAddress,
+                          style: TextStyle(color: Colors.black87),
+                          validator: (input) {
+                            if(input.isEmpty){
+                              return 'Email Required';
+                            }
+                          },
+                          onChanged: (value) {
+                            setState(() {
+                              _email = value.trim();
+                            });
+                          },
+
+
+                          decoration: InputDecoration(
+                              border: InputBorder.none,
+                              contentPadding: EdgeInsets.only(top: 14),
+                              prefixIcon: Icon(
+                                Icons.email_sharp,
+                                color: kPrimaryColor,
+                              ),
+
+                              hintText: "Email Address",
+                              hintStyle: TextStyle(color: Colors.black87)
+                          ),
+                        ),
+
+                      )
+                    ],
+                  ),
+                //buildemail()
+              ),
+              //buildsendlinkbtn(),
+              Container(
+                padding: EdgeInsets.fromLTRB(80, 60, 80, 60),
+                width: double.infinity,
+                child: RaisedButton(
+                  elevation: 5,
+
+                  onPressed: () {
+                    auth.sendPasswordResetEmail(email: _email);
+                    Navigator.push(context, MaterialPageRoute(builder: (context){
+                      return ResetLink();
+                    }));
+                  },
+                  padding: EdgeInsets.all(15),
+                  shape: RoundedRectangleBorder(
+
+                      borderRadius: BorderRadius.circular(30)
+                  ),
+                  color: kPrimaryColor2,
+                  child: Text(
+                    "SEND RESET LINK",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18
+                    ),
+                  ),
+                ),
+              ),
+
               Container(
                 child: GestureDetector(
                   onTap: (){
@@ -99,8 +190,11 @@ Widget buildsendlinkbtn(){
 
       onPressed: () {
 
+
       },
+      padding: EdgeInsets.all(15),
       shape: RoundedRectangleBorder(
+
           borderRadius: BorderRadius.circular(30)
       ),
       color: kPrimaryColor2,

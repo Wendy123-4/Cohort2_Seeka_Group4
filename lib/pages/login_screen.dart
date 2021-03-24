@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:summative/constant.dart';
+import 'package:summative/controllers/constant.dart';
 
 class Login_screen extends StatelessWidget {
   @override

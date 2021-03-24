@@ -1,0 +1,453 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_signin_button/button_list.dart';
+import 'package:flutter_signin_button/button_view.dart';
+import 'package:summative/controllers/constant.dart';
+import 'package:summative/pages/forgot_pass.dart';
+import 'package:summative/pages/signup_screen.dart';
+import 'package:summative/pages/homepage.dart';
+import 'package:summative/controllers/auth.dart';
+
+import 'homepage.dart';
+
+class SignIn extends StatefulWidget {
+  @override
+  __SignInScreenState createState() => __SignInScreenState();
+}
+
+Widget buildEmail() {
+  return Column(
+
+
+
+    crossAxisAlignment: CrossAxisAlignment.start,
+
+    children: <Widget>[
+      Text(
+        "Email",
+        style: TextStyle(
+            color: Colors.white, fontSize: 15, fontWeight: FontWeight.normal),
+      ),
+      SizedBox(height: 10),
+      Container(
+        alignment: Alignment.centerLeft,
+
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.black26, blurRadius: 6, offset: Offset(0, 2))
+            ]),
+        height: 60,
+        child: TextFormField(
+
+          keyboardType: TextInputType.emailAddress,
+          style: TextStyle(color: Colors.black87),
+          validator: (input) {
+            if(input.isEmpty){
+              return 'Email Required';
+            }
+          },
+
+
+          decoration: InputDecoration(
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.only(top: 14),
+              prefixIcon: Icon(
+                Icons.email_sharp,
+                color: kPrimaryColor,
+              ),
+
+              hintText: "Email Address",
+              hintStyle: TextStyle(color: Colors.black87)
+          ),
+        ),
+
+      )
+    ],
+  );
+}
+
+Widget buildPassword() {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: <Widget>[
+      Text(
+        "Password",
+        style: TextStyle(
+            color: Colors.white, fontSize: 15, fontWeight: FontWeight.normal),
+      ),
+      SizedBox(height: 10),
+      Container(
+        alignment: Alignment.centerLeft,
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.black26, blurRadius: 6, offset: Offset(0, 2))
+            ]),
+        height: 60,
+        child: TextFormField(
+          obscureText: true,
+          style: TextStyle(color: Colors.black87),
+          validator: (input) {
+            if(input.length < 6){
+              return 'Longer password please';
+            }
+          },
+          decoration: InputDecoration(
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.only(top: 14),
+              prefixIcon: Icon(
+                Icons.lock_outline_sharp,
+                color: kPrimaryColor,
+              ),
+              hintText: "Password",
+              hintStyle: TextStyle(color: Colors.black87)),
+        ),
+      )
+    ],
+  );
+}
+
+Widget buildForgotPassword() {
+  return Container(
+    alignment: Alignment.centerRight,
+    child: FlatButton(
+      onPressed: () => print("Forgot Password pressed"),
+      padding: EdgeInsets.only(right: 0),
+      child: Text(
+        'Forgot Password?',
+        style: TextStyle(
+            decoration: TextDecoration.underline,
+            color: Colors.white,
+            fontWeight: FontWeight.bold),
+      ),
+    ),
+  );
+}
+
+Widget buildLoginBtn() {
+  return Container(
+    padding: EdgeInsets.fromLTRB(80, 60, 80, 60),
+    width: double.infinity,
+    child: RaisedButton(
+      elevation: 5,
+      onPressed: () {},
+      padding: EdgeInsets.all(15),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+      color: kPrimaryColor2,
+      child: Text(
+        "SIGN IN",
+        style: TextStyle(color: Colors.black, fontSize: 18),
+      ),
+    ),
+  );
+}
+
+Widget buildSignUpBtn() {
+  return GestureDetector(
+    onTap: () {},
+    child: RichText(
+      text: TextSpan(children: [
+        TextSpan(
+            text: "Don't have an account?  ",
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: 15,
+                fontWeight: FontWeight.w400)),
+        TextSpan(
+            text: "Sign Up",
+            style: TextStyle(
+                decoration: TextDecoration.underline,
+                color: Colors.white,
+                fontSize: 15,
+                fontWeight: FontWeight.bold))
+      ]),
+    ),
+  );
+}
+
+class __SignInScreenState extends State<SignIn> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  String _email, _password;
+  FirebaseUser user;
+
+  void click(){
+    signInWithGoogle().then((user)=>{
+      this.user = user,
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => HomePage()))
+
+    });
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Scaffold(
+      // ignore: missing_required_param
+      body: Form(
+        key: _formKey,
+      // AnnotatedRegion<SystemUiOverlayStyle>(
+      //   value: SystemUiOverlayStyle.light,
+
+          child: Stack(
+            children: <Widget>[
+              Container(
+                height: double.infinity,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          kPrimaryColor,
+                          kPrimaryColor,
+                          kPrimaryColor,
+                          kPrimaryColor,
+                        ])),
+                 child: SingleChildScrollView(
+                     padding:
+                     EdgeInsets.symmetric(horizontal: 25, vertical: 50),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+
+                      children: <Widget>[
+                        SizedBox(height: 30),
+                        Text(
+                          "Sign In",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(height: 100),
+                        //buildEmail(),
+                        Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+
+                        children: <Widget>[
+                          Text(
+                            "Email",
+                            style: TextStyle(
+                                color: Colors.white, fontSize: 15, fontWeight: FontWeight.normal),
+                          ),
+                          SizedBox(height: 10),
+                          Container(
+                            alignment: Alignment.centerLeft,
+
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Colors.black26, blurRadius: 6, offset: Offset(0, 2))
+                                ]),
+                            height: 60,
+                            child: TextFormField(
+
+                              keyboardType: TextInputType.emailAddress,
+                              style: TextStyle(color: Colors.black87),
+                              validator: (input) {
+                                if(input.isEmpty){
+                                  return 'Email Required';
+                                }
+                              },
+                              onSaved: (input) => _email = input,
+
+                              decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  contentPadding: EdgeInsets.only(top: 14),
+                                  prefixIcon: Icon(
+                                    Icons.email_sharp,
+                                    color: kPrimaryColor,
+                                  ),
+
+                                  hintText: "Email Address",
+                                  hintStyle: TextStyle(color: Colors.black87)
+                              ),
+                            ),
+
+                          )
+                        ],),
+                        SizedBox(height: 20),
+                        //buildPassword(),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              "Password",
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 15, fontWeight: FontWeight.normal),
+                            ),
+                            SizedBox(height: 10),
+                            Container(
+                              alignment: Alignment.centerLeft,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10),
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: Colors.black26, blurRadius: 6, offset: Offset(0, 2))
+                                  ]),
+                              height: 60,
+                              child: TextFormField(
+                                obscureText: true,
+                                style: TextStyle(color: Colors.black87),
+                                validator: (input) {
+                                  if(input.length < 6){
+                                    return 'Longer password please';
+                                  }
+                                },
+                                onSaved: (input) => _password = input,
+                                decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    contentPadding: EdgeInsets.only(top: 14),
+
+                                    prefixIcon: Icon(
+                                      Icons.lock_outline_sharp,
+                                      color: kPrimaryColor,
+                                    ),
+                                    hintText: "Password",
+                                    hintStyle: TextStyle(color: Colors.black87)),
+                              ),
+                            )
+                          ],
+                        ),
+
+                        Container(
+                          alignment: Alignment.centerRight,
+                          child: FlatButton(
+                            onPressed: () {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                    return forgotscreen();
+                                  }));
+                            },
+                            padding: EdgeInsets.only(right: 0),
+                            child: Text(
+                              'Forgot Password?',
+                              style: TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.fromLTRB(80, 30, 80, 30),
+                          width: double.infinity,
+                          child: RaisedButton(
+                            elevation: 5,
+                            onPressed: signIn,
+                            padding: EdgeInsets.all(15),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30)),
+                            color: kPrimaryColor2,
+                            child: Text(
+                              "SIGN IN",
+                              style:
+                              TextStyle(color: Colors.black, fontSize: 18),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          child: Column(
+                            children: <Widget>[
+                              Text("- OR -", style: TextStyle(color: Colors.white),),
+                              SizedBox(height: 20)
+                            ],
+                          ),
+                        ),
+                        Container(
+                          child: Column(
+                            children: <Widget>[
+
+                              SignInButton(Buttons.Google,padding: EdgeInsets.fromLTRB(40, 10, 40, 10),
+                                  onPressed: this.click, ),
+                              SizedBox(height: 20,),
+                            ],
+
+
+                          ),
+
+                        ),
+                        // Container(
+                        //   child: Column(
+                        //     children: <Widget>[
+                        //       SizedBox(height: 20,),
+                        //       SignInButton(Buttons.Facebook, padding: EdgeInsets.fromLTRB(40, 15, 40, 15),
+                        //           onPressed: () => Navigator.of(context).pushReplacement(
+                        //               MaterialPageRoute(builder: (context) => HomePage()),
+                        //
+                        //           ),
+                        //
+                        //
+                        //       ),
+                        //       SizedBox(height: 20,),
+                        //     ],
+                        //
+                        //   ),
+                        //
+                        // ),
+
+                        Container(
+
+
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                    return Signup_screen();
+                                  }));
+                            },
+                            child: RichText(
+
+                              text: TextSpan(children:
+                              [
+                                TextSpan(
+                                    text: "Don't have an account?  ",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w400)),
+                                TextSpan(
+                                    text: "Sign Up",
+                                    style: TextStyle(
+                                        decoration: TextDecoration.underline,
+                                        color: Colors.white,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold))
+                              ]),
+                            ),
+                          ),
+                        ),
+
+                        //buildsignupbtn()
+                      ],
+                    )),)
+
+            ],),
+          ),
+        );
+        }
+
+  Future<void> signIn() async {
+    if(_formKey.currentState.validate()){
+      _formKey.currentState.save();
+      try{
+        AuthResult user = await FirebaseAuth.instance.signInWithEmailAndPassword(email: _email, password: _password);
+        Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+      }catch(e){
+        print(e.message);
+      }
+    }
+  }
+}
+
+
