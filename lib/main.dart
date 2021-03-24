@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:summative/welcome_screen.dart';
-import 'package:summative/constant.dart';
+import 'package:summative/pages/welcome_screen.dart';
+import 'package:summative/controllers/constant.dart';
 
 void main() => runApp(MyApp());
 
@@ -24,8 +24,8 @@ class MyApp extends StatelessWidget {
             inputDecorationTheme: InputDecorationTheme(
                 enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
-              color: kPrimaryColor.withOpacity(.4),
-            )))),
+                      color: kPrimaryColor.withOpacity(.4),
+                    )))),
         home: WelcomeScreen());
   }
 }

@@ -1,64 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:summative/Dashboard.dart';
-import 'package:summative/constant.dart';
+import 'package:summative/controllers/constant.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'signin_screen.dart';
 
 // void main => runApp(HomePage());
-class HomePage extends StatelessWidget {
+class Direction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // Drawer
-    Widget drawerSection = Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: <Widget>[
-          DrawerHeader(
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Seeka',
-                    style: GoogleFonts.poppins(
-                        textStyle: TextStyle(
-                            color: Colors.white,
-                            fontSize: 30,
-                            letterSpacing: 1.5)),
-                  ),
-                ],
-              ),
-            ),
-            decoration: BoxDecoration(
-              color: kPrimaryColor,
-            ),
-          ),
-          ListTile(
-            title: Text('My Dashboard', style: GoogleFonts.poppins()),
-            onTap: () {
-              // Update the state of the app
-              // Closing the drawer
-              Navigator.pop(context);
-            },
-          ),
-          ListTile(
-            title: Text('Help', style: GoogleFonts.poppins()),
-            onTap: () {
-              // Update the state of the app
-              // Closing the drawer
-              Navigator.pop(context);
-            },
-          ),
-          ListTile(
-            title: Text('Logout', style: GoogleFonts.poppins()),
-            onTap: () {
-              // Update the state of the app
-              // Closing the drawer
-              Navigator.pop(context);
-            },
-          ),
-        ],
-      ),
-    );
+
 
     // Category Card
     Widget categoryCard = Container(
@@ -83,7 +32,7 @@ class HomePage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Apply", style: GoogleFonts.poppins()),
+                        Text("Apply", style: GoogleFonts.poppins(textStyle: TextStyle(color: Color(0xFFFEB4566))), ),
                         Text("Fill in personal information within 4 \nminutes",
                             style: GoogleFonts.poppins()),
                       ],
@@ -109,7 +58,7 @@ class HomePage extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: 10),
+          SizedBox(height: 20),
         ],
       ),
     );
@@ -137,13 +86,14 @@ class HomePage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Approve", style: GoogleFonts.poppins()),
+                        Text("Approve", style: GoogleFonts.poppins(textStyle: TextStyle(color: Color(0xFFFEB4566)))),
                         Text("Wait about 20 minutes to verify the \nauthenticity of the application",
                             style: GoogleFonts.poppins()),
                       ],
                     ),
                   ],
                 ),
+
               ],
             ),
             decoration: ShapeDecoration(
@@ -163,7 +113,7 @@ class HomePage extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: 10),
+          SizedBox(height: 20),
         ],
       ),
     );
@@ -191,8 +141,8 @@ class HomePage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Receive Money", style: GoogleFonts.poppins()),
-                        Text("Once the application is approved, the \nloan will be sent to the mobile account",
+                        Text("Receive Money", style: GoogleFonts.poppins(textStyle: TextStyle(color: Color(0xFFFEB4566)))),
+                        Text("Once the application is approved, \nloan will be sent to account",
                             style: GoogleFonts.poppins()),
                       ],
                     ),
@@ -217,7 +167,7 @@ class HomePage extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: 10),
+          SizedBox(height: 20),
         ],
       ),
     );
@@ -245,7 +195,7 @@ class HomePage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Payback", style: GoogleFonts.poppins()),
+                        Text("Payback", style: GoogleFonts.poppins(textStyle: TextStyle(color: Color(0xFFFEB4566)))),
                         Text("Fill in personal information within 4 \nminutes",
                             style: GoogleFonts.poppins()),
                       ],
@@ -271,37 +221,13 @@ class HomePage extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: 10),
+          SizedBox(height: 20),
         ],
       ),
     );
 
     // Next Button
-    Widget nextButton = RaisedButton(
-      onPressed: () {},
-      child: const Text('Skip', style: TextStyle(fontSize: 20)),
-    );
 
-
-    // Test Button
-    Widget dashboard = RaisedButton(
-      elevation: 5,
-      onPressed: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) {
-              return Dashboard();
-            }));
-      },
-      padding: EdgeInsets.all(15),
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30)),
-      color: kPrimaryColor2,
-      child: Text(
-        "HOMEPAGE",
-        style:
-        TextStyle(color: Colors.black, fontSize: 18),
-      ),
-    );
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -318,44 +244,74 @@ class HomePage extends StatelessWidget {
           inputDecorationTheme: InputDecorationTheme(
               enabledBorder: UnderlineInputBorder(
                   borderSide: BorderSide(
-            color: kPrimaryColor.withOpacity(.4),
-          )))),
+                    color: kPrimaryColor.withOpacity(.4),
+                  )))),
       home: Scaffold(
-        drawer: drawerSection,
-        appBar: AppBar(),
+
+        appBar: AppBar(
+          leading: new IconButton(icon: new Icon(Icons.arrow_back, color: Colors.white,),
+            onPressed: ()
+            {Navigator.pop(context);},
+          ),),
         body: Container(
           child: Center(
             child: Column(
               children: [
                 SizedBox(
-                  height: 30,
+                  height: 60,
                 ),
-                Image.asset(
-                  'assets/images/logo.png',
-                  width: 60,
-                ),
-                SizedBox(
-                  height: 30,
-                ),
+
                 Column(
                   children: [
                     Text("How it works",
                         style: GoogleFonts.poppins(
-                            textStyle: TextStyle(fontSize: 18))),
-                    SizedBox(height: 10),
+                            textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold ))),
+                    SizedBox(height: 40),
                     categoryCard,
                     categoryCard1,
                     categoryCard2,
                     categoryCard3,
-                    // nextButton,
-                    SizedBox(height: 10),
-                    dashboard,
+
+
                   ],
-                )
+
+
+
+
+                ),
+                SizedBox(height: 60),
+                Container(
+                  padding: EdgeInsets.fromLTRB(80, 60, 80, 60),
+                  width: double.infinity,
+                  child: RaisedButton(
+                    elevation: 5,
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                            return SignIn();
+                          }));
+                    },
+                    padding: EdgeInsets.all(15),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30)),
+                    color: kPrimaryColor2,
+                    child: Text(
+                      "CONTINUE",
+                      style:
+                      TextStyle(color: Colors.black, fontSize: 18),
+                    ),
+                  ),
+                ),
               ],
+
             ),
+
+
           ),
+
+
         ),
+
       ),
     );
   }

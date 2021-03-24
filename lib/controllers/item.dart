@@ -27,7 +27,7 @@ List items = [
     "header": "Launch",
     "description":
     "Online chat which provides its users maximum functionality to simplify the search",
-    "image": "assets/images/5.png"
+    "image": "assets/images/mainlogo.png"
   },
 
 ];
