@@ -1,362 +1,352 @@
+
 import 'package:flutter/material.dart';
 import 'package:summative/pages/Dashboard.dart';
 import 'package:summative/controllers/constant.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 // void main => runApp(HomePage());
-class HomePage extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    // Drawer
-    Widget drawerSection = Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
+    return Scaffold(
+
+      drawer: drawerSection,
+      appBar: AppBar(
+        // actions: [
+        //   Column(
+        //     crossAxisAlignment: CrossAxisAlignment.start,
+        //     mainAxisAlignment: MainAxisAlignment.center,
+        //     children: <Widget>[
+        //       Padding(
+        //         padding: const EdgeInsets.fromLTRB(15, 8, 15, 3),
+        //         child:
+        //
+        //         CircleAvatar(
+        //           radius: 20,
+        //           backgroundImage:
+        //           AssetImage("assets/images/user (2).png"),
+        //         ),
+        //       ),
+        //       SizedBox(height: 5),
+        //
+        //
+        //     ],
+        //   ),
+        // ],
+
+      ),
+      body: Stack(
         children: <Widget>[
-          DrawerHeader(
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Seeka',
-                    style: GoogleFonts.poppins(
-                        textStyle: TextStyle(
-                            color: Colors.white,
-                            fontSize: 30,
-                            letterSpacing: 1.5)),
-                  ),
-                ],
-              ),
-            ),
+          Container(
             decoration: BoxDecoration(
-              color: kPrimaryColor,
-            ),
-          ),
-          ListTile(
-            title: Text('My Dashboard', style: GoogleFonts.poppins()),
-            onTap: () {
-              // Update the state of the app
-              // Closing the drawer
-              Navigator.pop(context);
-            },
-          ),
-          ListTile(
-            title: Text('Help', style: GoogleFonts.poppins()),
-            onTap: () {
-              // Update the state of the app
-              // Closing the drawer
-              Navigator.pop(context);
-            },
-          ),
-          ListTile(
-            title: Text('Logout', style: GoogleFonts.poppins()),
-            onTap: () {
-              // Update the state of the app
-              // Closing the drawer
-              Navigator.pop(context);
-            },
-          ),
-        ],
-      ),
-    );
+              gradient: LinearGradient(
+                begin: Alignment(-4.0, 0.0),
+                end: Alignment(0.0, 1.5),
+                colors: [
+                  Theme.of(context).primaryColor,
+                  Theme.of(context).primaryColor,
+                  kGradientColor1,
+                  kGradientColor2,
+                  kGradientColor3,
+                  kGradientColor4,
+                  kGradientColor4
 
-    // Category Card
-    Widget categoryCard = Container(
-      child: Column(
-        children: <Widget>[
+                ],
+                stops: [0.0, 0.3, 0.2, 0.3, 0.63, 0.63, 0.0],
+              ),
+            ),
+            child: header,
+          ),
           Container(
-            height: 80,
-            width: 350,
-            padding: EdgeInsets.fromLTRB(5, 5, 0, 0),
+            margin: EdgeInsets.only(top: 180.0),
+            padding: EdgeInsets.only(top: 40.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30),
+                topRight: Radius.circular(30),
+              ),
+            ),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
+                SizedBox(height: 30),
+                Text(
+                  "AMOUNT TO PAY",
+                  style: TextStyle(
+                    fontSize: 14,
+                  ),
+                ),
+                SizedBox(height: 6.0),
+                Text(
+                  "\$4,25,000",
+                  style: TextStyle(
+                    color: kPrimaryColor3,
+                    fontSize: 35,
+                    fontWeight: FontWeight.w500,
+                    letterSpacing: 1.1,
+                  ),
+                ),
+                SizedBox(height: 50.0),
                 Row(
-                  children: [
-                    Image.asset(
-                      'assets/images/contact-form.png',
-                      width: 60,
-                    ),
-                    SizedBox(
-                      width: 2,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Column(
+                      children: <Widget>[
+                        Text(
+                          'AMOUNT PAYED',
+                          style: kSubTitlesStyle,
+                        ),
+                        SizedBox(height: 6.0),
+                        Text(
+                          '\$75,000',
+                          style: kNumberTextStyle,
+                        ),
+                      ],
                     ),
                     Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("Apply", style: GoogleFonts.poppins()),
-                        Text("Fill in personal information within 4 \nminutes",
-                            style: GoogleFonts.poppins()),
+                      children: <Widget>[
+                        Text('DAYS LEFT',
+                            style: kSubTitlesStyle
+                        ),
+                        SizedBox(height: 6.0),
+                        Text(
+                          '10',
+                          style: kNumberTextStyle,
+                        )
+                      ],
+                    ),
+                    Column(
+                      children: <Widget>[
+                        Text('RATE',
+                            style: kSubTitlesStyle
+                        ),
+                        SizedBox(height: 6.0),
+                        Text(
+                          '15%',
+                          style: kNumberTextStyle,
+                        )
                       ],
                     ),
                   ],
                 ),
-              ],
-            ),
-            decoration: ShapeDecoration(
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(5),
-                ),
-              ),
-              shadows: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 1.5,
-                  blurRadius: 2,
-                  offset: Offset(0, 3), // changes position of shadow
-                ),
-              ],
-            ),
-          ),
-          SizedBox(height: 10),
-        ],
-      ),
-    );
+                SizedBox(height: 60.0),
+                Container(
+                  height: 120.0,
+                  width: 300,
+                  margin:
+                  EdgeInsets.symmetric(horizontal: 15.0, vertical: 30.0),
+                  padding: EdgeInsets.all(20.0),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(15),
+                    boxShadow: [BoxShadow(
+                        color: Colors.black12,
+                        offset: Offset(0.0, 3.0),
+                        blurRadius: 10
+                    ),],
+                  ),
+                  child: Column(
+                      children: <Widget>[
+                        Text(
+                          "LOAN STATUS:",
+                          style: TextStyle(
+                            fontSize: 14,
 
-    // Category Card
-    Widget categoryCard1 = Container(
-      child: Column(
-        children: <Widget>[
-          Container(
-            height: 80,
-            width: 350,
-            padding: EdgeInsets.fromLTRB(5, 5, 0, 0),
-            child: Column(
-              children: <Widget>[
+                          ),
+                        ),
+                        SizedBox(height: 6.0),
+                        Text(
+                          "ACTIVE",
+                          style: TextStyle(
+                            color: Colors.green,
+                            fontSize: 35,
+                            fontWeight: FontWeight.w500,
+                            letterSpacing: 1.1,
+                          ),
+                        ),
+
+
+                    ],
+                  ),
+
+                ),
+
+                SizedBox(height: 40.0),
                 Row(
-                  children: [
-                    Image.asset(
-                      'assets/images/approval-symbol-in-badge.png',
-                      width: 60,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                  ButtonTheme(
+                    minWidth: 150.0,
+                    height: 50.0,
+                    child: RaisedButton(
+                      onPressed: () {},
+                      child: Text(
+                        'Request Loan',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                        ),
+                      ),
+                      elevation: 0.0,
+                      color: kPrimaryColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
                     ),
-                    SizedBox(
-                      width: 2,
+                  ),
+                    ButtonTheme(
+                      minWidth: 150.0,
+                      height: 50.0,
+                      child: RaisedButton(
+                        onPressed: () {},
+                        child: Text(
+                          'Pay Loan',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                          ),
+                        ),
+                        elevation: 0.0,
+                        color: kPrimaryColor2,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
                     ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("Approve", style: GoogleFonts.poppins()),
-                        Text("Wait about 20 minutes to verify the \nauthenticity of the application",
-                            style: GoogleFonts.poppins()),
-                      ],
-                    ),
-                  ],
-                ),
+
+
+                ],),
+
+
+
               ],
+
             ),
-            decoration: ShapeDecoration(
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(5),
-                ),
-              ),
-              shadows: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 1.5,
-                  blurRadius: 2,
-                  offset: Offset(0, 3), // changes position of shadow
-                ),
-              ],
-            ),
+
           ),
-          SizedBox(height: 10),
+          //BottomNavigation(),
         ],
-      ),
-    );
-
-    // Category Card
-    Widget categoryCard2 = Container(
-      child: Column(
-        children: <Widget>[
-          Container(
-            height: 80,
-            width: 350,
-            padding: EdgeInsets.fromLTRB(5, 5, 0, 0),
-            child: Column(
-              children: <Widget>[
-                Row(
-                  children: [
-                    Image.asset(
-                      'assets/images/income.png',
-                      width: 60,
-                    ),
-                    SizedBox(
-                      width: 2,
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("Receive Money", style: GoogleFonts.poppins()),
-                        Text("Once the application is approved, the \nloan will be sent to the mobile account",
-                            style: GoogleFonts.poppins()),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            decoration: ShapeDecoration(
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(5),
-                ),
-              ),
-              shadows: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 1.5,
-                  blurRadius: 2,
-                  offset: Offset(0, 3), // changes position of shadow
-                ),
-              ],
-            ),
-          ),
-          SizedBox(height: 10),
-        ],
-      ),
-    );
-
-    // Category Card
-    Widget categoryCard3 = Container(
-      child: Column(
-        children: <Widget>[
-          Container(
-            height: 80,
-            width: 350,
-            padding: EdgeInsets.fromLTRB(5, 5, 0, 0),
-            child: Column(
-              children: <Widget>[
-                Row(
-                  children: [
-                    Image.asset(
-                      'assets/images/money.png',
-                      width: 60,
-                    ),
-                    SizedBox(
-                      width: 2,
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("Payback", style: GoogleFonts.poppins()),
-                        Text("Fill in personal information within 4 \nminutes",
-                            style: GoogleFonts.poppins()),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            decoration: ShapeDecoration(
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(5),
-                ),
-              ),
-              shadows: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 1.5,
-                  blurRadius: 2,
-                  offset: Offset(0, 3), // changes position of shadow
-                ),
-              ],
-            ),
-          ),
-          SizedBox(height: 10),
-        ],
-      ),
-    );
-
-    // Next Button
-    Widget nextButton = RaisedButton(
-      onPressed: () {},
-      child: const Text('Skip', style: TextStyle(fontSize: 20)),
-    );
-
-
-    // Test Button
-    Widget dashboard = RaisedButton(
-      elevation: 5,
-      onPressed: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) {
-              return Dashboard();
-            }));
-      },
-      padding: EdgeInsets.all(15),
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30)),
-      color: kPrimaryColor2,
-      child: Text(
-        "HOMEPAGE",
-        style:
-        TextStyle(color: Colors.black, fontSize: 18),
-      ),
-    );
-
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-          primaryColor: kPrimaryColor,
-          textTheme: TextTheme(
-              headline5: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.normal,
-              ),
-              button: TextStyle(
-                color: kPrimaryColor,
-              )),
-          inputDecorationTheme: InputDecorationTheme(
-              enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-            color: kPrimaryColor.withOpacity(.4),
-          )))),
-      home: Scaffold(
-        drawer: drawerSection,
-        appBar: AppBar(),
-        body: Container(
-          child: Center(
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 30,
-                ),
-                Image.asset(
-                  'assets/images/logo.png',
-                  width: 60,
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-                Column(
-                  children: [
-                    Text("How it works",
-                        style: GoogleFonts.poppins(
-                            textStyle: TextStyle(fontSize: 18))),
-                    SizedBox(height: 10),
-                    categoryCard,
-                    categoryCard1,
-                    categoryCard2,
-                    categoryCard3,
-                    // nextButton,
-                    SizedBox(height: 10),
-                    dashboard,
-                  ],
-                )
-              ],
-            ),
-          ),
-        ),
       ),
     );
   }
 }
+
+
+
+Widget header= Container(
+    margin: EdgeInsets.symmetric(vertical: 70.0),
+    child: Column(
+      children: <Widget>[
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 18.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+
+              Container(
+                height: 60,
+                width: 300,
+                decoration: BoxDecoration(
+                  color: kPrimaryColor,
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                child: Row(
+                  mainAxisAlignment : MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
+                  children: <Widget>[
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Text("     Seeka", style: TextStyle(fontSize: 50, color: Colors.white,), textAlign: TextAlign.center,)
+                    ),
+                  ],
+                )
+              ),
+
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
+
+
+Widget drawerSection = Drawer(
+  child: ListView(
+    padding: EdgeInsets.zero,
+    children: <Widget>[
+      UserAccountsDrawerHeader(
+          accountName: Text("Wendy"),
+          accountEmail: Text("w.essuman@alustudent.com"),
+      currentAccountPicture: CircleAvatar(
+        backgroundColor: Colors.white,
+        child: Text("W", style: TextStyle(fontSize: 25, color: kPrimaryColor),),
+      ),),
+
+      SizedBox(height: 20),
+      ListTile(
+        title: Row(
+          children: <Widget>[
+            Icon(Icons.history_outlined),
+        Padding(padding: EdgeInsets.only(left: 8.0),
+child: Text('My History', style: GoogleFonts.poppins()),
+
+
+),
+
+
+      ],
+        ),
+        onTap: () {
+          // Update the state of the app
+          // Closing the drawer
+          //Navigator.pop(context);
+        },
+),
+      ListTile(
+        title: Row(
+          children: <Widget>[
+            Icon(Icons.help_center_outlined),
+            Padding(padding: EdgeInsets.only(left: 8.0),
+              child: Text('Help', style: GoogleFonts.poppins()),
+
+
+            ),
+
+
+          ],
+        ),
+        onTap: () {
+          // Update the state of the app
+          // Closing the drawer
+          //Navigator.pop(context);
+        },
+      ),
+      ListTile(
+        title: Row(
+          children: <Widget>[
+            Icon(Icons.logout),
+            Padding(padding: EdgeInsets.only(left: 8.0),
+              child: Text('Logout', style: GoogleFonts.poppins()),
+
+
+            ),
+
+
+          ],
+        ),
+        onTap: () {
+          // Update the state of the app
+          // Closing the drawer
+          //Navigator.pop(context);
+        },
+      ),
+    ],
+  ),
+);
+

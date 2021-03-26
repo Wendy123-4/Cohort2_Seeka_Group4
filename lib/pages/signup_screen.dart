@@ -539,26 +539,5 @@ class  __Signup_screenState extends State<Signup_screen> {
     }
   }
 
-  // Future<void> _trySubmitForm() async {
-  //   final isValid = _formKey.currentState.validate();
-  //   if (isValid) {
-  //     print(_email);
-  //     print(_password);
-  //     print(_confirmPassword);
-  //
-  //     /*
-  //     Continute proccessing the provided information with your own logic
-  //     such us sending HTTP requests, savaing to SQLite database, etc.
-  //     */
-  //     _formKey.currentState.save();
-  //     try {
-  //        await FirebaseAuth.instance
-  //           .signInWithEmailAndPassword(email: _email, password: _password);
-  //       Navigator.push(
-  //           context, MaterialPageRoute(builder: (context) => SignIn()));
-  //     } catch (e) {
-  //       print(e.message);
-  //     }
-  //   }
-  // }
+
 }
