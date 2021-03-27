@@ -1,8 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:summative/pages/Dashboard.dart';
 import 'package:summative/controllers/constant.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:summative/pages/History.dart';
 
 // void main => runApp(HomePage());
 class HomeScreen extends StatefulWidget {
@@ -14,32 +14,31 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       drawer: drawerSection,
       appBar: AppBar(
-        // actions: [
-        //   Column(
-        //     crossAxisAlignment: CrossAxisAlignment.start,
-        //     mainAxisAlignment: MainAxisAlignment.center,
-        //     children: <Widget>[
-        //       Padding(
-        //         padding: const EdgeInsets.fromLTRB(15, 8, 15, 3),
-        //         child:
-        //
-        //         CircleAvatar(
-        //           radius: 20,
-        //           backgroundImage:
-        //           AssetImage("assets/images/user (2).png"),
-        //         ),
-        //       ),
-        //       SizedBox(height: 5),
-        //
-        //
-        //     ],
-        //   ),
-        // ],
+          // actions: [
+          //   Column(
+          //     crossAxisAlignment: CrossAxisAlignment.start,
+          //     mainAxisAlignment: MainAxisAlignment.center,
+          //     children: <Widget>[
+          //       Padding(
+          //         padding: const EdgeInsets.fromLTRB(15, 8, 15, 3),
+          //         child:
+          //
+          //         CircleAvatar(
+          //           radius: 20,
+          //           backgroundImage:
+          //           AssetImage("assets/images/user (2).png"),
+          //         ),
+          //       ),
+          //       SizedBox(height: 5),
+          //
+          //
+          //     ],
+          //   ),
+          // ],
 
-      ),
+          ),
       body: Stack(
         children: <Widget>[
           Container(
@@ -55,7 +54,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   kGradientColor3,
                   kGradientColor4,
                   kGradientColor4
-
                 ],
                 stops: [0.0, 0.3, 0.2, 0.3, 0.63, 0.63, 0.0],
               ),
@@ -111,9 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     Column(
                       children: <Widget>[
-                        Text('DAYS LEFT',
-                            style: kSubTitlesStyle
-                        ),
+                        Text('DAYS LEFT', style: kSubTitlesStyle),
                         SizedBox(height: 6.0),
                         Text(
                           '10',
@@ -123,9 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     Column(
                       children: <Widget>[
-                        Text('RATE',
-                            style: kSubTitlesStyle
-                        ),
+                        Text('RATE', style: kSubTitlesStyle),
                         SizedBox(height: 6.0),
                         Text(
                           '15%',
@@ -140,66 +134,62 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 120.0,
                   width: 300,
                   margin:
-                  EdgeInsets.symmetric(horizontal: 15.0, vertical: 30.0),
+                      EdgeInsets.symmetric(horizontal: 15.0, vertical: 30.0),
                   padding: EdgeInsets.all(20.0),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(15),
-                    boxShadow: [BoxShadow(
-                        color: Colors.black12,
-                        offset: Offset(0.0, 3.0),
-                        blurRadius: 10
-                    ),],
-                  ),
-                  child: Column(
-                      children: <Widget>[
-                        Text(
-                          "LOAN STATUS:",
-                          style: TextStyle(
-                            fontSize: 14,
-
-                          ),
-                        ),
-                        SizedBox(height: 6.0),
-                        Text(
-                          "ACTIVE",
-                          style: TextStyle(
-                            color: Colors.green,
-                            fontSize: 35,
-                            fontWeight: FontWeight.w500,
-                            letterSpacing: 1.1,
-                          ),
-                        ),
-
-
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.black12,
+                          offset: Offset(0.0, 3.0),
+                          blurRadius: 10),
                     ],
                   ),
-
+                  child: Column(
+                    children: <Widget>[
+                      Text(
+                        "LOAN STATUS:",
+                        style: TextStyle(
+                          fontSize: 14,
+                        ),
+                      ),
+                      SizedBox(height: 6.0),
+                      Text(
+                        "ACTIVE",
+                        style: TextStyle(
+                          color: Colors.green,
+                          fontSize: 35,
+                          fontWeight: FontWeight.w500,
+                          letterSpacing: 1.1,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-
                 SizedBox(height: 40.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
-                  ButtonTheme(
-                    minWidth: 150.0,
-                    height: 50.0,
-                    child: RaisedButton(
-                      onPressed: () {},
-                      child: Text(
-                        'Request Loan',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
+                    ButtonTheme(
+                      minWidth: 150.0,
+                      height: 50.0,
+                      child: RaisedButton(
+                        onPressed: () {},
+                        child: Text(
+                          'Request Loan',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                          ),
+                        ),
+                        elevation: 0.0,
+                        color: kPrimaryColor,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
                         ),
                       ),
-                      elevation: 0.0,
-                      color: kPrimaryColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
                     ),
-                  ),
                     ButtonTheme(
                       minWidth: 150.0,
                       height: 50.0,
@@ -219,16 +209,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                     ),
-
-
-                ],),
-
-
-
+                  ],
+                ),
               ],
-
             ),
-
           ),
           //BottomNavigation(),
         ],
@@ -237,19 +221,16 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-
-
-Widget header= Container(
-    margin: EdgeInsets.symmetric(vertical: 70.0),
-    child: Column(
-      children: <Widget>[
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 18.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-
-              Container(
+Widget header = Container(
+  margin: EdgeInsets.symmetric(vertical: 70.0),
+  child: Column(
+    children: <Widget>[
+      Padding(
+        padding: EdgeInsets.symmetric(horizontal: 18.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Container(
                 height: 60,
                 width: 300,
                 decoration: BoxDecoration(
@@ -257,96 +238,102 @@ Widget header= Container(
                   borderRadius: BorderRadius.circular(50),
                 ),
                 child: Row(
-                  mainAxisAlignment : MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.max,
                   children: <Widget>[
                     Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Text("     Seeka", style: TextStyle(fontSize: 50, color: Colors.white,), textAlign: TextAlign.center,)
-                    ),
+                        alignment: Alignment.bottomCenter,
+                        child: Text(
+                          "     Seeka",
+                          style: TextStyle(
+                            fontSize: 50,
+                            color: Colors.white,
+                          ),
+                          textAlign: TextAlign.center,
+                        )),
                   ],
-                )
-              ),
-
-            ],
-          ),
-        ),
-      ],
-    ),
-  );
-
-
-Widget drawerSection = Drawer(
-  child: ListView(
-    padding: EdgeInsets.zero,
-    children: <Widget>[
-      UserAccountsDrawerHeader(
-          accountName: Text("Wendy"),
-          accountEmail: Text("w.essuman@alustudent.com"),
-      currentAccountPicture: CircleAvatar(
-        backgroundColor: Colors.white,
-        child: Text("W", style: TextStyle(fontSize: 25, color: kPrimaryColor),),
-      ),),
-
-      SizedBox(height: 20),
-      ListTile(
-        title: Row(
-          children: <Widget>[
-            Icon(Icons.history_outlined),
-        Padding(padding: EdgeInsets.only(left: 8.0),
-child: Text('My History', style: GoogleFonts.poppins()),
-
-
-),
-
-
-      ],
-        ),
-        onTap: () {
-          // Update the state of the app
-          // Closing the drawer
-          //Navigator.pop(context);
-        },
-),
-      ListTile(
-        title: Row(
-          children: <Widget>[
-            Icon(Icons.help_center_outlined),
-            Padding(padding: EdgeInsets.only(left: 8.0),
-              child: Text('Help', style: GoogleFonts.poppins()),
-
-
-            ),
-
-
+                )),
           ],
         ),
-        onTap: () {
-          // Update the state of the app
-          // Closing the drawer
-          //Navigator.pop(context);
-        },
-      ),
-      ListTile(
-        title: Row(
-          children: <Widget>[
-            Icon(Icons.logout),
-            Padding(padding: EdgeInsets.only(left: 8.0),
-              child: Text('Logout', style: GoogleFonts.poppins()),
-
-
-            ),
-
-
-          ],
-        ),
-        onTap: () {
-          // Update the state of the app
-          // Closing the drawer
-          //Navigator.pop(context);
-        },
       ),
     ],
   ),
 );
 
+Widget drawerSection = NewWidget();
+
+class NewWidget extends StatelessWidget {
+  const NewWidget({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          UserAccountsDrawerHeader(
+            accountName: Text("Wendy"),
+            accountEmail: Text("w.essuman@alustudent.com"),
+            currentAccountPicture: CircleAvatar(
+              backgroundColor: Colors.white,
+              child: Text(
+                "W",
+                style: TextStyle(fontSize: 25, color: kPrimaryColor),
+              ),
+            ),
+          ),
+          SizedBox(height: 20),
+          ListTile(
+            title: Row(
+              children: <Widget>[
+                Icon(Icons.history_outlined),
+                Padding(
+                  padding: EdgeInsets.only(left: 8.0),
+                  child: Text('My History', style: GoogleFonts.poppins()),
+                ),
+              ],
+            ),
+            onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context){
+                return HistoryScreen();
+              }));
+            },
+          ),
+          ListTile(
+            title: Row(
+              children: <Widget>[
+                Icon(Icons.help_center_outlined),
+                Padding(
+                  padding: EdgeInsets.only(left: 8.0),
+                  child: Text('Help', style: GoogleFonts.poppins()),
+                ),
+              ],
+            ),
+            onTap: (){
+            },
+          ),
+          ListTile(
+            title: Row(
+              children: <Widget>[
+                Icon(Icons.logout),
+                Padding(
+                  padding: EdgeInsets.only(left: 8.0),
+                  child: Text('Logout', style: GoogleFonts.poppins()),
+                ),
+              ],
+            ),
+            onTap: () {
+              // Update the state of the app
+
+              // Closing the drawer
+
+              //Navigator.pop(context);
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}

@@ -279,7 +279,7 @@ class Direction extends StatelessWidget {
 
 
                 ),
-                SizedBox(height: 60),
+                //SizedBox(height: 5),
                 Container(
                   padding: EdgeInsets.fromLTRB(80, 60, 80, 60),
                   width: double.infinity,
