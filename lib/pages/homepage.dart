@@ -3,6 +3,7 @@ import 'package:summative/pages/Dashboard.dart';
 import 'package:summative/controllers/constant.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:summative/pages/History.dart';
+import 'package:summative/pages/requestloan.dart';
 
 // void main => runApp(HomePage());
 class HomeScreen extends StatefulWidget {
@@ -167,7 +168,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
-                SizedBox(height: 40.0),
+                SizedBox(height: 20.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
@@ -175,7 +176,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       minWidth: 150.0,
                       height: 50.0,
                       child: RaisedButton(
-                        onPressed: () {},
+                        onPressed: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context){
+                            return RequestLoan();
+                          }));
+                        },
                         child: Text(
                           'Request Loan',
                           style: TextStyle(
