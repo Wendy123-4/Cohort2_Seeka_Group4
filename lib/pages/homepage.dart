@@ -1,17 +1,21 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:summative/pages/Dashboard.dart';
 import 'package:summative/controllers/constant.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:summative/pages/History.dart';
 import 'package:summative/pages/requestloan.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 
 // void main => runApp(HomePage());
+final FirebaseAuth _auth = FirebaseAuth.instance;
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -329,12 +333,20 @@ class NewWidget extends StatelessWidget {
                 ),
               ],
             ),
-            onTap: () {
-              // Update the state of the app
-
-              // Closing the drawer
-
-              //Navigator.pop(context);
+            onTap: () async {
+              final FirebaseUser user = await _auth.currentUser();
+              if (user == null) {
+//6
+                Scaffold.of(context).showSnackBar(const SnackBar(
+                  content: Text('No one has signed in.'),
+                ));
+                return;
+              }
+              await _auth.signOut();
+              final String uid = user.uid;
+              Scaffold.of(context).showSnackBar(SnackBar(
+                content: Text(uid + ' has successfully signed out.'),
+              ));
             },
           ),
         ],
