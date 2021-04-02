@@ -7,15 +7,17 @@ import 'package:summative/pages/History.dart';
 import 'package:summative/pages/RequestLoan.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 
+import 'RequestLoanForm.dart';
+
 // void main => runApp(HomePage());
 final FirebaseAuth _auth = FirebaseAuth.instance;
+
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,6 +25,8 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(),
       body: Stack(
         children: <Widget>[
+          //  ===========  I think we should also leave comments in our code to indicate what different items
+          // whether widgets or functions do ========== //
           Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -40,8 +44,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 stops: [0.0, 0.3, 0.2, 0.3, 0.63, 0.63, 0.0],
               ),
             ),
+            // Inserting the header widget here
             child: header,
           ),
+
+          // The rest of the white body
           Container(
             margin: EdgeInsets.only(top: 140.0),
             padding: EdgeInsets.only(top: 40.0),
@@ -52,6 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 topRight: Radius.circular(30),
               ),
             ),
+
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
@@ -73,6 +81,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 SizedBox(height: 50.0),
+
+                // Row containing amount payed, days left and rate
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
@@ -111,7 +121,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
+
+                // Margin
                 SizedBox(height: 30.0),
+
+                // Loan status card
                 Container(
                   height: 120.0,
                   width: 300,
@@ -149,17 +163,23 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
+
+                // Margin
                 SizedBox(height: 20.0),
+
+                // Row containing the Request Loan and Pay Loan buttons
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
+                    // Navigating to the Request Loan screen
                     ButtonTheme(
                       minWidth: 150.0,
                       height: 50.0,
                       child: RaisedButton(
-                        onPressed: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context){
-                            return RequestLoan();
+                        onPressed: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return RequestLoanForm();
                           }));
                         },
                         child: Text(
@@ -176,6 +196,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                     ),
+
+                    //Navigating to the PAyLoan screen
                     ButtonTheme(
                       minWidth: 150.0,
                       height: 50.0,
@@ -207,6 +229,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
+// Header with the Seeka name
 Widget header = Container(
   margin: EdgeInsets.symmetric(vertical: 70.0),
   child: Column(
@@ -307,27 +330,11 @@ class NewWidget extends StatelessWidget {
                   padding: EdgeInsets.only(left: 8.0),
                   child: Text('Logout', style: GoogleFonts.poppins()),
                 ),
-                // Column(
-                //   children: [
-                //     Text("How it works",
-                //         style: GoogleFonts.poppins(
-                //             textStyle: TextStyle(fontSize: 18))),
-                //     SizedBox(height: 10),
-                //     // categoryCard,
-                //     // categoryCard1,
-                //     // categoryCard2,
-                //     // categoryCard3,
-                //     // nextButton,
-                //     SizedBox(height: 10),
-                //     // dashboard,
-                //   ],
-                // ),
               ],
             ),
             onTap: () async {
               final FirebaseUser user = await _auth.currentUser();
               if (user == null) {
-//6
                 Scaffold.of(context).showSnackBar(const SnackBar(
                   content: Text('No one has signed in.'),
                 ));
