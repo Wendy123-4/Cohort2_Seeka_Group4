@@ -180,7 +180,7 @@ class __SignInScreenState extends State<SignIn> {
     signInWithGoogle().then((user)=>{
       this.user = user,
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => HomePage()))
+          context, MaterialPageRoute(builder: (context) => HomeScreen()))
 
     });
   }
@@ -442,7 +442,7 @@ class __SignInScreenState extends State<SignIn> {
       _formKey.currentState.save();
       try{
         AuthResult user = await FirebaseAuth.instance.signInWithEmailAndPassword(email: _email, password: _password);
-        Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
       }catch(e){
         print(e.message);
       }

@@ -258,28 +258,22 @@ class Direction extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(
-                  height: 60,
+                  height: 45,
                 ),
 
                 Column(
                   children: [
                     Text("How it works",
                         style: GoogleFonts.poppins(
-                            textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold ))),
-                    SizedBox(height: 40),
+                            textStyle: TextStyle(fontSize: 20, fontWeight: FontWeight.bold ))),
+                    SizedBox(height: 30),
                     categoryCard,
                     categoryCard1,
                     categoryCard2,
                     categoryCard3,
 
-
                   ],
-
-
-
-
                 ),
-                SizedBox(height: 60),
                 Container(
                   padding: EdgeInsets.fromLTRB(80, 60, 80, 60),
                   width: double.infinity,
