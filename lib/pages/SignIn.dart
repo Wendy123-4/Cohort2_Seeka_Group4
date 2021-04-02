@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
-import 'package:summative/controllers/constant.dart';
-import 'package:summative/pages/forgot_pass.dart';
-import 'package:summative/pages/signup_screen.dart';
-import 'package:summative/pages/homepage.dart';
-import 'package:summative/controllers/auth.dart';
+import 'package:summative/controllers/Constants.dart';
+import 'package:summative/pages/ForgotPassword.dart';
+import 'package:summative/pages/SignUp.dart';
+import 'package:summative/pages/HomePage.dart';
+import 'package:summative/controllers/Auth.dart';
 
-import 'homepage.dart';
+import 'HomePage.dart';
 
 class SignIn extends StatefulWidget {
   @override

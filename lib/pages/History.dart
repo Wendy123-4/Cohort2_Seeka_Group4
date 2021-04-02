@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:summative/pages/Dashboard.dart';
-import 'package:summative/controllers/constant.dart';
+import 'package:summative/controllers/Constants.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 // void main => runApp(HomePage());

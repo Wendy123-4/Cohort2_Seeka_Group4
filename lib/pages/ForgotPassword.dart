@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:summative/controllers/constant.dart';
-import 'package:summative/pages/resetlink_confirmation.dart';
-import 'package:summative/pages/signin_screen.dart';
-import 'package:summative/pages/signup_screen.dart';
+import 'package:summative/controllers/Constants.dart';
+import 'package:summative/pages/ResetLinkConfirmation.dart';
+import 'package:summative/pages/SignIn.dart';
+import 'package:summative/pages/SignUp.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class forgotscreen extends StatefulWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:summative/pages/welcome_screen.dart';
-import 'package:summative/controllers/constant.dart';
+import 'package:summative/pages/WelcomeScreen.dart';
+import 'package:summative/controllers/Constants.dart';
 
 void main() => runApp(MyApp());
 

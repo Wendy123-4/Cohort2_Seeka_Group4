@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:summative/controllers/constant.dart';
+import 'package:summative/controllers/Constants.dart';
 
 class Dashboard extends StatelessWidget {
   // White Text Style

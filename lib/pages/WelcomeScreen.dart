@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:summative/controllers/constant.dart';
-import 'package:summative/pages/welcom_screen2.dart';
+import 'package:summative/controllers/Constants.dart';
+import 'package:summative/pages/WelcomeScreen2.dart';
 
 
 
