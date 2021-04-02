@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:summative/controllers/constant.dart';
 import 'package:summative/pages/forgot_pass.dart';
 import 'signin_screen.dart';
+import 'signin_screen.dart';
 
 class Signup_screen extends StatefulWidget{
   @override
@@ -221,7 +222,43 @@ Widget buildsigninbtn(){
 }
 class  __Signup_screenState extends State<Signup_screen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  String _email, _password, _confirmPassword;
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _cpasswordController = TextEditingController();
+  bool _success;
+  String _userEmail;
+  String _password;
+  String _cpassword;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  void _register() async {
+    final FirebaseUser user = (await
+    _auth.createUserWithEmailAndPassword(
+      email: _emailController.text,
+      password: _passwordController.text,
+    )
+    ).user;
+    if (user != null) {
+      setState(() {
+        _success = true;
+        _userEmail = user.email;
+        try{
+          Navigator.push(context, MaterialPageRoute(builder: (context) => SignIn()));
+        }catch(e){
+          print(e.message);
+        }
+      });
+    } else {
+      setState(() {
+        _success = true;
+      });
+    }
+  }
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -296,16 +333,18 @@ class  __Signup_screenState extends State<Signup_screen> {
                               ),
                               height: 60,
                               child: TextFormField(
+                                controller: _emailController,
                                 keyboardType: TextInputType.emailAddress,
                                 style: TextStyle(
                                     color: Colors.black87
                                 ),
-                                validator: (input) {
-                                  if (input.isEmpty) {
-                                    return 'Provide an email';
+                                validator: (String value) {
+                                  if (value.isEmpty) {
+                                    return 'Please enter your email';
                                   }
+                                  return null;
                                 },
-                                onSaved: (input) => _email = input,
+                                onChanged: (input) => _userEmail = input,
                                 decoration: InputDecoration(
                                     border: InputBorder.none,
                                     contentPadding: EdgeInsets.only(top: 14),
@@ -351,21 +390,14 @@ class  __Signup_screenState extends State<Signup_screen> {
                               ),
                               height: 60,
                               child: TextFormField(
-                                validator: (value) {
-                                  if (value
-                                      .trim()
-                                      .isEmpty) {
+                                controller: _passwordController,
+                                validator: (String value) {
+                                  if (value.trim().isEmpty) {
                                     return 'This field is required';
                                   }
-                                  if (value
-                                      .trim()
-                                      .length < 8) {
-                                    return 'Password must be at least 8 characters in length';
-                                  }
-                                  // Return null if the entered password is valid
                                   return null;
                                 },
-                                onSaved: (value) => _password = value,
+                                onChanged: (value) => _password = value,
                                 obscureText: true,
                                 style: TextStyle(
                                     color: Colors.black87
@@ -418,6 +450,7 @@ class  __Signup_screenState extends State<Signup_screen> {
                               ),
                               height: 60,
                               child: TextFormField(
+                                controller: _cpasswordController,
                                 validator: (value) {
                                   if (value.isEmpty) {
                                     return 'This field is required';
@@ -429,7 +462,7 @@ class  __Signup_screenState extends State<Signup_screen> {
 
                                   return null;
                                 },
-                                onSaved: (value) => _confirmPassword = value,
+                                onChanged: (value) => _cpassword = value,
                                 obscureText: true,
                                 style: TextStyle(
                                     color: Colors.black87
@@ -458,7 +491,11 @@ class  __Signup_screenState extends State<Signup_screen> {
                           width: double.infinity,
                           child: RaisedButton(
                             elevation: 5,
-                            onPressed: signUp,
+                            onPressed: () async {
+                              if (_formKey.currentState.validate()) {
+                                _register();
+                              }
+                            },
                             padding: EdgeInsets.all(15),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30)
@@ -472,6 +509,14 @@ class  __Signup_screenState extends State<Signup_screen> {
                               ),
                             ),
                           ),
+                        ),
+                        Container(
+                          alignment: Alignment.center,
+                          child: Text(_success == null
+                              ? ''
+                              : (_success
+                              ? 'Successfully registered ' + _userEmail
+                              : 'Registration failed')),
                         ),
                         Container(
                           child: GestureDetector(
@@ -527,17 +572,17 @@ class  __Signup_screenState extends State<Signup_screen> {
     );
   }
 
-  void signUp() async {
-    if(_formKey.currentState.validate()){
-      _formKey.currentState.save();
-      try{
-        await FirebaseAuth.instance.createUserWithEmailAndPassword(email: _email, password: _password);
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SignIn()));
-      }catch(e){
-        print(e.message);
-      }
-    }
-  }
+  // void signUp() async {
+  //   if(_formKey.currentState.validate()){
+  //     _formKey.currentState.save();
+  //     try{
+  //       await FirebaseAuth.instance.createUserWithEmailAndPassword(email: _email, password: _password);
+  //       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SignIn()));
+  //     }catch(e){
+  //       print(e.message);
+  //     }
+  //   }
+  // }
 
 
 }

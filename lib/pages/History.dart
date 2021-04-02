@@ -17,7 +17,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
       appBar: AppBar(
         leading: new IconButton(icon: new Icon(Icons.arrow_back, color: Colors.white,),
           onPressed: ()
-          {Navigator.pop(context);},
+          {int count = 0;
+          Navigator.of(context).popUntil((_) => count++ >= 2);
+          },
         ),
         centerTitle: true, // this is all you ne
         title: Text(" Transaction History"),),

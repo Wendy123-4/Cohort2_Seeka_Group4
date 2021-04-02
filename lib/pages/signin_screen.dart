@@ -173,7 +173,12 @@ Widget buildSignUpBtn() {
 
 class __SignInScreenState extends State<SignIn> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  String _email, _password;
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  bool _success;
+  String _userEmail;
+  String _password;
   FirebaseUser user;
 
   void click(){
@@ -250,6 +255,7 @@ class __SignInScreenState extends State<SignIn> {
                                 ]),
                             height: 60,
                             child: TextFormField(
+                              controller: _emailController,
 
                               keyboardType: TextInputType.emailAddress,
                               style: TextStyle(color: Colors.black87),
@@ -257,8 +263,9 @@ class __SignInScreenState extends State<SignIn> {
                                 if(input.isEmpty){
                                   return 'Email Required';
                                 }
+                                return null;
                               },
-                              onSaved: (input) => _email = input,
+                              onSaved: (input) => _userEmail = input,
 
                               decoration: InputDecoration(
                                   border: InputBorder.none,
@@ -300,10 +307,12 @@ class __SignInScreenState extends State<SignIn> {
                                 obscureText: true,
                                 style: TextStyle(color: Colors.black87),
                                 validator: (input) {
-                                  if(input.length < 6){
-                                    return 'Longer password please';
+                                  if (input.isEmpty) {
+                                    return 'Please enter some text';
                                   }
+                                  return null;
                                 },
+
                                 onSaved: (input) => _password = input,
                                 decoration: InputDecoration(
                                     border: InputBorder.none,
@@ -441,13 +450,35 @@ class __SignInScreenState extends State<SignIn> {
     if(_formKey.currentState.validate()){
       _formKey.currentState.save();
       try{
-        AuthResult user = await FirebaseAuth.instance.signInWithEmailAndPassword(email: _email, password: _password);
+        AuthResult user = await FirebaseAuth.instance.signInWithEmailAndPassword(email: _userEmail, password: _password);
         Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
       }catch(e){
         print(e.message);
       }
     }
   }
+  // void _signInWithEmailAndPassword() async {
+  //   final FirebaseUser user = (await _auth.signInWithEmailAndPassword(
+  //     email: _emailController.text,
+  //     password: _passwordController.text,
+  //   )).user;
+  //
+  //   if (user != null) {
+  //     setState(() {
+  //       _success = true;
+  //       _userEmail = user.email;
+  //       try{
+  //               Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+  //             }catch(e){
+  //               print(e.message);
+  //             }
+  //     });
+  //   } else {
+  //     setState(() {
+  //       _success = false;
+  //     });
+  //   }
+  // }
 }
 
 
