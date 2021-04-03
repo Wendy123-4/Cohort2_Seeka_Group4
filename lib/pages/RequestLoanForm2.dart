@@ -15,7 +15,7 @@ class _RequestLoanFormTwoState extends State<RequestLoanFormTwo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(title: Text("Employment Information"),),
       body: Stack(
         children: <Widget>[
           //  ===========  I think we should also leave comments in our code to indicate what different items
@@ -38,13 +38,13 @@ class _RequestLoanFormTwoState extends State<RequestLoanFormTwo> {
               ),
             ),
             // Inserting the header widget here
-            child: header,
+            // child: header,
           ),
 
           // The rest of the white body
           Container(
-            margin: EdgeInsets.only(top: 140.0),
-            padding: EdgeInsets.only(top: 10.0),
+            margin: EdgeInsets.only(top: 70.0),
+            padding: EdgeInsets.only(top: 1.0),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only(
@@ -55,11 +55,9 @@ class _RequestLoanFormTwoState extends State<RequestLoanFormTwo> {
             child: Form(
                 child: Column(
               children: <Widget>[
-                Padding(padding: EdgeInsets.only(top: 20)),
                 Padding(padding: EdgeInsets.only(bottom: 30)),
 
                 // Form Input Widgets
-
                 Padding(
                   padding: EdgeInsets.only(left: 30.0, right: 30.0),
                   child: TextFormField(
@@ -91,7 +89,7 @@ class _RequestLoanFormTwoState extends State<RequestLoanFormTwo> {
                       alignment: Alignment.centerLeft,
                       child: Text(
                         'Main source of income',
-                        style: TextStyle(fontSize: 16, color: Colors.black54),
+                        style: TextStyle(fontSize: 16, color: textColor),
                       ),
                     )),
 
@@ -100,19 +98,55 @@ class _RequestLoanFormTwoState extends State<RequestLoanFormTwo> {
                   child: Column(
                     children: <Widget>[
                       ListTile(
-                        title: const Text('Employed full-time'),
+                        dense: true,
+                        title: const Text(
+                          'Employed full-time',
+                          style: TextStyle(fontSize: 16, color: textColor),
+                        ),
                         leading: Radio(
                           value: 'Employed full-time',
                           groupValue: 'Employed full-time',
                           onChanged: (String value) {},
+                          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap
                         ),
                       ),
                       ListTile(
-                        title: const Text('Employed part-time'),
+                        dense: true,
+                        title: const Text(
+                          'Employed part-time',
+                          style: TextStyle(fontSize: 16, color: textColor),
+                        ),
                         leading: Radio(
                           value: 'Employed part-time',
-                          groupValue: 'Employed part-time',
+                          groupValue: 'Employed full-time',
                           onChanged: (String value) {},
+                          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap
+                        ),
+                      ),
+                      ListTile(
+                        dense: true,
+                        title: const Text(
+                          'Self-employed',
+                          style: TextStyle(fontSize: 16, color: textColor),
+                        ),
+                        leading: Radio(
+                          value: 'Self-employed',
+                          groupValue: 'Employed full-time',
+                          onChanged: (String value) {},
+                          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap
+                        ),
+                      ),
+                      ListTile(
+                        dense: true,
+                        title: const Text(
+                          'Unemployed',
+                          style: TextStyle(fontSize: 16, color: textColor),
+                        ),
+                        leading: Radio(
+                          value: 'Unemployed',
+                          groupValue: 'Employed full-time',
+                          onChanged: (String value) {},
+                          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap
                         ),
                       ),
                     ],

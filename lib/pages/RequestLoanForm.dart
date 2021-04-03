@@ -17,7 +17,9 @@ class _RequestLoanFormState extends State<RequestLoanForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text("Personal Information"),
+      ),
       body: Stack(
         children: <Widget>[
           //  ===========  I think we should also leave comments in our code to indicate what different items
@@ -40,13 +42,13 @@ class _RequestLoanFormState extends State<RequestLoanForm> {
               ),
             ),
             // Inserting the header widget here
-            child: header,
+            // child: header,
           ),
 
           // The rest of the white body
           Container(
-            margin: EdgeInsets.only(top: 140.0),
-            padding: EdgeInsets.only(top: 10.0),
+            margin: EdgeInsets.only(top: 70.0),
+            padding: EdgeInsets.only(top: 1.0),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only(

@@ -26,3 +26,4 @@ const kBodyColor = Color(0xFFE5EDFA);
 const kAccentColor = Color(0xFFEE7943);
 const kCardName = Color(0xFF072249);
 const kIconsColor = Color(0xFF9B9DB4);
+const textColor = Color(0xFF5B5B5B);
