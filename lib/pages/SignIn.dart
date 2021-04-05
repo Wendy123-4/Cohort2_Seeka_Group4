@@ -133,7 +133,7 @@ Widget buildLoginBtn() {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
       color: kPrimaryColor2,
       child: Text(
-        "SIGN IN",
+        "Sign In",
         style: TextStyle(color: Colors.black, fontSize: 18),
       ),
     ),

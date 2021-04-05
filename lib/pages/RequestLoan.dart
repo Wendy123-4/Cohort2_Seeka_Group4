@@ -105,6 +105,7 @@ class _RequestLoanState extends State<RequestLoan> {
             ),
           ),
           //BottomNavigation(),
+          ElevatedButton(onPressed: () {}, child: Text('I gotta pee')),
         ],
       ),
       floatingActionButton: FloatingActionButton(

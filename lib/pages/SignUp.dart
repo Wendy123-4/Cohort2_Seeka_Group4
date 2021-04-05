@@ -181,7 +181,7 @@ Widget buildsignupbtn(){
       ),
       color: kPrimaryColor2,
       child: Text(
-        "SIGN UP",
+        "Sign Up",
         style: TextStyle(
             color: Colors.black,
             fontSize: 18
