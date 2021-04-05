@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:summative/controllers/Constants.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:summative/pages/History.dart';
-
 import 'RequestLoanForm2.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:flutter/services.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -14,6 +15,49 @@ class RequestLoanForm extends StatefulWidget {
 }
 
 class _RequestLoanFormState extends State<RequestLoanForm> {
+  // Creating variables for storing the position and the address
+  Position _currentPosition;
+  String _currentAddress;
+
+  // Instantiating the geolocator class
+  final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
+
+  @override
+  void initState() {
+    super.initState();
+    _getCurrentAddress;
+  }
+
+  // Getting the location in form of coordinates(Latitudes and Longitudes)
+  _getCurrentAddress() {
+    geolocator
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
+        .then((Position position) {
+      setState(() {
+        _currentPosition = position;
+      });
+      // Reference to the address function
+      _getAddressFromLatLng();
+    }).catchError((e) {
+      print(e);
+    });
+  }
+
+  // Getting the address from coordinates
+  _getAddressFromLatLng() async {
+    try {
+      List<Placemark> p = await geolocator.placemarkFromCoordinates(
+          _currentPosition.latitude, _currentPosition.longitude);
+      Placemark place = p[0];
+      setState(() {
+        _currentAddress =
+            "${place.locality}. ${place.postalCode},${place.country} ";
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,6 +108,7 @@ class _RequestLoanFormState extends State<RequestLoanForm> {
 
                 // Form Input Widgets
 
+                // First name
                 Padding(
                   padding: EdgeInsets.only(left: 30.0, right: 30.0),
                   child: TextFormField(
@@ -76,6 +121,7 @@ class _RequestLoanFormState extends State<RequestLoanForm> {
                   ),
                 ),
 
+                // Last name
                 Padding(
                   padding: EdgeInsets.only(left: 30.0, right: 30.0),
                   child: TextFormField(
@@ -88,7 +134,7 @@ class _RequestLoanFormState extends State<RequestLoanForm> {
                   ),
                 ),
 
-
+                // Email
                 Padding(
                   padding: EdgeInsets.only(left: 30.0, right: 30.0),
                   child: TextFormField(
@@ -109,6 +155,7 @@ class _RequestLoanFormState extends State<RequestLoanForm> {
                   ),
                 ),
 
+                // Mobile number
                 Padding(
                   padding: EdgeInsets.only(left: 30.0, right: 30.0),
                   child: TextFormField(
@@ -121,15 +168,66 @@ class _RequestLoanFormState extends State<RequestLoanForm> {
                   ),
                 ),
 
+                //Location
+                // Displaying the address on the screen
+                SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).canvasColor,
+                          ),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                          child: Column(
+                            children: <Widget>[
+                              Row(
+                                children: <Widget>[
+                                  Icon(Icons.location_on),
+                                  SizedBox(
+                                    width: 8,
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Text(
+                                          'Location',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .caption,
+                                        ),
+                                        if (_currentPosition != null &&
+                                            _currentAddress != null)
+                                          Text(_currentAddress,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyText2),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 8,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ))
+                    ],
+                  ),
+                ),
 
+                // Button
                 Padding(
                   padding: EdgeInsets.all(20.0),
                   child: RaisedButton(
                     onPressed: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                            return RequestLoanFormTwo();
-                          }));
+                        return RequestLoanFormTwo();
+                      }));
                     },
                     child: Text(
                       'Next',
