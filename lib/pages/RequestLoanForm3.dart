@@ -72,7 +72,7 @@ class _RequestLoanFormThreeState extends State<RequestLoanFormThree> {
                       ),
                     )),
                 SizedBox(
-                  height: 8,
+                  height: 15,
                 ),
 
                 Padding(
@@ -100,7 +100,7 @@ class _RequestLoanFormThreeState extends State<RequestLoanFormThree> {
                   ),
                 ),
                 SizedBox(
-                  height: 50,
+                  height: 40,
                 ),
 
                 Padding(
