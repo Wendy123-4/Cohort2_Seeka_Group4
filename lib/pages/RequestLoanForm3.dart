@@ -4,20 +4,22 @@ import 'package:summative/controllers/Constants.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:summative/pages/History.dart';
 
-import 'RequestLoanForm3.dart';
+import 'RequestLoan.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
-class RequestLoanFormTwo extends StatefulWidget {
+class RequestLoanFormThree extends StatefulWidget {
   @override
-  _RequestLoanFormTwoState createState() => _RequestLoanFormTwoState();
+  _RequestLoanFormThreeState createState() => _RequestLoanFormThreeState();
 }
 
-class _RequestLoanFormTwoState extends State<RequestLoanFormTwo> {
+class _RequestLoanFormThreeState extends State<RequestLoanFormThree> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Employment Information"),),
+      appBar: AppBar(
+        title: Text("Verification Information"),
+      ),
       body: Stack(
         children: <Widget>[
           //  ===========  I think we should also leave comments in our code to indicate what different items
@@ -61,97 +63,92 @@ class _RequestLoanFormTwoState extends State<RequestLoanFormTwo> {
 
                 // Form Input Widgets
                 Padding(
-                  padding: EdgeInsets.only(left: 30.0, right: 30.0),
-                  child: TextFormField(
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-                      hintText: 'Monthly Salary',
-                      labelText: 'How much do you earn per month? (in RWF)',
-                    ),
-                  ),
+                    padding: EdgeInsets.only(left: 30.0, right: 30.0),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Passport *',
+                        style: TextStyle(fontSize: 18, color: textColor),
+                      ),
+                    )),
+                SizedBox(
+                  height: 8,
                 ),
 
                 Padding(
                   padding: EdgeInsets.only(left: 30.0, right: 30.0),
-                  child: TextFormField(
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-                      hintText: 'Number of dependants',
-                      labelText:
-                          'How many people are you supporting financially?',
-                    ),
+                  child: Row(
+                    children: <Widget>[
+                      Icon(Icons.upload_rounded),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.white, // background
+                          onPrimary: Colors.white70, // foreground
+                        ),
+                        onPressed: () {
+                          print("Login pressed.");
+                        },
+                        child: Text(
+                          'Upload Passport',
+                          style: TextStyle(color: textColor),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 SizedBox(
-                  height: 15,
+                  height: 50,
+                ),
+
+                Padding(
+                    padding: EdgeInsets.only(left: 30.0, right: 30.0),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Take a Selfie *',
+                        style: TextStyle(fontSize: 18, color: textColor),
+                      ),
+                    )),
+                SizedBox(
+                  height: 10,
                 ),
                 Padding(
                     padding: EdgeInsets.only(left: 30.0, right: 30.0),
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        'Main source of income',
+                        '(Note: Picture must be in portrait)',
                         style: TextStyle(fontSize: 16, color: textColor),
                       ),
                     )),
+                SizedBox(
+                  height: 30,
+                ),
+                Padding(
+                    padding: EdgeInsets.only(left: 30.0, right: 30.0),
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Icon(
+                        Icons.camera,
+                        size: 80.0,
+                      ),
+                    )),
+
+                SizedBox(
+                  height: 30,
+                ),
 
                 Padding(
                   padding: EdgeInsets.only(left: 30.0, right: 30.0),
-                  child: Column(
-                    children: <Widget>[
-                      ListTile(
-                        dense: true,
-                        title: const Text(
-                          'Employed full-time',
-                          style: TextStyle(fontSize: 16, color: textColor),
-                        ),
-                        leading: Radio(
-                          value: 'Employed full-time',
-                          groupValue: 'Employed full-time',
-                          onChanged: (String value) {},
-                          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap
-                        ),
-                      ),
-                      ListTile(
-                        dense: true,
-                        title: const Text(
-                          'Employed part-time',
-                          style: TextStyle(fontSize: 16, color: textColor),
-                        ),
-                        leading: Radio(
-                          value: 'Employed part-time',
-                          groupValue: 'Employed full-time',
-                          onChanged: (String value) {},
-                          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap
-                        ),
-                      ),
-                      ListTile(
-                        dense: true,
-                        title: const Text(
-                          'Self-employed',
-                          style: TextStyle(fontSize: 16, color: textColor),
-                        ),
-                        leading: Radio(
-                          value: 'Self-employed',
-                          groupValue: 'Employed full-time',
-                          onChanged: (String value) {},
-                          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap
-                        ),
-                      ),
-                      ListTile(
-                        dense: true,
-                        title: const Text(
-                          'Unemployed',
-                          style: TextStyle(fontSize: 16, color: textColor),
-                        ),
-                        leading: Radio(
-                          value: 'Unemployed',
-                          groupValue: 'Employed full-time',
-                          onChanged: (String value) {},
-                          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap
-                        ),
-                      ),
-                    ],
+                  child: TextFormField(
+                    keyboardType: TextInputType.text,
+                    decoration: InputDecoration(
+                      hintText: 'Kindly verify mobile number for transaction',
+                      labelText: 'Kindly verify mobile number for transaction',
+                    ),
                   ),
                 ),
 
@@ -161,11 +158,11 @@ class _RequestLoanFormTwoState extends State<RequestLoanFormTwo> {
                     onPressed: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                            return RequestLoanFormThree();
-                          }));
+                        return RequestLoan();
+                      }));
                     },
                     child: Text(
-                      'Next',
+                      'Submit',
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 16,
