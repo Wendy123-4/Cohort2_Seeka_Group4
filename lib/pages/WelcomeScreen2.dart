@@ -290,7 +290,7 @@ class Direction extends StatelessWidget {
                         borderRadius: BorderRadius.circular(30)),
                     color: kPrimaryColor2,
                     child: Text(
-                      "CONTINUE",
+                      "Continue",
                       style:
                       TextStyle(color: Colors.black, fontSize: 18),
                     ),

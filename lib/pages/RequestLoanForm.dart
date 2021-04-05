@@ -103,8 +103,8 @@ class _RequestLoanFormState extends State<RequestLoanForm> {
             child: Form(
                 child: Column(
               children: <Widget>[
-                Padding(padding: EdgeInsets.only(top: 20)),
-                Padding(padding: EdgeInsets.only(bottom: 30)),
+                Padding(padding: EdgeInsets.only(top: 10)),
+                Padding(padding: EdgeInsets.only(bottom: 20)),
 
                 // Form Input Widgets
 

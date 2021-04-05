@@ -3,11 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:summative/pages/Dashboard.dart';
 import 'package:summative/controllers/Constants.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:summative/pages/Help.dart';
 import 'package:summative/pages/History.dart';
 import 'package:summative/pages/RequestLoan.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 
 import 'RequestLoanForm.dart';
+import 'SignIn.dart';
+import 'SignIn.dart';
+import 'PayLoan.dart';
 
 // void main => runApp(HomePage());
 final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -202,7 +206,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       minWidth: 150.0,
                       height: 50.0,
                       child: RaisedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                                return PayLoan();
+                              }));
+                        },
                         child: Text(
                           'Pay Loan',
                           style: TextStyle(
@@ -320,7 +329,11 @@ class NewWidget extends StatelessWidget {
                 ),
               ],
             ),
-            onTap: () {},
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return Help();
+              }));
+            },
           ),
           ListTile(
             title: Row(
@@ -337,11 +350,17 @@ class NewWidget extends StatelessWidget {
               if (user == null) {
                 Scaffold.of(context).showSnackBar(const SnackBar(
                   content: Text('No one has signed in.'),
+
                 ));
-                return;
+                return Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return SignIn();
+                }));
               }
               await _auth.signOut();
               final String uid = user.uid;
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return SignIn();
+              }));
               Scaffold.of(context).showSnackBar(SnackBar(
                 content: Text(uid + ' has successfully signed out.'),
               ));
