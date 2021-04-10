@@ -25,11 +25,11 @@ class _RequestLoanFormState extends State<RequestLoanForm> {
   @override
   void initState() {
     super.initState();
-    _getCurrentAddress;
+    _getCurrentLocation();
   }
 
   // Getting the location in form of coordinates(Latitudes and Longitudes)
-  _getCurrentAddress() {
+  _getCurrentLocation() {
     geolocator
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
         .then((Position position) {
