@@ -21,18 +21,22 @@ class _RequestLoanFormThreeState extends State<RequestLoanFormThree> {
 
   final ImagePicker _picker = ImagePicker();
 
-  _openGallery() async {
+  _openGallery(BuildContext context) async {
     var picture = await _picker.getImage(source: ImageSource.gallery);
     this.setState(() {
       imageFile = picture;
     });
+
+    // Popping off the gallery after selecting an image
+    Navigator.of(context).pop();
   }
 
-  _openCamera() async{
+  _openCamera(BuildContext context) async{
     var picture = await _picker.getImage(source: ImageSource.camera);
     this.setState(() {
       imageFile = picture;
     });
+    Navigator.of(context).pop();
   }
 
   Future<void> _showChoiceDialog(BuildContext context) {
@@ -47,14 +51,14 @@ class _RequestLoanFormThreeState extends State<RequestLoanFormThree> {
                   GestureDetector(
                     child: Text("Gallery"),
                     onTap: () {
-                      _openGallery();
+                      _openGallery(context);
                     },
                   ),
                   Padding(padding: EdgeInsets.all(8.0)),
                   GestureDetector(
                     child: Text("Camera"),
                     onTap: () {
-                      _openCamera();
+                      _openCamera(context);
                     },
                   )
                 ],
@@ -62,6 +66,15 @@ class _RequestLoanFormThreeState extends State<RequestLoanFormThree> {
             ),
           );
         });
+  }
+
+
+  Widget _decideImageView(){
+    if(imageFile == null){
+      return Text("No image selected!");
+    } else{
+      return Text(imageFile.path);
+    }
   }
 
   @override

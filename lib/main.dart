@@ -1,14 +1,8 @@
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:summative/pages/WelcomeScreen.dart';
 import 'package:summative/controllers/Constants.dart';
 
 void main() {
-  // Ensure that plugin services are initialized so that `availableCameras()`
-// can be called before `runApp()`
-  WidgetsFlutterBinding.ensureInitialized();
-
-
   runApp(MyApp());
 }
 
