@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 import 'package:camera/camera.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +17,52 @@ class RequestLoanFormThree extends StatefulWidget {
 }
 
 class _RequestLoanFormThreeState extends State<RequestLoanFormThree> {
+  PickedFile imageFile;
+
+  final ImagePicker _picker = ImagePicker();
+
+  _openGallery() async {
+    var picture = await _picker.getImage(source: ImageSource.gallery);
+    this.setState(() {
+      imageFile = picture;
+    });
+  }
+
+  _openCamera() async{
+    var picture = await _picker.getImage(source: ImageSource.camera);
+    this.setState(() {
+      imageFile = picture;
+    });
+  }
+
+  Future<void> _showChoiceDialog(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Make a choice!"),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  GestureDetector(
+                    child: Text("Gallery"),
+                    onTap: () {
+                      _openGallery();
+                    },
+                  ),
+                  Padding(padding: EdgeInsets.all(8.0)),
+                  GestureDetector(
+                    child: Text("Camera"),
+                    onTap: () {
+                      _openCamera();
+                    },
+                  )
+                ],
+              ),
+            ),
+          );
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,12 +80,8 @@ class _RequestLoanFormThreeState extends State<RequestLoanFormThree> {
                 begin: Alignment(-4.0, 0.0),
                 end: Alignment(0.0, 1.5),
                 colors: [
-                  Theme
-                      .of(context)
-                      .primaryColor,
-                  Theme
-                      .of(context)
-                      .primaryColor,
+                  Theme.of(context).primaryColor,
+                  Theme.of(context).primaryColor,
                   kGradientColor1,
                   kGradientColor2,
                   kGradientColor3,
@@ -64,125 +108,130 @@ class _RequestLoanFormThreeState extends State<RequestLoanFormThree> {
             ),
             child: Form(
                 child: Column(
-                  children: <Widget>[
-                    Padding(padding: EdgeInsets.only(bottom: 30)),
+              children: <Widget>[
+                Padding(padding: EdgeInsets.only(bottom: 30)),
 
-                    // Form Input Widgets
-                    Padding(
-                        padding: EdgeInsets.only(left: 30.0, right: 30.0),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            'Passport *',
-                            style: TextStyle(fontSize: 18, color: textColor),
-                          ),
-                        )),
-                    SizedBox(
-                      height: 15,
-                    ),
-
-                    Padding(
-                      padding: EdgeInsets.only(left: 30.0, right: 30.0),
-                      child: Row(
-                        children: <Widget>[
-                          Icon(Icons.upload_rounded),
-                          SizedBox(
-                            width: 15,
-                          ),
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              primary: Colors.white, // background
-                              onPrimary: Colors.white70, // foreground
-                            ),
-                            onPressed: () {
-                              print("Login pressed.");
-                            },
-                            child: Text(
-                              'Upload Passport',
-                              style: TextStyle(color: textColor),
-                            ),
-                          ),
-                        ],
+                // Form Input Widgets
+                Padding(
+                    padding: EdgeInsets.only(left: 30.0, right: 30.0),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Passport *',
+                        style: TextStyle(fontSize: 18, color: textColor),
                       ),
-                    ),
-                    SizedBox(
-                      height: 40,
-                    ),
+                    )),
+                SizedBox(
+                  height: 15,
+                ),
 
-                    Padding(
-                        padding: EdgeInsets.only(left: 30.0, right: 30.0),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            'Take a Selfie *',
-                            style: TextStyle(fontSize: 18, color: textColor),
-                          ),
-                        )),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Padding(
-                        padding: EdgeInsets.only(left: 30.0, right: 30.0),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            '(Note: Picture must be in portrait)',
-                            style: TextStyle(fontSize: 16, color: textColor),
-                          ),
-                        )),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    Padding(
-                        padding: EdgeInsets.only(left: 30.0, right: 30.0),
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: Icon(
-                            Icons.camera,
-                            size: 80.0,
-                          ),
-                        )),
-
-                    SizedBox(
-                      height: 30,
-                    ),
-
-                    Padding(
-                      padding: EdgeInsets.only(left: 30.0, right: 30.0),
-                      child: TextFormField(
-                        keyboardType: TextInputType.text,
-                        decoration: InputDecoration(
-                          hintText: 'Kindly verify mobile number for transaction',
-                          labelText: 'Kindly verify mobile number for transaction',
+                Padding(
+                  padding: EdgeInsets.only(left: 30.0, right: 30.0),
+                  child: Row(
+                    children: <Widget>[
+                      Icon(Icons.upload_rounded),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.white, // background
+                          onPrimary: Colors.white70, // foreground
                         ),
-                      ),
-                    ),
-
-                    Padding(
-                      padding: EdgeInsets.all(20.0),
-                      child: RaisedButton(
                         onPressed: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) {
-                                return RequestLoan();
-                              }));
+                          print("Login pressed.");
                         },
                         child: Text(
-                          'Submit',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                          ),
-                        ),
-                        elevation: 0.0,
-                        color: kPrimaryColor2,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
+                          'Upload Passport',
+                          style: TextStyle(color: textColor),
                         ),
                       ),
-                    )
-                  ],
-                )),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 40,
+                ),
+
+                Padding(
+                    padding: EdgeInsets.only(left: 30.0, right: 30.0),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Take a Selfie *',
+                        style: TextStyle(fontSize: 18, color: textColor),
+                      ),
+                    )),
+                SizedBox(
+                  height: 10,
+                ),
+                Padding(
+                    padding: EdgeInsets.only(left: 30.0, right: 30.0),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        '(Note: Picture must be in portrait)',
+                        style: TextStyle(fontSize: 16, color: textColor),
+                      ),
+                    )),
+                SizedBox(
+                  height: 20,
+                ),
+                Padding(
+                    padding: EdgeInsets.only(right: 55.0),
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.camera,
+                          size: 80.0,
+                        ),
+                        onPressed: () {
+                          _showChoiceDialog(context);
+                        },
+                      ),
+                    )),
+
+                SizedBox(
+                  height: 40,
+                ),
+
+                Padding(
+                  padding: EdgeInsets.only(left: 30.0, right: 30.0),
+                  child: TextFormField(
+                    keyboardType: TextInputType.text,
+                    decoration: InputDecoration(
+                      hintText: 'Kindly verify mobile number for transaction',
+                      labelText: 'Kindly verify mobile number for transaction',
+                    ),
+                  ),
+                ),
+
+                Padding(
+                  padding: EdgeInsets.all(20.0),
+                  child: RaisedButton(
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return RequestLoan();
+                      }));
+                    },
+                    child: Text(
+                      'Submit',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                      ),
+                    ),
+                    elevation: 0.0,
+                    color: kPrimaryColor2,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                  ),
+                )
+              ],
+            )),
           ),
           //BottomNavigation(),
         ],
