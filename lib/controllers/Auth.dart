@@ -30,6 +30,14 @@ Future<FirebaseUser> signInWithGoogle() async{
 }
 
 
+// Getting the User ID
+Future<String> getCurrentUserId() async{
+  return (await _auth.currentUser()).uid;
+
+}
+
+
+
 // class Authentication {
 //   static Future<FirebaseApp> initializeFirebase({
 //     required BuildContext context,
