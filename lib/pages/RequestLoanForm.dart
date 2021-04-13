@@ -58,6 +58,9 @@ class _RequestLoanFormState extends State<RequestLoanForm> {
     }
   }
 
+
+  // Personal Information
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
