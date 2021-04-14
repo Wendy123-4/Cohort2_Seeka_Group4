@@ -16,152 +16,6 @@ class SignIn extends StatefulWidget {
   __SignInScreenState createState() => __SignInScreenState();
 }
 
-Widget buildEmail() {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: <Widget>[
-      Text(
-        "Email",
-        style: TextStyle(
-            color: Colors.white, fontSize: 15, fontWeight: FontWeight.normal),
-      ),
-      SizedBox(height: 10),
-      Container(
-        alignment: Alignment.centerLeft,
-        decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.black26, blurRadius: 6, offset: Offset(0, 2))
-            ]),
-        height: 60,
-        child: TextFormField(
-          keyboardType: TextInputType.emailAddress,
-          style: TextStyle(color: Colors.black87),
-          validator: (input) {
-            if (input.isEmpty) {
-              return 'Email Required';
-            }
-            return null;
-          },
-          decoration: InputDecoration(
-              border: InputBorder.none,
-              contentPadding: EdgeInsets.only(top: 14),
-              prefixIcon: Icon(
-                Icons.email_sharp,
-                color: kPrimaryColor,
-              ),
-              hintText: "Email Address",
-              hintStyle: TextStyle(color: Colors.black87)),
-        ),
-      )
-    ],
-  );
-}
-
-Widget buildPassword() {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: <Widget>[
-      Text(
-        "Password",
-        style: TextStyle(
-            color: Colors.white, fontSize: 15, fontWeight: FontWeight.normal),
-      ),
-      SizedBox(height: 10),
-      Container(
-        alignment: Alignment.centerLeft,
-        decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.black26, blurRadius: 6, offset: Offset(0, 2))
-            ]),
-        height: 60,
-        child: TextFormField(
-          obscureText: true,
-          style: TextStyle(color: Colors.black87),
-          validator: (input) {
-            if (input.length < 6) {
-              // ignore: missing_return
-              return 'Longer password please';
-            }
-            return null;
-          },
-          decoration: InputDecoration(
-              border: InputBorder.none,
-              contentPadding: EdgeInsets.only(top: 14),
-              prefixIcon: Icon(
-                Icons.lock_outline_sharp,
-                color: kPrimaryColor,
-              ),
-              hintText: "Password",
-              hintStyle: TextStyle(color: Colors.black87)),
-        ),
-      )
-    ],
-  );
-}
-
-Widget buildForgotPassword() {
-  return Container(
-    alignment: Alignment.centerRight,
-    child: FlatButton(
-      onPressed: () => print("Forgot Password pressed"),
-      padding: EdgeInsets.only(right: 0),
-      child: Text(
-        'Forgot Password?',
-        style: TextStyle(
-            decoration: TextDecoration.underline,
-            color: Colors.white,
-            fontWeight: FontWeight.bold),
-      ),
-    ),
-  );
-}
-
-Widget buildLoginBtn() {
-  return Container(
-    padding: EdgeInsets.fromLTRB(80, 60, 80, 60),
-    width: double.infinity,
-    child: RaisedButton(
-      elevation: 5,
-      onPressed: () {},
-      padding: EdgeInsets.all(15),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-      color: kPrimaryColor2,
-      child: Text(
-        "Sign In",
-        style: TextStyle(color: Colors.black, fontSize: 18),
-      ),
-    ),
-  );
-}
-
-Widget buildSignUpBtn() {
-  return GestureDetector(
-    onTap: () {},
-    child: RichText(
-      text: TextSpan(children: [
-        TextSpan(
-            text: "Don't have an account?  ",
-            style: TextStyle(
-                color: Colors.white,
-                fontSize: 15,
-                fontWeight: FontWeight.w400)),
-        TextSpan(
-            text: "Sign Up",
-            style: TextStyle(
-                decoration: TextDecoration.underline,
-                color: Colors.white,
-                fontSize: 15,
-                fontWeight: FontWeight.bold))
-      ]),
-    ),
-  );
-}
 
 class __SignInScreenState extends State<SignIn> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -173,13 +27,6 @@ class __SignInScreenState extends State<SignIn> {
   String _password;
   FirebaseUser user;
 
-  void click() {
-    signInWithGoogle().then((user) => {
-          this.user = user,
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => HomeScreen()))
-        });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -201,11 +48,11 @@ class __SignInScreenState extends State<SignIn> {
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
-                    kPrimaryColor,
-                    kPrimaryColor,
-                    kPrimaryColor,
-                    kPrimaryColor,
-                  ])),
+                        kPrimaryColor,
+                        kPrimaryColor,
+                        kPrimaryColor,
+                        kPrimaryColor,
+                      ])),
               child: SingleChildScrollView(
                   padding: EdgeInsets.symmetric(horizontal: 25, vertical: 50),
                   child: Column(
@@ -323,8 +170,8 @@ class __SignInScreenState extends State<SignIn> {
                           onPressed: () {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
-                              return forgotscreen();
-                            }));
+                                  return forgotscreen();
+                                }));
                           },
                           padding: EdgeInsets.only(right: 0),
                           child: Text(
@@ -352,57 +199,16 @@ class __SignInScreenState extends State<SignIn> {
                           ),
                         ),
                       ),
-                      Container(
-                        child: Column(
-                          children: <Widget>[
-                            Text(
-                              "- OR -",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            SizedBox(height: 20)
-                          ],
-                        ),
-                      ),
-                      Container(
-                        child: Column(
-                          children: <Widget>[
-                            SignInButton(
-                              Buttons.Google,
-                              padding: EdgeInsets.fromLTRB(40, 10, 40, 10),
-                              onPressed: this.click,
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                          ],
-                        ),
-                      ),
-                      // Container(
-                      //   child: Column(
-                      //     children: <Widget>[
-                      //       SizedBox(height: 20,),
-                      //       SignInButton(Buttons.Facebook, padding: EdgeInsets.fromLTRB(40, 15, 40, 15),
-                      //           onPressed: () => Navigator.of(context).pushReplacement(
-                      //               MaterialPageRoute(builder: (context) => HomePage()),
-                      //
-                      //           ),
-                      //
-                      //
-                      //       ),
-                      //       SizedBox(height: 20,),
-                      //     ],
-                      //
-                      //   ),
-                      //
-                      // ),
+
+                      SizedBox(height: 20,),
 
                       Container(
                         child: GestureDetector(
                           onTap: () {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
-                              return Signup_screen();
-                            }));
+                                  return Signup_screen();
+                                }));
                           },
                           child: RichText(
                             text: TextSpan(children: [
@@ -424,7 +230,6 @@ class __SignInScreenState extends State<SignIn> {
                         ),
                       ),
 
-                      //buildsignupbtn()
                     ],
                   )),
             )
@@ -447,26 +252,4 @@ class __SignInScreenState extends State<SignIn> {
       }
     }
   }
-// void _signInWithEmailAndPassword() async {
-//   final FirebaseUser user = (await _auth.signInWithEmailAndPassword(
-//     email: _emailController.text,
-//     password: _passwordController.text,
-//   )).user;
-//
-//   if (user != null) {
-//     setState(() {
-//       _success = true;
-//       _userEmail = user.email;
-//       try{
-//               Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
-//             }catch(e){
-//               print(e.message);
-//             }
-//     });
-//   } else {
-//     setState(() {
-//       _success = false;
-//     });
-//   }
-// }
 }

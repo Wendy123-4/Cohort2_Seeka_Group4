@@ -12,14 +12,28 @@ import 'RequestLoan.dart';
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
 class RequestLoanFormThree extends StatefulWidget {
+  final data;
+  RequestLoanFormThree({Key key, this.data}) : super(key:key);
   @override
   _RequestLoanFormThreeState createState() => _RequestLoanFormThreeState();
 }
 
 class _RequestLoanFormThreeState extends State<RequestLoanFormThree> {
+  PickedFile _passport;
   PickedFile imageFile;
 
   final ImagePicker _picker = ImagePicker();
+
+
+  _openGalleryPassport(BuildContext context) async {
+    var picture = await _picker.getImage(source: ImageSource.gallery);
+    this.setState(() {
+      _passport = picture;
+    });
+
+    // Popping off the gallery after selecting an image
+    Navigator.of(context).pop();
+  }
 
   _openGallery(BuildContext context) async {
     var picture = await _picker.getImage(source: ImageSource.gallery);
@@ -73,6 +87,7 @@ class _RequestLoanFormThreeState extends State<RequestLoanFormThree> {
     if(imageFile == null){
       return Text("No image selected!");
     } else{
+      print(imageFile.path);
       return Text(imageFile.path);
     }
   }
@@ -80,6 +95,7 @@ class _RequestLoanFormThreeState extends State<RequestLoanFormThree> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset : false,
       appBar: AppBar(
         title: Text("Verification Information"),
       ),
@@ -122,7 +138,9 @@ class _RequestLoanFormThreeState extends State<RequestLoanFormThree> {
             child: Form(
                 child: Column(
               children: <Widget>[
-                Padding(padding: EdgeInsets.only(bottom: 30)),
+                Padding(padding: EdgeInsets.only(top: 10)),
+                Padding(padding: EdgeInsets.only(bottom: 20)),
+
 
                 // Form Input Widgets
                 Padding(
@@ -152,7 +170,7 @@ class _RequestLoanFormThreeState extends State<RequestLoanFormThree> {
                           onPrimary: Colors.white70, // foreground
                         ),
                         onPressed: () {
-                          print("Login pressed.");
+                          _openGalleryPassport(context);
                         },
                         child: Text(
                           'Upload Passport',
@@ -163,8 +181,9 @@ class _RequestLoanFormThreeState extends State<RequestLoanFormThree> {
                   ),
                 ),
                 SizedBox(
-                  height: 40,
+                  height: 60,
                 ),
+                _decideImageView(),
 
                 Padding(
                     padding: EdgeInsets.only(left: 30.0, right: 30.0),
@@ -194,6 +213,7 @@ class _RequestLoanFormThreeState extends State<RequestLoanFormThree> {
                     padding: EdgeInsets.only(right: 55.0),
                     child: Align(
                       alignment: Alignment.center,
+
                       child: IconButton(
                         icon: Icon(
                           Icons.camera,
@@ -203,22 +223,27 @@ class _RequestLoanFormThreeState extends State<RequestLoanFormThree> {
                           _showChoiceDialog(context);
                         },
                       ),
-                    )),
+                    )
+                    ),
+
 
                 SizedBox(
                   height: 40,
                 ),
 
-                Padding(
-                  padding: EdgeInsets.only(left: 30.0, right: 30.0),
-                  child: TextFormField(
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-                      hintText: 'Kindly verify mobile number for transaction',
-                      labelText: 'Kindly verify mobile number for transaction',
-                    ),
-                  ),
-                ),
+                _decideImageView(),
+
+                // Padding(
+                //   padding: EdgeInsets.only(left: 30.0, right: 30.0),
+                //   child: TextFormField(
+                //     keyboardType: TextInputType.text,
+                //     decoration: InputDecoration(
+                //       hintText: 'Kindly verify mobile number for transaction',
+                //       labelText: 'Kindly verify mobile number for transaction',
+                //     ),
+                //   ),
+                // ),
+                SizedBox(height: 50),
 
                 Padding(
                   padding: EdgeInsets.all(20.0),
@@ -226,11 +251,12 @@ class _RequestLoanFormThreeState extends State<RequestLoanFormThree> {
                     onPressed: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                        return RequestLoan();
+                            return RequestLoan();
+                        // return RequestLoan(data: myJson);
                       }));
                     },
                     child: Text(
-                      'Submit',
+                      'Next',
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 16,
@@ -238,6 +264,7 @@ class _RequestLoanFormThreeState extends State<RequestLoanFormThree> {
                     ),
                     elevation: 0.0,
                     color: kPrimaryColor2,
+                    padding: EdgeInsets.fromLTRB(60, 15, 60, 15),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
@@ -293,86 +320,3 @@ Widget header = Container(
   ),
 );
 
-Widget drawerSection = NewWidget();
-
-class NewWidget extends StatelessWidget {
-  const NewWidget({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: <Widget>[
-          UserAccountsDrawerHeader(
-            accountName: Text("Wendy"),
-            accountEmail: Text("w.essuman@alustudent.com"),
-            currentAccountPicture: CircleAvatar(
-              backgroundColor: Colors.white,
-              child: Text(
-                "W",
-                style: TextStyle(fontSize: 25, color: kPrimaryColor),
-              ),
-            ),
-          ),
-          SizedBox(height: 20),
-          ListTile(
-            title: Row(
-              children: <Widget>[
-                Icon(Icons.history_outlined),
-                Padding(
-                  padding: EdgeInsets.only(left: 8.0),
-                  child: Text('My History', style: GoogleFonts.poppins()),
-                ),
-              ],
-            ),
-            onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return HistoryScreen();
-              }));
-            },
-          ),
-          ListTile(
-            title: Row(
-              children: <Widget>[
-                Icon(Icons.help_center_outlined),
-                Padding(
-                  padding: EdgeInsets.only(left: 8.0),
-                  child: Text('Help', style: GoogleFonts.poppins()),
-                ),
-              ],
-            ),
-            onTap: () {},
-          ),
-          ListTile(
-            title: Row(
-              children: <Widget>[
-                Icon(Icons.logout),
-                Padding(
-                  padding: EdgeInsets.only(left: 8.0),
-                  child: Text('Logout', style: GoogleFonts.poppins()),
-                ),
-              ],
-            ),
-            onTap: () async {
-              final FirebaseUser user = await _auth.currentUser();
-              if (user == null) {
-                Scaffold.of(context).showSnackBar(const SnackBar(
-                  content: Text('No one has signed in.'),
-                ));
-                return;
-              }
-              await _auth.signOut();
-              final String uid = user.uid;
-              Scaffold.of(context).showSnackBar(SnackBar(
-                content: Text(uid + ' has successfully signed out.'),
-              ));
-            },
-          ),
-        ],
-      ),
-    );
-  }
-}

@@ -18,7 +18,8 @@ class _RequestLoanFormState extends State<RequestLoanForm> {
   // Creating variables for storing the position and the address
   Position _currentPosition;
   String _currentAddress;
-
+    var myJson = {};
+    var fName, lName,email,phoneNumber;
   // Instantiating the geolocator class
   final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
 
@@ -26,7 +27,9 @@ class _RequestLoanFormState extends State<RequestLoanForm> {
   void initState() {
     super.initState();
     _getCurrentLocation();
+    // location = _currentAddress;
   }
+
 
   // Getting the location in form of coordinates(Latitudes and Longitudes)
   _getCurrentLocation() {
@@ -64,6 +67,7 @@ class _RequestLoanFormState extends State<RequestLoanForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset : false,
       appBar: AppBar(
         title: Text("Personal Information"),
       ),
@@ -115,6 +119,9 @@ class _RequestLoanFormState extends State<RequestLoanForm> {
                 Padding(
                   padding: EdgeInsets.only(left: 30.0, right: 30.0),
                   child: TextFormField(
+                    onChanged: (value){
+                      fName = value;
+                    },
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                       icon: Icon(Icons.account_circle),
@@ -123,24 +130,33 @@ class _RequestLoanFormState extends State<RequestLoanForm> {
                     ),
                   ),
                 ),
+                SizedBox(height: 20),
 
                 // Last name
                 Padding(
                   padding: EdgeInsets.only(left: 30.0, right: 30.0),
                   child: TextFormField(
+                    onChanged: (value){
+                      lName = value;
+                    },
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                       icon: Icon(Icons.account_circle_outlined),
+                      contentPadding: EdgeInsets.only(top: 5),
                       hintText: 'Last name',
                       labelText: 'Last name *',
                     ),
                   ),
                 ),
+                SizedBox(height: 20),
 
                 // Email
                 Padding(
                   padding: EdgeInsets.only(left: 30.0, right: 30.0),
                   child: TextFormField(
+                    onChanged: (value){
+                      email = value;
+                    },
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
                       icon: Icon(Icons.email),
@@ -157,11 +173,15 @@ class _RequestLoanFormState extends State<RequestLoanForm> {
                     },
                   ),
                 ),
+                SizedBox(height: 20),
 
                 // Mobile number
                 Padding(
                   padding: EdgeInsets.only(left: 30.0, right: 30.0),
                   child: TextFormField(
+                    onChanged: (value){
+                      phoneNumber = value;
+                    },
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       icon: Icon(Icons.phone),
@@ -173,6 +193,7 @@ class _RequestLoanFormState extends State<RequestLoanForm> {
 
                 //Location
                 // Displaying the address on the screen
+                SizedBox(height: 30),
                 SingleChildScrollView(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -181,8 +202,7 @@ class _RequestLoanFormState extends State<RequestLoanForm> {
                           decoration: BoxDecoration(
                             color: Theme.of(context).canvasColor,
                           ),
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                          padding: EdgeInsets.fromLTRB(30.0,10.0,30.0,10.0),
                           child: Column(
                             children: <Widget>[
                               Row(
@@ -208,6 +228,7 @@ class _RequestLoanFormState extends State<RequestLoanForm> {
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .bodyText2),
+
                                       ],
                                     ),
                                   ),
@@ -223,14 +244,22 @@ class _RequestLoanFormState extends State<RequestLoanForm> {
                 ),
 
                 // Button
+                SizedBox(height: 30),
                 Padding(
                   padding: EdgeInsets.all(20.0),
                   child: RaisedButton(
                     onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return RequestLoanFormTwo();
-                      }));
+                      myJson = {'fName': fName,
+                        'lName':lName,
+                        'email':email,
+                      'phoneNumber':phoneNumber,
+                      'location':_currentAddress};
+                      print(myJson);
+                       Navigator.push(context,
+                           MaterialPageRoute(builder: (context) {
+                      //       return RequestLoanFormTwo();
+                          return RequestLoanFormTwo(data : myJson);
+                       }));
                     },
                     child: Text(
                       'Next',
@@ -241,6 +270,7 @@ class _RequestLoanFormState extends State<RequestLoanForm> {
                     ),
                     elevation: 0.0,
                     color: kPrimaryColor2,
+                    padding: EdgeInsets.fromLTRB(60, 15, 60, 15),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
@@ -296,86 +326,3 @@ Widget header = Container(
   ),
 );
 
-Widget drawerSection = NewWidget();
-
-class NewWidget extends StatelessWidget {
-  const NewWidget({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: <Widget>[
-          UserAccountsDrawerHeader(
-            accountName: Text("Wendy"),
-            accountEmail: Text("w.essuman@alustudent.com"),
-            currentAccountPicture: CircleAvatar(
-              backgroundColor: Colors.white,
-              child: Text(
-                "W",
-                style: TextStyle(fontSize: 25, color: kPrimaryColor),
-              ),
-            ),
-          ),
-          SizedBox(height: 20),
-          ListTile(
-            title: Row(
-              children: <Widget>[
-                Icon(Icons.history_outlined),
-                Padding(
-                  padding: EdgeInsets.only(left: 8.0),
-                  child: Text('My History', style: GoogleFonts.poppins()),
-                ),
-              ],
-            ),
-            onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return HistoryScreen();
-              }));
-            },
-          ),
-          ListTile(
-            title: Row(
-              children: <Widget>[
-                Icon(Icons.help_center_outlined),
-                Padding(
-                  padding: EdgeInsets.only(left: 8.0),
-                  child: Text('Help', style: GoogleFonts.poppins()),
-                ),
-              ],
-            ),
-            onTap: () {},
-          ),
-          ListTile(
-            title: Row(
-              children: <Widget>[
-                Icon(Icons.logout),
-                Padding(
-                  padding: EdgeInsets.only(left: 8.0),
-                  child: Text('Logout', style: GoogleFonts.poppins()),
-                ),
-              ],
-            ),
-            onTap: () async {
-              final FirebaseUser user = await _auth.currentUser();
-              if (user == null) {
-                Scaffold.of(context).showSnackBar(const SnackBar(
-                  content: Text('No one has signed in.'),
-                ));
-                return;
-              }
-              await _auth.signOut();
-              final String uid = user.uid;
-              Scaffold.of(context).showSnackBar(SnackBar(
-                content: Text(uid + ' has successfully signed out.'),
-              ));
-            },
-          ),
-        ],
-      ),
-    );
-  }
-}

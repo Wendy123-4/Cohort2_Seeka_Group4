@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:summative/pages/Dashboard.dart';
 import 'package:summative/controllers/Constants.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:summative/pages/Help.dart';
@@ -16,6 +15,8 @@ import 'PayLoan.dart';
 // void main => runApp(HomePage());
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
+
+
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -25,6 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset : false,
       drawer: drawerSection,
       appBar: AppBar(),
       body: Stack(
@@ -76,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 SizedBox(height: 6.0),
                 Text(
-                  "\$4,250,000",
+                  "RWF 0",
                   style: TextStyle(
                     color: kPrimaryColor3,
                     fontSize: 35,
@@ -98,7 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         SizedBox(height: 6.0),
                         Text(
-                          '\$75,000',
+                          'RWF 0',
                           style: kNumberTextStyle,
                         ),
                       ],
@@ -108,7 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         Text('DAYS LEFT', style: kSubTitlesStyle),
                         SizedBox(height: 6.0),
                         Text(
-                          '10',
+                          '20',
                           style: kNumberTextStyle,
                         )
                       ],
@@ -156,7 +158,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       SizedBox(height: 6.0),
                       Text(
-                        "ACTIVE",
+                        "INACTIVE",
                         style: TextStyle(
                           color: Colors.green,
                           fontSize: 35,
@@ -280,10 +282,39 @@ Widget header = Container(
 
 Widget drawerSection = NewWidget();
 
-class NewWidget extends StatelessWidget {
+class NewWidget extends StatefulWidget {
+
+
   const NewWidget({
     Key key,
   }) : super(key: key);
+
+  @override
+  _NewWidgetState createState() => _NewWidgetState();
+}
+
+class _NewWidgetState extends State<NewWidget> {
+  String userEmail = "";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    test();
+  }
+
+ void test(){
+   FirebaseAuth.instance.onAuthStateChanged
+       .listen((FirebaseUser user) {
+     if (user == null) {
+       print('User is currently signed out!');
+     } else {
+       setState(() {
+         userEmail = user.email;
+       });
+     }
+   });
+ }
 
   @override
   Widget build(BuildContext context) {
@@ -292,12 +323,12 @@ class NewWidget extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: <Widget>[
           UserAccountsDrawerHeader(
-            accountName: Text("Wendy"),
-            accountEmail: Text("w.essuman@alustudent.com"),
+            //accountName: Text("Wendy"),
+            accountEmail: Text(userEmail),
             currentAccountPicture: CircleAvatar(
               backgroundColor: Colors.white,
               child: Text(
-                "W",
+                userEmail == "" ? "X" : userEmail[0].toUpperCase(),
                 style: TextStyle(fontSize: 25, color: kPrimaryColor),
               ),
             ),
