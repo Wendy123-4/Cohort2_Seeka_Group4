@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:summative/controllers/Constants.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:summative/model/RequestLoan.dart';
 import 'package:summative/pages/History.dart';
 import 'RequestLoanForm2.dart';
 import 'package:geolocator/geolocator.dart';
@@ -18,6 +19,24 @@ class _RequestLoanFormState extends State<RequestLoanForm> {
   // Creating variables for storing the position and the address
   Position _currentPosition;
   String _currentAddress;
+
+
+  // Populating the list of personal information
+  final List<PersonalInformation> personalInfoList = [
+    PersonalInformation("Wendy", "Essuman", "w.essuman@alustudent.com",
+        25076543219, "Kigali, Rwanda"),
+    PersonalInformation("David", "Masoperh", "d.masoperh@alustudent.com",
+        25078123455, "Nairobi, Kenya"),
+    PersonalInformation("Christine", "Wasike", "c.wasike@alustudent.com",
+        250789654679, "Kampala, Uganda")
+  ];
+
+  // Controllers to collect the user input
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController phoneNumberController = TextEditingController();
+  TextEditingController locationController = TextEditingController();
 
   // Instantiating the geolocator class
   final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
@@ -57,7 +76,6 @@ class _RequestLoanFormState extends State<RequestLoanForm> {
       print(e);
     }
   }
-
 
   // Personal Information
 
@@ -115,6 +133,7 @@ class _RequestLoanFormState extends State<RequestLoanForm> {
                 Padding(
                   padding: EdgeInsets.only(left: 30.0, right: 30.0),
                   child: TextFormField(
+                    controller: firstNameController,
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                       icon: Icon(Icons.account_circle),
@@ -128,6 +147,7 @@ class _RequestLoanFormState extends State<RequestLoanForm> {
                 Padding(
                   padding: EdgeInsets.only(left: 30.0, right: 30.0),
                   child: TextFormField(
+                    controller: lastNameController,
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                       icon: Icon(Icons.account_circle_outlined),
@@ -141,6 +161,7 @@ class _RequestLoanFormState extends State<RequestLoanForm> {
                 Padding(
                   padding: EdgeInsets.only(left: 30.0, right: 30.0),
                   child: TextFormField(
+                    controller: emailController,
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
                       icon: Icon(Icons.email),
@@ -162,6 +183,7 @@ class _RequestLoanFormState extends State<RequestLoanForm> {
                 Padding(
                   padding: EdgeInsets.only(left: 30.0, right: 30.0),
                   child: TextFormField(
+                    controller: phoneNumberController,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       icon: Icon(Icons.phone),
@@ -227,6 +249,7 @@ class _RequestLoanFormState extends State<RequestLoanForm> {
                   padding: EdgeInsets.all(20.0),
                   child: RaisedButton(
                     onPressed: () {
+
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
                         return RequestLoanFormTwo();
