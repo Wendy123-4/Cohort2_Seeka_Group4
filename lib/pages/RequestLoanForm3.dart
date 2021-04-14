@@ -22,23 +22,41 @@ class RequestLoanFormThree extends StatefulWidget {
 class _RequestLoanFormThreeState extends State<RequestLoanFormThree> {
   // For the file upload (Passport)
   String _fileName;
+
+  // When uploading a single file
   String _path;
+
+  //Uploading multiple files
   Map<String, String> _paths;
+
+  // Storing the file extension
   String _extension;
+
+  // Check that the file path is present
   bool _loadingPath = false;
+
+  // check if multiple files have been selected
   bool _multiPick = false;
+
+  //Check for valid formatting
   bool _hasValidMime = false;
+
+  // File type
   FileType _pickingType;
+
+  // Listening for the file to upload(name and extension)
   TextEditingController _controller = new TextEditingController();
 
   PickedFile imageFile;
-  PickedFile passport;
+  PickedFile passportFile;
 
   final ImagePicker _picker = ImagePicker();
 
   @override
   void initState() {
     super.initState();
+
+    // The view's state is changed once the file is retrieved
     _controller.addListener(() => _extension = _controller.text);
   }
 
@@ -70,14 +88,12 @@ class _RequestLoanFormThreeState extends State<RequestLoanFormThree> {
     }
   }
 
-  _openGalleryPassport(BuildContext context) async {
-    var picture = await _picker.getImage(source: ImageSource.gallery);
+  _openFileExplorerPassport(BuildContext context) async {
+    var passport = await _picker.getImage(source: ImageSource.gallery);
     this.setState(() {
-      passport = picture;
+      passportFile = passport;
     });
-
-    // Popping off the gallery after selecting an image
-    Navigator.of(context).pop();
+    // Navigator.of(context).pop();
   }
 
   _openGallery(BuildContext context) async {
@@ -136,6 +152,15 @@ class _RequestLoanFormThreeState extends State<RequestLoanFormThree> {
     }
   }
 
+  Widget _decidePassportView() {
+    if (passportFile == null) {
+      return Text("No file selected!");
+    } else {
+      print(passportFile.path);
+      return Text(passportFile.path);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -179,184 +204,147 @@ class _RequestLoanFormThreeState extends State<RequestLoanFormThree> {
                 topRight: Radius.circular(30),
               ),
             ),
-            child: Form(
-                child: Column(
+            child: ListView(
+              padding: const EdgeInsets.all(8),
               children: <Widget>[
-                Padding(padding: EdgeInsets.only(top: 10)),
-                Padding(padding: EdgeInsets.only(bottom: 20)),
+                Form(
+                    child: Column(
+                  children: <Widget>[
+                    Padding(padding: EdgeInsets.only(top: 10)),
+                    Padding(padding: EdgeInsets.only(bottom: 20)),
 
-                // Form Input Widgets
-                Padding(
-                    padding: EdgeInsets.only(left: 30.0, right: 30.0),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Passport *',
-                        style: TextStyle(fontSize: 18, color: textColor),
-                      ),
-                    )),
-                SizedBox(
-                  height: 15,
-                ),
+                    // Form Input Widgets
+                    Padding(
+                        padding: EdgeInsets.only(left: 30.0, right: 30.0),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            'Passport *',
+                            style: TextStyle(fontSize: 18, color: textColor),
+                          ),
+                        )),
+                    SizedBox(
+                      height: 15,
+                    ),
 
-                Padding(
-                  padding: EdgeInsets.only(left: 30.0, right: 30.0),
-                  child: Row(
-                    children: <Widget>[
-                      Icon(Icons.upload_rounded),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.white, // background
-                          onPrimary: Colors.white70, // foreground
-                        ),
+                    Padding(
+                        padding: EdgeInsets.only(left: 30.0, right: 30.0),
+                        child: Column(
+                          children: <Widget>[
+                            Row(
+                              children: <Widget>[
+                                Icon(Icons.upload_rounded),
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    primary: Colors.white, // background
+                                    onPrimary: Colors.white70, // foreground
+                                  ),
+                                  onPressed: () {
+                                    _openFileExplorerPassport(context);
+                                  },
+                                  child: Text(
+                                    'Upload Passport',
+                                    style: TextStyle(color: textColor),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            _decidePassportView(),
+                          ],
+                        )),
+                    SizedBox(
+                      height: 60,
+                    ),
+
+                    Padding(
+                        padding: EdgeInsets.only(left: 30.0, right: 30.0),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            'Take a Selfie *',
+                            style: TextStyle(fontSize: 18, color: textColor),
+                          ),
+                        )),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Padding(
+                        padding: EdgeInsets.only(left: 30.0, right: 30.0),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            '(Note: Picture must be in portrait)',
+                            style: TextStyle(fontSize: 16, color: textColor),
+                          ),
+                        )),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Padding(
+                        padding: EdgeInsets.only(right: 55.0),
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: IconButton(
+                            icon: Icon(
+                              Icons.camera,
+                              size: 80.0,
+                            ),
+                            onPressed: () {
+                              _showChoiceDialog(context);
+                            },
+                          ),
+                        )),
+
+                    SizedBox(
+                      height: 40,
+                    ),
+
+                    _decideImageView(),
+
+                    // Padding(
+                    //   padding: EdgeInsets.only(left: 30.0, right: 30.0),
+                    //   child: TextFormField(
+                    //     keyboardType: TextInputType.text,
+                    //     decoration: InputDecoration(
+                    //       hintText: 'Kindly verify mobile number for transaction',
+                    //       labelText: 'Kindly verify mobile number for transaction',
+                    //     ),
+                    //   ),
+                    // ),
+                    SizedBox(height: 50),
+
+                    Padding(
+                      padding: EdgeInsets.all(20.0),
+                      child: RaisedButton(
                         onPressed: () {
-                          _openFileExplorer();
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return RequestLoan();
+                            // return RequestLoan(data: myJson);
+                          }));
                         },
                         child: Text(
-                          'Upload Passport',
-                          style: TextStyle(color: textColor),
+                          'Next',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                          ),
+                        ),
+                        elevation: 0.0,
+                        color: kPrimaryColor2,
+                        padding: EdgeInsets.fromLTRB(60, 15, 60, 15),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
                         ),
                       ),
-                      new Builder(
-                        builder: (BuildContext context) => _loadingPath
-                            ? Padding(
-                                padding: const EdgeInsets.only(bottom: 10.0),
-                                child: const CircularProgressIndicator())
-                            : _path != null || _paths != null
-                                ? new Container(
-                                    padding:
-                                        const EdgeInsets.only(bottom: 30.0),
-                                    height: MediaQuery.of(context).size.height *
-                                        0.50,
-                                    child: new Scrollbar(
-                                        child: new ListView.separated(
-                                      itemCount:
-                                          _paths != null && _paths.isNotEmpty
-                                              ? _paths.length
-                                              : 1,
-                                      itemBuilder:
-                                          (BuildContext context, int index) {
-                                        final bool isMultiPath =
-                                            _paths != null && _paths.isNotEmpty;
-                                        final String name = 'File $index: ' +
-                                            (isMultiPath
-                                                ? _paths.keys.toList()[index]
-                                                : _fileName ?? '...');
-                                        final path = isMultiPath
-                                            ? _paths.values
-                                                .toList()[index]
-                                                .toString()
-                                            : _path;
-
-                                        return new ListTile(
-                                          title: new Text(
-                                            name,
-                                          ),
-                                          subtitle: new Text(path),
-                                        );
-                                      },
-                                      separatorBuilder:
-                                          (BuildContext context, int index) =>
-                                              new Divider(),
-                                    )),
-                                  )
-                                : new Container(),
-                      )
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 60,
-                ),
-                _decideImageView(),
-
-                Padding(
-                    padding: EdgeInsets.only(left: 30.0, right: 30.0),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Take a Selfie *',
-                        style: TextStyle(fontSize: 18, color: textColor),
-                      ),
-                    )),
-                SizedBox(
-                  height: 10,
-                ),
-                Padding(
-                    padding: EdgeInsets.only(left: 30.0, right: 30.0),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        '(Note: Picture must be in portrait)',
-                        style: TextStyle(fontSize: 16, color: textColor),
-                      ),
-                    )),
-                SizedBox(
-                  height: 20,
-                ),
-                Padding(
-                    padding: EdgeInsets.only(right: 55.0),
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: IconButton(
-                        icon: Icon(
-                          Icons.camera,
-                          size: 80.0,
-                        ),
-                        onPressed: () {
-                          _showChoiceDialog(context);
-                        },
-                      ),
-                    )),
-
-                SizedBox(
-                  height: 40,
-                ),
-
-                _decideImageView(),
-
-                // Padding(
-                //   padding: EdgeInsets.only(left: 30.0, right: 30.0),
-                //   child: TextFormField(
-                //     keyboardType: TextInputType.text,
-                //     decoration: InputDecoration(
-                //       hintText: 'Kindly verify mobile number for transaction',
-                //       labelText: 'Kindly verify mobile number for transaction',
-                //     ),
-                //   ),
-                // ),
-                SizedBox(height: 50),
-
-                Padding(
-                  padding: EdgeInsets.all(20.0),
-                  child: RaisedButton(
-                    onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return RequestLoan();
-                        // return RequestLoan(data: myJson);
-                      }));
-                    },
-                    child: Text(
-                      'Next',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                      ),
-                    ),
-                    elevation: 0.0,
-                    color: kPrimaryColor2,
-                    padding: EdgeInsets.fromLTRB(60, 15, 60, 15),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                  ),
-                )
+                    )
+                  ],
+                )),
               ],
-            )),
+            ),
           ),
           //BottomNavigation(),
         ],
