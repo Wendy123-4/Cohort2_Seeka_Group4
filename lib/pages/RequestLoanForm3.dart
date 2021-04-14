@@ -1,11 +1,10 @@
 import 'dart:io';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:camera/camera.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:summative/controllers/Constants.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:summative/pages/History.dart';
 
 import 'RequestLoan.dart';
 
@@ -13,22 +12,68 @@ final FirebaseAuth _auth = FirebaseAuth.instance;
 
 class RequestLoanFormThree extends StatefulWidget {
   final data;
-  RequestLoanFormThree({Key key, this.data}) : super(key:key);
+
+  RequestLoanFormThree({Key key, this.data}) : super(key: key);
+
   @override
   _RequestLoanFormThreeState createState() => _RequestLoanFormThreeState();
 }
 
 class _RequestLoanFormThreeState extends State<RequestLoanFormThree> {
-  PickedFile _passport;
+  // For the file upload (Passport)
+  String _fileName;
+  String _path;
+  Map<String, String> _paths;
+  String _extension;
+  bool _loadingPath = false;
+  bool _multiPick = false;
+  bool _hasValidMime = false;
+  FileType _pickingType;
+  TextEditingController _controller = new TextEditingController();
+
   PickedFile imageFile;
+  PickedFile passport;
 
   final ImagePicker _picker = ImagePicker();
 
+  @override
+  void initState() {
+    super.initState();
+    _controller.addListener(() => _extension = _controller.text);
+  }
+
+  void _openFileExplorer() async {
+    if (_pickingType != FileType.CUSTOM || _hasValidMime) {
+      setState(() => _loadingPath = true);
+      try {
+        if (_multiPick) {
+          _path = null;
+          _paths = await FilePicker.getMultiFilePath(
+              type: _pickingType, fileExtension: _extension);
+        } else {
+          _paths = null;
+          _path = await FilePicker.getFilePath(
+              type: _pickingType, fileExtension: _extension);
+        }
+      } on PlatformException catch (e) {
+        print("Unsupported operation" + e.toString());
+      }
+      if (!mounted) return;
+      setState(() {
+        _loadingPath = false;
+        _fileName = _path != null
+            ? _path.split('/').last
+            : _paths != null
+                ? _paths.keys.toString()
+                : '...';
+      });
+    }
+  }
 
   _openGalleryPassport(BuildContext context) async {
     var picture = await _picker.getImage(source: ImageSource.gallery);
     this.setState(() {
-      _passport = picture;
+      passport = picture;
     });
 
     // Popping off the gallery after selecting an image
@@ -45,7 +90,7 @@ class _RequestLoanFormThreeState extends State<RequestLoanFormThree> {
     Navigator.of(context).pop();
   }
 
-  _openCamera(BuildContext context) async{
+  _openCamera(BuildContext context) async {
     var picture = await _picker.getImage(source: ImageSource.camera);
     this.setState(() {
       imageFile = picture;
@@ -82,20 +127,19 @@ class _RequestLoanFormThreeState extends State<RequestLoanFormThree> {
         });
   }
 
-
-  Widget _decideImageView(){
-    if(imageFile == null){
+  Widget _decideImageView() {
+    if (imageFile == null) {
       return Text("No image selected!");
-    } else{
+    } else {
       print(imageFile.path);
-      return Text(imageFile.path);
+      return Image.file(File(imageFile.path), width: 200, height: 200);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset : false,
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text("Verification Information"),
       ),
@@ -141,7 +185,6 @@ class _RequestLoanFormThreeState extends State<RequestLoanFormThree> {
                 Padding(padding: EdgeInsets.only(top: 10)),
                 Padding(padding: EdgeInsets.only(bottom: 20)),
 
-
                 // Form Input Widgets
                 Padding(
                     padding: EdgeInsets.only(left: 30.0, right: 30.0),
@@ -170,13 +213,58 @@ class _RequestLoanFormThreeState extends State<RequestLoanFormThree> {
                           onPrimary: Colors.white70, // foreground
                         ),
                         onPressed: () {
-                          _openGalleryPassport(context);
+                          _openFileExplorer();
                         },
                         child: Text(
                           'Upload Passport',
                           style: TextStyle(color: textColor),
                         ),
                       ),
+                      new Builder(
+                        builder: (BuildContext context) => _loadingPath
+                            ? Padding(
+                                padding: const EdgeInsets.only(bottom: 10.0),
+                                child: const CircularProgressIndicator())
+                            : _path != null || _paths != null
+                                ? new Container(
+                                    padding:
+                                        const EdgeInsets.only(bottom: 30.0),
+                                    height: MediaQuery.of(context).size.height *
+                                        0.50,
+                                    child: new Scrollbar(
+                                        child: new ListView.separated(
+                                      itemCount:
+                                          _paths != null && _paths.isNotEmpty
+                                              ? _paths.length
+                                              : 1,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        final bool isMultiPath =
+                                            _paths != null && _paths.isNotEmpty;
+                                        final String name = 'File $index: ' +
+                                            (isMultiPath
+                                                ? _paths.keys.toList()[index]
+                                                : _fileName ?? '...');
+                                        final path = isMultiPath
+                                            ? _paths.values
+                                                .toList()[index]
+                                                .toString()
+                                            : _path;
+
+                                        return new ListTile(
+                                          title: new Text(
+                                            name,
+                                          ),
+                                          subtitle: new Text(path),
+                                        );
+                                      },
+                                      separatorBuilder:
+                                          (BuildContext context, int index) =>
+                                              new Divider(),
+                                    )),
+                                  )
+                                : new Container(),
+                      )
                     ],
                   ),
                 ),
@@ -213,7 +301,6 @@ class _RequestLoanFormThreeState extends State<RequestLoanFormThree> {
                     padding: EdgeInsets.only(right: 55.0),
                     child: Align(
                       alignment: Alignment.center,
-
                       child: IconButton(
                         icon: Icon(
                           Icons.camera,
@@ -223,9 +310,7 @@ class _RequestLoanFormThreeState extends State<RequestLoanFormThree> {
                           _showChoiceDialog(context);
                         },
                       ),
-                    )
-                    ),
-
+                    )),
 
                 SizedBox(
                   height: 40,
@@ -251,7 +336,7 @@ class _RequestLoanFormThreeState extends State<RequestLoanFormThree> {
                     onPressed: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                            return RequestLoan();
+                        return RequestLoan();
                         // return RequestLoan(data: myJson);
                       }));
                     },
@@ -319,4 +404,3 @@ Widget header = Container(
     ],
   ),
 );
-
