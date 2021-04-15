@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:summative/controllers/Constants.dart';
 import 'package:summative/pages/ForgotPassword.dart';
 import 'package:summative/pages/SignUp.dart';
@@ -245,6 +246,8 @@ class __SignInScreenState extends State<SignIn> {
       try {
         AuthResult user = await FirebaseAuth.instance
             .signInWithEmailAndPassword(email: _userEmail, password: _password);
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString('email', _userEmail);
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => HomeScreen()));
       } catch (e) {

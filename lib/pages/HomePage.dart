@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:summative/controllers/Constants.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:summative/pages/Help.dart';
@@ -389,6 +390,8 @@ class _NewWidgetState extends State<NewWidget> {
               }
               await _auth.signOut();
               final String uid = user.uid;
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              prefs.remove('email');
               Navigator.push(context, MaterialPageRoute(builder: (context) {
                 return SignIn();
               }));

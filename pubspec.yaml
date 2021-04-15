@@ -41,6 +41,9 @@ dependencies:
   path_provider: ^2.0.1
   path: ^1.8.0
   image_picker: ^0.7.4
+  shared_preferences: ^2.0.5
+  firebase_storage: ^3.0.3
+  file_picker: ^1.4.2
 
 dev_dependencies:
   flutter_test:
