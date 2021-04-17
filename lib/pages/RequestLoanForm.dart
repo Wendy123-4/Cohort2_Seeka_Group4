@@ -6,6 +6,7 @@ import 'RequestLoanForm2.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter/services.dart';
 
+// ignore: unused_element
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
 class RequestLoanForm extends StatefulWidget {
@@ -270,6 +271,7 @@ class _RequestLoanFormState extends State<RequestLoanForm> {
                 SizedBox(height: 30),
                 Padding(
                   padding: EdgeInsets.all(20.0),
+                  // ignore: deprecated_member_use
                   child: RaisedButton(
                     onPressed: () {
 

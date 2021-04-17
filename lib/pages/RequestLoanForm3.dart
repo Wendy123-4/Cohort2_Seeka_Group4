@@ -168,7 +168,7 @@ class _RequestLoanFormThreeState extends State<RequestLoanFormThree> {
   Future uploadImageToFirebase(BuildContext context, PickedFile _imageFile) async {
     String fileName = basename(_imageFile.path);
     StorageReference firebaseStorageRef =
-    FirebaseStorage.instance.ref().child('uploads/$fileName');
+    FirebaseStorage.instance.ref().child('selfies/$fileName');
     StorageUploadTask uploadTask = firebaseStorageRef.putFile(File(_imageFile.path));
     StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
     taskSnapshot.ref.getDownloadURL().then(
