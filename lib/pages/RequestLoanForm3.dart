@@ -1,25 +1,102 @@
 import 'dart:io';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:camera/camera.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:path/path.dart';
 import 'package:summative/controllers/Constants.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:summative/pages/History.dart';
 
 import 'RequestLoan.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
 class RequestLoanFormThree extends StatefulWidget {
+  final data;
+
+  RequestLoanFormThree({Key key, this.data}) : super(key: key);
+
   @override
   _RequestLoanFormThreeState createState() => _RequestLoanFormThreeState();
 }
 
 class _RequestLoanFormThreeState extends State<RequestLoanFormThree> {
+  // For the file upload (Passport)
+  String _fileName;
+
+  // When uploading a single file
+  String _path;
+
+  //Uploading multiple files
+  Map<String, String> _paths;
+
+  // Storing the file extension
+  String _extension;
+
+  // Check that the file path is present
+  bool _loadingPath = false;
+
+  // check if multiple files have been selected
+  bool _multiPick = false;
+
+  //Check for valid formatting
+  bool _hasValidMime = false;
+
+  // File type
+  FileType _pickingType;
+
+  // Listening for the file to upload(name and extension)
+  TextEditingController _controller = new TextEditingController();
+
   PickedFile imageFile;
+  PickedFile passportFile;
 
   final ImagePicker _picker = ImagePicker();
+
+  @override
+  void initState() {
+    super.initState();
+
+    // The view's state is changed once the file is retrieved
+    _controller.addListener(() => _extension = _controller.text);
+  }
+
+  void _openFileExplorer() async {
+    if (_pickingType != FileType.CUSTOM || _hasValidMime) {
+      setState(() => _loadingPath = true);
+      try {
+        if (_multiPick) {
+          _path = null;
+          _paths = await FilePicker.getMultiFilePath(
+              type: _pickingType, fileExtension: _extension);
+        } else {
+          _paths = null;
+          _path = await FilePicker.getFilePath(
+              type: _pickingType, fileExtension: _extension);
+        }
+      } on PlatformException catch (e) {
+        print("Unsupported operation" + e.toString());
+      }
+      if (!mounted) return;
+      setState(() {
+        _loadingPath = false;
+        _fileName = _path != null
+            ? _path.split('/').last
+            : _paths != null
+                ? _paths.keys.toString()
+                : '...';
+      });
+    }
+  }
+
+  _openFileExplorerPassport(BuildContext context) async {
+    var passport = await _picker.getImage(source: ImageSource.gallery);
+    this.setState(() {
+      passportFile = passport;
+    });
+    // Navigator.of(context).pop();
+  }
 
   _openGallery(BuildContext context) async {
     var picture = await _picker.getImage(source: ImageSource.gallery);
@@ -31,7 +108,7 @@ class _RequestLoanFormThreeState extends State<RequestLoanFormThree> {
     Navigator.of(context).pop();
   }
 
-  _openCamera(BuildContext context) async{
+  _openCamera(BuildContext context) async {
     var picture = await _picker.getImage(source: ImageSource.camera);
     this.setState(() {
       imageFile = picture;
@@ -69,17 +146,40 @@ class _RequestLoanFormThreeState extends State<RequestLoanFormThree> {
   }
 
 
-  Widget _decideImageView(){
-    if(imageFile == null){
+  Widget _decideImageView() {
+    if (imageFile == null) {
       return Text("No image selected!");
-    } else{
-      return Text(imageFile.path);
+    } else {
+      print(imageFile.path);
+      return Image.file(File(imageFile.path), width: 200, height: 200);
     }
+  }
+
+  Widget _decidePassportView() {
+    if (passportFile == null) {
+      return Text("No file selected!");
+    } else {
+      print(passportFile.path);
+      return Text(passportFile.path);
+    }
+  }
+
+  // Upload file to Firebase
+  Future uploadImageToFirebase(BuildContext context, PickedFile _imageFile) async {
+    String fileName = basename(_imageFile.path);
+    StorageReference firebaseStorageRef =
+    FirebaseStorage.instance.ref().child('uploads/$fileName');
+    StorageUploadTask uploadTask = firebaseStorageRef.putFile(File(_imageFile.path));
+    StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
+    taskSnapshot.ref.getDownloadURL().then(
+          (value) => print("Done: $value"),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text("Verification Information"),
       ),
@@ -119,132 +219,171 @@ class _RequestLoanFormThreeState extends State<RequestLoanFormThree> {
                 topRight: Radius.circular(30),
               ),
             ),
-            child: Form(
-                child: Column(
+            child: ListView(
+              padding: const EdgeInsets.all(8),
               children: <Widget>[
-                Padding(padding: EdgeInsets.only(bottom: 30)),
+                Form(
+                    child: Column(
+                  children: <Widget>[
+                    Padding(padding: EdgeInsets.only(top: 10)),
+                    Padding(padding: EdgeInsets.only(bottom: 20)),
 
-                // Form Input Widgets
-                Padding(
-                    padding: EdgeInsets.only(left: 30.0, right: 30.0),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Passport *',
-                        style: TextStyle(fontSize: 18, color: textColor),
-                      ),
-                    )),
-                SizedBox(
-                  height: 15,
-                ),
+                    // Form Input Widgets
+                    Padding(
+                        padding: EdgeInsets.only(left: 30.0, right: 30.0),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            'Passport *',
+                            style: TextStyle(fontSize: 18, color: textColor),
+                          ),
+                        )),
+                    SizedBox(
+                      height: 15,
+                    ),
 
-                Padding(
-                  padding: EdgeInsets.only(left: 30.0, right: 30.0),
-                  child: Row(
-                    children: <Widget>[
-                      Icon(Icons.upload_rounded),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.white, // background
-                          onPrimary: Colors.white70, // foreground
-                        ),
+                    Padding(
+                        padding: EdgeInsets.only(left: 30.0, right: 30.0),
+                        child: Column(
+                          children: <Widget>[
+                            Row(
+                              children: <Widget>[
+                                Icon(Icons.upload_rounded),
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    primary: Colors.white, // background
+                                    onPrimary: Colors.white70, // foreground
+                                  ),
+                                  onPressed: () {
+                                    _openFileExplorerPassport(context);
+                                  },
+                                  child: Text(
+                                    'Upload Passport',
+                                    style: TextStyle(color: textColor),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            _decidePassportView(),
+                          ],
+                        )),
+                    SizedBox(
+                      height: 60,
+                    ),
+
+                    Padding(
+                        padding: EdgeInsets.only(left: 30.0, right: 30.0),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            'Take a Selfie *',
+                            style: TextStyle(fontSize: 18, color: textColor),
+                          ),
+                        )),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Padding(
+                        padding: EdgeInsets.only(left: 30.0, right: 30.0),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            '(Note: Picture must be in portrait)',
+                            style: TextStyle(fontSize: 16, color: textColor),
+                          ),
+                        )),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Padding(
+                        padding: EdgeInsets.only(right: 55.0),
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: IconButton(
+                            icon: Icon(
+                              Icons.camera,
+                              size: 80.0,
+                            ),
+                            onPressed: () {
+                              _showChoiceDialog(context);
+                            },
+                          ),
+                        )),
+
+                    SizedBox(
+                      height: 40,
+                    ),
+
+                    _decideImageView(),
+
+                    // Padding(
+                    //   padding: EdgeInsets.only(left: 30.0, right: 30.0),
+                    //   child: TextFormField(
+                    //     keyboardType: TextInputType.text,
+                    //     decoration: InputDecoration(
+                    //       hintText: 'Kindly verify mobile number for transaction',
+                    //       labelText: 'Kindly verify mobile number for transaction',
+                    //     ),
+                    //   ),
+                    // ),
+                    SizedBox(height: 50),
+
+                    Padding(
+                      padding: EdgeInsets.all(20.0),
+                      child: RaisedButton(
                         onPressed: () {
-                          print("Login pressed.");
+                          uploadImageToFirebase(context, imageFile);
                         },
                         child: Text(
-                          'Upload Passport',
-                          style: TextStyle(color: textColor),
+                          'Upload Selfie',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                          ),
+                        ),
+                        elevation: 0.0,
+                        color: kGradientColor4,
+                        padding: EdgeInsets.fromLTRB(60, 15, 60, 15),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
                         ),
                       ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 40,
-                ),
+                    ),
 
-                Padding(
-                    padding: EdgeInsets.only(left: 30.0, right: 30.0),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Take a Selfie *',
-                        style: TextStyle(fontSize: 18, color: textColor),
-                      ),
-                    )),
-                SizedBox(
-                  height: 10,
-                ),
-                Padding(
-                    padding: EdgeInsets.only(left: 30.0, right: 30.0),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        '(Note: Picture must be in portrait)',
-                        style: TextStyle(fontSize: 16, color: textColor),
-                      ),
-                    )),
-                SizedBox(
-                  height: 20,
-                ),
-                Padding(
-                    padding: EdgeInsets.only(right: 55.0),
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: IconButton(
-                        icon: Icon(
-                          Icons.camera,
-                          size: 80.0,
-                        ),
+                    SizedBox(height: 20),
+
+                    Padding(
+                      padding: EdgeInsets.all(20.0),
+                      child: RaisedButton(
                         onPressed: () {
-                          _showChoiceDialog(context);
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return RequestLoan();
+                            // return RequestLoan(data: myJson);
+                          }));
                         },
-                      ),
-                    )),
-
-                SizedBox(
-                  height: 40,
-                ),
-
-                Padding(
-                  padding: EdgeInsets.only(left: 30.0, right: 30.0),
-                  child: TextFormField(
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-                      hintText: 'Kindly verify mobile number for transaction',
-                      labelText: 'Kindly verify mobile number for transaction',
-                    ),
-                  ),
-                ),
-
-                Padding(
-                  padding: EdgeInsets.all(20.0),
-                  child: RaisedButton(
-                    onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return RequestLoan();
-                      }));
-                    },
-                    child: Text(
-                      'Submit',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
+                        child: Text(
+                          'Next',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                          ),
+                        ),
+                        elevation: 0.0,
+                        color: kPrimaryColor2,
+                        padding: EdgeInsets.fromLTRB(60, 15, 60, 15),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
                       ),
                     ),
-                    elevation: 0.0,
-                    color: kPrimaryColor2,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                  ),
-                )
+                  ],
+                )),
               ],
-            )),
+            ),
           ),
           //BottomNavigation(),
         ],
@@ -292,87 +431,3 @@ Widget header = Container(
     ],
   ),
 );
-
-Widget drawerSection = NewWidget();
-
-class NewWidget extends StatelessWidget {
-  const NewWidget({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: <Widget>[
-          UserAccountsDrawerHeader(
-            accountName: Text("Wendy"),
-            accountEmail: Text("w.essuman@alustudent.com"),
-            currentAccountPicture: CircleAvatar(
-              backgroundColor: Colors.white,
-              child: Text(
-                "W",
-                style: TextStyle(fontSize: 25, color: kPrimaryColor),
-              ),
-            ),
-          ),
-          SizedBox(height: 20),
-          ListTile(
-            title: Row(
-              children: <Widget>[
-                Icon(Icons.history_outlined),
-                Padding(
-                  padding: EdgeInsets.only(left: 8.0),
-                  child: Text('My History', style: GoogleFonts.poppins()),
-                ),
-              ],
-            ),
-            onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return HistoryScreen();
-              }));
-            },
-          ),
-          ListTile(
-            title: Row(
-              children: <Widget>[
-                Icon(Icons.help_center_outlined),
-                Padding(
-                  padding: EdgeInsets.only(left: 8.0),
-                  child: Text('Help', style: GoogleFonts.poppins()),
-                ),
-              ],
-            ),
-            onTap: () {},
-          ),
-          ListTile(
-            title: Row(
-              children: <Widget>[
-                Icon(Icons.logout),
-                Padding(
-                  padding: EdgeInsets.only(left: 8.0),
-                  child: Text('Logout', style: GoogleFonts.poppins()),
-                ),
-              ],
-            ),
-            onTap: () async {
-              final FirebaseUser user = await _auth.currentUser();
-              if (user == null) {
-                Scaffold.of(context).showSnackBar(const SnackBar(
-                  content: Text('No one has signed in.'),
-                ));
-                return;
-              }
-              await _auth.signOut();
-              final String uid = user.uid;
-              Scaffold.of(context).showSnackBar(SnackBar(
-                content: Text(uid + ' has successfully signed out.'),
-              ));
-            },
-          ),
-        ],
-      ),
-    );
-  }
-}

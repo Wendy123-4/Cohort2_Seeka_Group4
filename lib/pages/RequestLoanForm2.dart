@@ -9,14 +9,19 @@ import 'RequestLoanForm3.dart';
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
 class RequestLoanFormTwo extends StatefulWidget {
+  final data;
+  RequestLoanFormTwo({Key key, this.data}) : super(key:key);
   @override
   _RequestLoanFormTwoState createState() => _RequestLoanFormTwoState();
 }
 
 class _RequestLoanFormTwoState extends State<RequestLoanFormTwo> {
+  var myJson = {};
+  var earning,dependantsNumber,occupation;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset : false,
       appBar: AppBar(title: Text("Employment Information"),),
       body: Stack(
         children: <Widget>[
@@ -57,113 +62,75 @@ class _RequestLoanFormTwoState extends State<RequestLoanFormTwo> {
             child: Form(
                 child: Column(
               children: <Widget>[
-                Padding(padding: EdgeInsets.only(top: 0)),
-                Padding(padding: EdgeInsets.only(bottom: 0)),
+                Padding(padding: EdgeInsets.only(top: 10)),
+                Padding(padding: EdgeInsets.only(bottom: 20)),
 
                 // Form Input Widgets
+
                 Padding(
                   padding: EdgeInsets.only(left: 30.0, right: 30.0),
                   child: TextFormField(
+                    onChanged: (value){
+                      occupation = value;
+                    },
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
-                      hintText: 'Monthly Salary',
-                      labelText: 'How much do you earn per month? (in RWF)',
+                      hintText: 'Occupation',
+                      labelText:
+                      'What do you do for a living?*',
                     ),
                   ),
                 ),
+                SizedBox(height: 20),
 
                 Padding(
                   padding: EdgeInsets.only(left: 30.0, right: 30.0),
                   child: TextFormField(
+                    onChanged: (value){
+                      earning = value;
+                    },
+                    keyboardType: TextInputType.text,
+                    decoration: InputDecoration(
+                      hintText: 'Monthly Salary',
+                      labelText: 'How much do you earn per month? (in RWF)*',
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20),
+
+                Padding(
+                  padding: EdgeInsets.only(left: 30.0, right: 30.0),
+                  child: TextFormField(
+                    onChanged: (value){
+                      dependantsNumber = value;
+                    },
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                       hintText: 'Number of dependants',
                       labelText:
-                          'How many people are you supporting financially?',
+                          'How many people are you supporting financially?*',
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 15,
-                ),
-                Padding(
-                    padding: EdgeInsets.only(left: 30.0, right: 30.0),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Main source of income',
-                        style: TextStyle(fontSize: 16, color: textColor),
-                      ),
-                    )),
 
-                Padding(
-                  padding: EdgeInsets.only(left: 30.0, right: 30.0),
-                  child: Column(
-                    children: <Widget>[
-                      ListTile(
-                        dense: true,
-                        title: const Text(
-                          'Employed full-time',
-                          style: TextStyle(fontSize: 16, color: textColor),
-                        ),
-                        leading: Radio(
-                          value: 'Employed full-time',
-                          groupValue: 'Employed full-time',
-                          onChanged: (String value) {},
-                          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap
-                        ),
-                      ),
-                      ListTile(
-                        dense: true,
-                        title: const Text(
-                          'Employed part-time',
-                          style: TextStyle(fontSize: 16, color: textColor),
-                        ),
-                        leading: Radio(
-                          value: 'Employed part-time',
-                          groupValue: 'Employed full-time',
-                          onChanged: (String value) {},
-                          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap
-                        ),
-                      ),
-                      ListTile(
-                        dense: true,
-                        title: const Text(
-                          'Self-employed',
-                          style: TextStyle(fontSize: 16, color: textColor),
-                        ),
-                        leading: Radio(
-                          value: 'Self-employed',
-                          groupValue: 'Employed full-time',
-                          onChanged: (String value) {},
-                          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap
-                        ),
-                      ),
-                      ListTile(
-                        dense: true,
-                        title: const Text(
-                          'Unemployed',
-                          style: TextStyle(fontSize: 16, color: textColor),
-                        ),
-                        leading: Radio(
-                          value: 'Unemployed',
-                          groupValue: 'Employed full-time',
-                          onChanged: (String value) {},
-                          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+
+
+
+                SizedBox(height: 50),
 
                 Padding(
                   padding: EdgeInsets.all(20.0),
                   child: RaisedButton(
                     onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                            return RequestLoanFormThree();
-                          }));
+                      myJson = {...widget.data, 'earning':earning,
+                        'dependantsNumber':dependantsNumber,
+                      'occupation':occupation};
+                      print(myJson);
+                       Navigator.push(context,
+                           MaterialPageRoute(builder: (context) {
+
+                              return RequestLoanFormThree(data: myJson);
+                           }));
                     },
                     child: Text(
                       'Next',
@@ -174,6 +141,7 @@ class _RequestLoanFormTwoState extends State<RequestLoanFormTwo> {
                     ),
                     elevation: 0.0,
                     color: kPrimaryColor2,
+                    padding: EdgeInsets.fromLTRB(60, 15, 60, 15),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
@@ -229,86 +197,3 @@ Widget header = Container(
   ),
 );
 
-Widget drawerSection = NewWidget();
-
-class NewWidget extends StatelessWidget {
-  const NewWidget({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: <Widget>[
-          UserAccountsDrawerHeader(
-            accountName: Text("Wendy"),
-            accountEmail: Text("w.essuman@alustudent.com"),
-            currentAccountPicture: CircleAvatar(
-              backgroundColor: Colors.white,
-              child: Text(
-                "W",
-                style: TextStyle(fontSize: 25, color: kPrimaryColor),
-              ),
-            ),
-          ),
-          SizedBox(height: 20),
-          ListTile(
-            title: Row(
-              children: <Widget>[
-                Icon(Icons.history_outlined),
-                Padding(
-                  padding: EdgeInsets.only(left: 8.0),
-                  child: Text('My History', style: GoogleFonts.poppins()),
-                ),
-              ],
-            ),
-            onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return HistoryScreen();
-              }));
-            },
-          ),
-          ListTile(
-            title: Row(
-              children: <Widget>[
-                Icon(Icons.help_center_outlined),
-                Padding(
-                  padding: EdgeInsets.only(left: 8.0),
-                  child: Text('Help', style: GoogleFonts.poppins()),
-                ),
-              ],
-            ),
-            onTap: () {},
-          ),
-          ListTile(
-            title: Row(
-              children: <Widget>[
-                Icon(Icons.logout),
-                Padding(
-                  padding: EdgeInsets.only(left: 8.0),
-                  child: Text('Logout', style: GoogleFonts.poppins()),
-                ),
-              ],
-            ),
-            onTap: () async {
-              final FirebaseUser user = await _auth.currentUser();
-              if (user == null) {
-                Scaffold.of(context).showSnackBar(const SnackBar(
-                  content: Text('No one has signed in.'),
-                ));
-                return;
-              }
-              await _auth.signOut();
-              final String uid = user.uid;
-              Scaffold.of(context).showSnackBar(SnackBar(
-                content: Text(uid + ' has successfully signed out.'),
-              ));
-            },
-          ),
-        ],
-      ),
-    );
-  }
-}

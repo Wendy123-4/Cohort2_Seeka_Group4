@@ -1,7 +1,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:summative/pages/Dashboard.dart';
 import 'package:summative/controllers/Constants.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:convert';
@@ -103,7 +102,9 @@ class _PayLoanState extends State<PayLoan> {
                               fontSize: 40.0,
                               color: Colors.black
                           ),
+                          maxLength: 6,
                           decoration: InputDecoration(
+                            counterText: '',
                             border: InputBorder.none,
                             focusedBorder: InputBorder.none,
                             enabledBorder: InputBorder.none,
