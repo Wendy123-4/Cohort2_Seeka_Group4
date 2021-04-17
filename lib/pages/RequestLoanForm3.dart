@@ -1,9 +1,11 @@
 import 'dart:io';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:path/path.dart';
 import 'package:summative/controllers/Constants.dart';
 
 import 'RequestLoan.dart';
@@ -143,6 +145,7 @@ class _RequestLoanFormThreeState extends State<RequestLoanFormThree> {
         });
   }
 
+
   Widget _decideImageView() {
     if (imageFile == null) {
       return Text("No image selected!");
@@ -159,6 +162,18 @@ class _RequestLoanFormThreeState extends State<RequestLoanFormThree> {
       print(passportFile.path);
       return Text(passportFile.path);
     }
+  }
+
+  // Upload file to Firebase
+  Future uploadImageToFirebase(BuildContext context, PickedFile _imageFile) async {
+    String fileName = basename(_imageFile.path);
+    StorageReference firebaseStorageRef =
+    FirebaseStorage.instance.ref().child('uploads/$fileName');
+    StorageUploadTask uploadTask = firebaseStorageRef.putFile(File(_imageFile.path));
+    StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
+    taskSnapshot.ref.getDownloadURL().then(
+          (value) => print("Done: $value"),
+    );
   }
 
   @override
@@ -320,6 +335,30 @@ class _RequestLoanFormThreeState extends State<RequestLoanFormThree> {
                       padding: EdgeInsets.all(20.0),
                       child: RaisedButton(
                         onPressed: () {
+                          uploadImageToFirebase(context, imageFile);
+                        },
+                        child: Text(
+                          'Upload Selfie',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                          ),
+                        ),
+                        elevation: 0.0,
+                        color: kGradientColor4,
+                        padding: EdgeInsets.fromLTRB(60, 15, 60, 15),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                    ),
+
+                    SizedBox(height: 20),
+
+                    Padding(
+                      padding: EdgeInsets.all(20.0),
+                      child: RaisedButton(
+                        onPressed: () {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
                             return RequestLoan();
@@ -340,7 +379,7 @@ class _RequestLoanFormThreeState extends State<RequestLoanFormThree> {
                           borderRadius: BorderRadius.circular(30),
                         ),
                       ),
-                    )
+                    ),
                   ],
                 )),
               ],
