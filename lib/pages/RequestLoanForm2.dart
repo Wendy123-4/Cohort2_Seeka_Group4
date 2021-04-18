@@ -89,7 +89,7 @@ class _RequestLoanFormTwoState extends State<RequestLoanFormTwo> {
                     onChanged: (value){
                       earning = value;
                     },
-                    keyboardType: TextInputType.text,
+                    keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       hintText: 'Monthly Salary',
                       labelText: 'How much do you earn per month? (in RWF)*',
@@ -104,7 +104,7 @@ class _RequestLoanFormTwoState extends State<RequestLoanFormTwo> {
                     onChanged: (value){
                       dependantsNumber = value;
                     },
-                    keyboardType: TextInputType.text,
+                    keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       hintText: 'Number of dependants',
                       labelText:
