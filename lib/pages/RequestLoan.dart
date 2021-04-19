@@ -6,8 +6,14 @@ import 'package:summative/controllers/Constants.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:convert';
 
+import 'package:summative/pages/HomePage.dart';
+
 // void main => runApp(HomePage());
 class RequestLoan extends StatefulWidget {
+  final data;
+
+  RequestLoan({Key key, this.data}) : super(key: key);
+
   @override
   _RequestLoanState createState() => _RequestLoanState();
 }
@@ -27,9 +33,23 @@ class _RequestLoanState extends State<RequestLoan> {
       _counter = _counter - 10000;
     });
   }
+  var myJson = {};
+  var loanAmount;
+
+  CollectionReference users = Firestore.instance.collection('users');
+
 
   @override
   Widget build(BuildContext context) {
+    Future<void> addUser() {
+      // Call the user's CollectionReference to add a new user
+      return users
+          .add(
+        myJson
+      )
+          .then((value) => print("User Added"))
+          .catchError((error) => print("Failed to add user: $error"));
+    }
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -173,13 +193,24 @@ class _RequestLoanState extends State<RequestLoan> {
             child: RaisedButton(
               elevation: 5,
               onPressed: () {
-                // CollectionReference users = Firestore.instance.collection('users');
-                // users.add(myJson).then((value)=> {print ('hi')});
+                //Map<String,dynamic> myJson = json.decode(myJson);
                 // Navigator.push(context,
                 //     MaterialPageRoute(builder: (context) {
-                //       return SignIn();
+                //
+                //       return HomeScreen();
                 //     }));
-              },
+                    myJson = {...widget.data, 'loanAmount':_counter,
+                    };
+                    print(myJson);
+
+
+                    addUser();
+
+                    },
+
+
+
+
               padding: EdgeInsets.fromLTRB(60, 15, 60, 15),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30)),

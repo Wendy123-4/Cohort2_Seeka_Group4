@@ -5,7 +5,7 @@ class RequestLoan {
   final String email;
   final int phoneNumber;
   final String location;
-  final double salary;
+  final int salary;
   final int dependants;
   final String mainIncomeSource;
   final String passportPath;

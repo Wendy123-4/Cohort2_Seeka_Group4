@@ -67,220 +67,253 @@ class _RequestLoanFormState extends State<RequestLoanForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset : false,
+      //resizeToAvoidBottomInset : false,
       appBar: AppBar(
         title: Text("Personal Information"),
       ),
-      body: Stack(
-        children: <Widget>[
-          //  ===========  I think we should also leave comments in our code to indicate what different items
-          // whether widgets or functions do ========== //
-          Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment(-4.0, 0.0),
-                end: Alignment(0.0, 1.5),
-                colors: [
-                  Theme.of(context).primaryColor,
-                  Theme.of(context).primaryColor,
-                  kGradientColor1,
-                  kGradientColor2,
-                  kGradientColor3,
-                  kGradientColor4,
-                  kGradientColor4
-                ],
-                stops: [0.0, 0.3, 0.2, 0.3, 0.63, 0.63, 0.0],
+      body: SingleChildScrollView(
+        child: Stack(
+          children: <Widget>[
+            //  ===========  I think we should also leave comments in our code to indicate what different items
+            // whether widgets or functions do ========== //
+            Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment(-4.0, 0.0),
+                  end: Alignment(0.0, 1.5),
+                  colors: [
+                    Theme.of(context).primaryColor,
+                    Theme.of(context).primaryColor,
+                    kGradientColor1,
+                    kGradientColor2,
+                    kGradientColor3,
+                    kGradientColor4,
+                    kGradientColor4
+                  ],
+                  stops: [0.0, 0.3, 0.2, 0.3, 0.63, 0.63, 0.0],
+                ),
               ),
+              // Inserting the header widget here
+              // child: header,
             ),
-            // Inserting the header widget here
-            // child: header,
-          ),
 
-          // The rest of the white body
-          Container(
-            margin: EdgeInsets.only(top: 70.0),
-            padding: EdgeInsets.only(top: 1.0),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30),
-                topRight: Radius.circular(30),
+            // The rest of the white body
+            Container(
+              margin: EdgeInsets.only(top: 70.0),
+              padding: EdgeInsets.only(top: 1.0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30),
+                  topRight: Radius.circular(30),
+                ),
               ),
-            ),
-            child: Form(
-                child: Column(
-              children: <Widget>[
-                Padding(padding: EdgeInsets.only(top: 10)),
-                Padding(padding: EdgeInsets.only(bottom: 20)),
-
-                // Form Input Widgets
-
-                // First name
-                Padding(
-                  padding: EdgeInsets.only(left: 30.0, right: 30.0),
-                  child: TextFormField(
-                    onChanged: (value){
-                      fName = value;
-                    },
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-                      icon: Icon(Icons.account_circle),
-                      hintText: 'First name',
-                      labelText: 'First name *',
-                    ),
-                  ),
-                ),
-                SizedBox(height: 20),
-
-                // Last name
-                Padding(
-                  padding: EdgeInsets.only(left: 30.0, right: 30.0),
-                  child: TextFormField(
-                    onChanged: (value){
-                      lName = value;
-                    },
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-                      icon: Icon(Icons.account_circle_outlined),
-                      contentPadding: EdgeInsets.only(top: 5),
-                      hintText: 'Last name',
-                      labelText: 'Last name *',
-                    ),
-                  ),
-                ),
-                SizedBox(height: 20),
-
-                // Email
-                Padding(
-                  padding: EdgeInsets.only(left: 30.0, right: 30.0),
-                  child: TextFormField(
-                    onChanged: (value){
-                      email = value;
-                    },
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(
-                      icon: Icon(Icons.email),
-                      hintText: 'Email',
-                      labelText: 'Email *',
-                    ),
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return 'Please Enter your email address';
-                      } else if (!value.contains('@')) {
-                        return 'Please enter a valid email address';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                SizedBox(height: 20),
-
-                // Mobile number
-                Padding(
-                  padding: EdgeInsets.only(left: 30.0, right: 30.0),
-                  child: TextFormField(
-                    onChanged: (value){
-                      phoneNumber = value;
-                    },
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      icon: Icon(Icons.phone),
-                      hintText: 'Mobile number',
-                      labelText: 'Mobile number *',
-                    ),
-                  ),
-                ),
-
-                //Location
-                // Displaying the address on the screen
-                SizedBox(height: 30),
-                SingleChildScrollView(
+              child: Form(
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).canvasColor,
-                          ),
-                          padding: EdgeInsets.fromLTRB(30.0,10.0,30.0,10.0),
-                          child: Column(
-                            children: <Widget>[
-                              Row(
-                                children: <Widget>[
-                                  Icon(Icons.location_on),
-                                  SizedBox(
-                                    width: 8,
-                                  ),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Text(
-                                          'Location',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .caption,
-                                        ),
-                                        if (_currentPosition != null &&
-                                            _currentAddress != null)
-                                          Text(_currentAddress,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyText2),
+                children: <Widget>[
+                  Padding(padding: EdgeInsets.only(top: 10)),
+                  Padding(padding: EdgeInsets.only(bottom: 20)),
 
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 8,
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ))
-                    ],
-                  ),
-                ),
+                  // Form Input Widgets
 
-                // Button
-                SizedBox(height: 30),
-                Padding(
-                  padding: EdgeInsets.all(20.0),
-                  child: RaisedButton(
-                    onPressed: () {
-                      myJson = {'fName': fName,
-                        'lName':lName,
-                        'email':email,
-                      'phoneNumber':phoneNumber,
-                      'location':_currentAddress};
-                      print(myJson);
-                       Navigator.push(context,
-                           MaterialPageRoute(builder: (context) {
-                      //       return RequestLoanFormTwo();
-                          return RequestLoanFormTwo(data : myJson);
-                       }));
-                    },
-                    child: Text(
-                      'Next',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
+                  // First name
+                  Padding(
+                    padding: EdgeInsets.only(left: 30.0, right: 30.0),
+                    child: TextFormField(
+                      onChanged: (value){
+                        fName = value;
+                      },
+                      keyboardType: TextInputType.text,
+                      decoration: InputDecoration(
+                        icon: Icon(Icons.account_circle),
+                        hintText: 'First name',
+                        labelText: 'First name *',
                       ),
                     ),
-                    elevation: 0.0,
-                    color: kPrimaryColor2,
-                    padding: EdgeInsets.fromLTRB(60, 15, 60, 15),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
+                  ),
+                  SizedBox(height: 20),
+
+                  // Last name
+                  Padding(
+                    padding: EdgeInsets.only(left: 30.0, right: 30.0),
+                    child: TextFormField(
+                      onChanged: (value){
+                        lName = value;
+                      },
+                      keyboardType: TextInputType.text,
+                      decoration: InputDecoration(
+                        icon: Icon(Icons.account_circle_outlined),
+                        contentPadding: EdgeInsets.only(top: 5),
+                        hintText: 'Last name',
+                        labelText: 'Last name *',
+                      ),
                     ),
                   ),
-                )
-              ],
-            )),
-          ),
-          //BottomNavigation(),
-        ],
+                  SizedBox(height: 20),
+
+                  // Email
+                  Padding(
+                    padding: EdgeInsets.only(left: 30.0, right: 30.0),
+                    child: TextFormField(
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please Enter your email address';
+                        } else if (!value.contains('@')) {
+                          return 'Please enter a valid email address';
+                        }
+                        return null;
+                      },
+                      onChanged: (value){
+                        email = value;
+                      },
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(
+                        icon: Icon(Icons.email),
+                        hintText: 'Email',
+                        labelText: 'Email *',
+                      ),
+                      // validator: (value) {
+                      //   if (value.isEmpty) {
+                      //     return 'Please Enter your email address';
+                      //   } else if (!value.contains('@')) {
+                      //     return 'Please enter a valid email address';
+                      //   }
+                      //   return null;
+                      // },
+                    ),
+                  ),
+                  SizedBox(height: 20),
+
+                  // Mobile number
+                  Padding(
+                    padding: EdgeInsets.only(left: 30.0, right: 30.0),
+                    child: TextFormField(
+                      onChanged: (value){
+                        phoneNumber = value;
+                      },
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        icon: Icon(Icons.phone),
+                        hintText: 'Mobile number',
+                        labelText: 'Mobile number *',
+                      ),
+                    ),
+                  ),
+
+                  //Location
+                  // Displaying the address on the screen
+                  SizedBox(height: 30),
+                  SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Container(
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).canvasColor,
+                            ),
+                            padding: EdgeInsets.fromLTRB(30.0,10.0,30.0,10.0),
+                            child: Column(
+                              children: <Widget>[
+                                Row(
+                                  children: <Widget>[
+                                    Icon(Icons.location_on),
+                                    SizedBox(
+                                      width: 8,
+                                    ),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Text(
+                                            'Location',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .caption,
+                                          ),
+                                          if (_currentPosition != null &&
+                                              _currentAddress != null)
+                                            Text(_currentAddress,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyText2),
+
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 8,
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ))
+                      ],
+                    ),
+                  ),
+
+                  // Button
+                  SizedBox(height: 30),
+                  Padding(
+                    padding: EdgeInsets.all(20.0),
+                    child: RaisedButton(
+                      onPressed: () {
+                        //checking all textfields
+                        if(fName == null || lName == null || email == null|| phoneNumber == null
+                            // ignore: unrelated_type_equality_checks
+                            || _currentAddress == null)
+                        {
+                          // Put your code here which you want to execute when Text Field is Empty.
+                          final snackBar = SnackBar(
+                              content: Text('All Textfield data are required'),
+                        action: SnackBarAction(
+                          label: 'Undo',
+                          onPressed: () {
+                            // Some code to undo the change.
+                          },
+                        ),);
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+
+                        }else{
+
+                          // Put your code here, which you want to execute when Text Field is NOT Empty.
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                                //       return RequestLoanFormTwo();
+                                return RequestLoanFormTwo(data : myJson);
+                              }));
+                        }
+                        myJson = {'fName': fName,
+                          'lName':lName,
+                          'email':email,
+                        'phoneNumber':phoneNumber,
+                        'location':_currentAddress,
+                        };
+                        print(myJson);
+
+                      },
+                      child: Text(
+                        'Next',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                        ),
+                      ),
+                      elevation: 0.0,
+                      color: kPrimaryColor2,
+                      padding: EdgeInsets.fromLTRB(60, 15, 60, 15),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                    ),
+                  )
+                ],
+              )),
+            ),
+            //BottomNavigation(),
+          ],
+        ),
       ),
     );
   }
