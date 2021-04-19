@@ -1,4 +1,5 @@
-
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:summative/pages/SignIn.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,6 +8,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'dart:convert';
 
 import 'package:summative/pages/HomePage.dart';
+
+
+
+
 
 // void main => runApp(HomePage());
 class RequestLoan extends StatefulWidget {
@@ -19,6 +24,7 @@ class RequestLoan extends StatefulWidget {
 }
 
 class _RequestLoanState extends State<RequestLoan> {
+  String userEmail = "";
   int _counter = 10000 ;
 
 
@@ -34,12 +40,30 @@ class _RequestLoanState extends State<RequestLoan> {
     });
   }
   var myJson = {};
-  var loanAmount;
+  var loanAmount ;
 
   CollectionReference users = Firestore.instance.collection('users');
 
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    test();
+  }
+
+  void test(){
+    FirebaseAuth.instance.onAuthStateChanged
+        .listen((FirebaseUser user) {
+      if (user == null) {
+        print('User is currently signed out!');
+      } else {
+        setState(() {
+          userEmail = user.email;
+        });
+      }
+    });
+  }
   Widget build(BuildContext context) {
     Future<void> addUser() {
       // Call the user's CollectionReference to add a new user
@@ -99,7 +123,9 @@ class _RequestLoanState extends State<RequestLoan> {
                 CircleAvatar(
                   backgroundColor: kGradientColor2,
                   minRadius: 50.0,
-                  child: Text('WE', style: TextStyle(fontSize: 25,
+                  child: Text(userEmail == "" ? "X" : userEmail[0].toUpperCase(),
+                    style: TextStyle(fontSize: 40,
+                      color: Colors.white,
                       fontWeight: FontWeight.w500,
                       letterSpacing: 1.1),
                   ),
@@ -141,6 +167,7 @@ class _RequestLoanState extends State<RequestLoan> {
                             this.setState(() {
                               var $convert = int.parse(text);
                               _counter = $convert ;
+
                             });
                           },
                         ),
@@ -199,7 +226,7 @@ class _RequestLoanState extends State<RequestLoan> {
                 //
                 //       return HomeScreen();
                 //     }));
-                    myJson = {...widget.data, 'loanAmount':_counter,
+                    myJson = {...widget.data, "loanAmount":_counter,
                     };
                     print(myJson);
 

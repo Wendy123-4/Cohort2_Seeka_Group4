@@ -251,10 +251,10 @@ class _RequestLoanFormTwoState extends State<RequestLoanFormTwo> {
                                 }));
 
                           }
-                        myJson = {...widget.data, 'earning':earning,
-                          'dependantsNumber':dependantsNumber,
-                        'occupation':occupation,
-                        'incomeSource':incomeSource};
+                        myJson = {...widget.data, "earning":earning,
+                          "dependantsNumber":dependantsNumber,
+                        "occupation":occupation,
+                        "incomeSource":incomeSource};
                         print(myJson);
 
                       },

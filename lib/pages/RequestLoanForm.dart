@@ -284,11 +284,11 @@ class _RequestLoanFormState extends State<RequestLoanForm> {
                                 return RequestLoanFormTwo(data : myJson);
                               }));
                         }
-                        myJson = {'fName': fName,
-                          'lName':lName,
-                          'email':email,
-                        'phoneNumber':phoneNumber,
-                        'location':_currentAddress,
+                        myJson = {"fName": fName,
+                          "lName":lName,
+                          "email":email,
+                        "phoneNumber":phoneNumber,
+                        "location":_currentAddress,
                         };
                         print(myJson);
 

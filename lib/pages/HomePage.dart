@@ -330,7 +330,7 @@ class _NewWidgetState extends State<NewWidget> {
               backgroundColor: Colors.white,
               child: Text(
                 userEmail == "" ? "X" : userEmail[0].toUpperCase(),
-                style: TextStyle(fontSize: 25, color: kPrimaryColor),
+                style: TextStyle(fontSize: 40, color: kPrimaryColor),
               ),
             ),
           ),
