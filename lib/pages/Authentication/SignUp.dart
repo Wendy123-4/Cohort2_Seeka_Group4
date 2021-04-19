@@ -2,9 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:summative/controllers/Constants.dart';
-import 'package:summative/pages/ForgotPassword.dart';
+import 'package:summative/pages/Authentication/ForgotPassword.dart';
 import 'SignIn.dart';
-import 'SignIn.dart';
+
 
 class Signup_screen extends StatefulWidget{
   @override

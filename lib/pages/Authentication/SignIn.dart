@@ -5,12 +5,12 @@ import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:summative/controllers/Constants.dart';
-import 'package:summative/pages/ForgotPassword.dart';
-import 'package:summative/pages/SignUp.dart';
-import 'package:summative/pages/HomePage.dart';
+import 'package:summative/pages/Authentication/ForgotPassword.dart';
+import 'package:summative/pages/Authentication/SignUp.dart';
+import 'package:summative/pages/HomePage/HomePage.dart';
 import 'package:summative/controllers/Auth.dart';
 
-import 'HomePage.dart';
+
 
 class SignIn extends StatefulWidget {
   @override

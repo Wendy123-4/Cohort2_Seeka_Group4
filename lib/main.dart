@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:summative/pages/HomePage.dart';
-import 'package:summative/pages/WelcomeScreen.dart';
+import 'package:summative/pages/HomePage/HomePage.dart';
+import 'package:summative/pages/SplashScreen/WelcomeScreen.dart';
 import 'package:summative/controllers/Constants.dart';
 
 // void main() {

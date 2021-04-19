@@ -3,15 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:summative/controllers/Constants.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:summative/pages/Help.dart';
-import 'package:summative/pages/History.dart';
-import 'package:summative/pages/RequestLoan.dart';
+import 'package:summative/pages/HomePage/DrawerOptions/Help.dart';
+import 'package:summative/pages/HomePage/DrawerOptions/History.dart';
+import 'package:summative/pages/HomePage/RequestLoanOption/RequestLoanForm.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
-
-import 'RequestLoanForm.dart';
-import 'SignIn.dart';
-import 'SignIn.dart';
-import 'PayLoan.dart';
+import 'package:summative/pages/Authentication/SignIn.dart';
+import 'package:summative/pages/HomePage/PayLoanOption/PayLoan.dart';
 
 // void main => runApp(HomePage());
 final FirebaseAuth _auth = FirebaseAuth.instance;

@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:summative/controllers/Constants.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:summative/pages/History.dart';
+import 'package:summative/pages/HomePage/DrawerOptions/History.dart';
 import 'RequestLoanForm2.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter/services.dart';

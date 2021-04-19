@@ -1,29 +1,18 @@
+
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:summative/pages/SignIn.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:summative/controllers/Constants.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:convert';
 
-import 'package:summative/pages/HomePage.dart';
-
-
-
-
-
 // void main => runApp(HomePage());
-class RequestLoan extends StatefulWidget {
-  final data;
-
-  RequestLoan({Key key, this.data}) : super(key: key);
-
+class PayLoan extends StatefulWidget {
   @override
-  _RequestLoanState createState() => _RequestLoanState();
+  _PayLoanState createState() => _PayLoanState();
 }
 
-class _RequestLoanState extends State<RequestLoan> {
+class _PayLoanState extends State<PayLoan> {
   String userEmail = "";
   int _counter = 10000 ;
 
@@ -39,11 +28,6 @@ class _RequestLoanState extends State<RequestLoan> {
       _counter = _counter - 10000;
     });
   }
-  var myJson = {};
-  var loanAmount ;
-
-  CollectionReference users = Firestore.instance.collection('users');
-
 
   @override
   void initState() {
@@ -65,15 +49,6 @@ class _RequestLoanState extends State<RequestLoan> {
     });
   }
   Widget build(BuildContext context) {
-    Future<void> addUser() {
-      // Call the user's CollectionReference to add a new user
-      return users
-          .add(
-        myJson
-      )
-          .then((value) => print("User Added"))
-          .catchError((error) => print("Failed to add user: $error"));
-    }
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -82,7 +57,7 @@ class _RequestLoanState extends State<RequestLoan> {
           {Navigator.pop(context);},
         ),
         centerTitle: true, // this is all you ne
-        title: Text(" Request Amount "),),
+        title: Text(" Payback Loan "),),
 
       body: Stack(
         children: <Widget>[
@@ -125,7 +100,7 @@ class _RequestLoanState extends State<RequestLoan> {
                   minRadius: 50.0,
                   child: Text(userEmail == "" ? "X" : userEmail[0].toUpperCase(),
                     style: TextStyle(fontSize: 40,
-                      color: Colors.white,
+                        color: Colors.white,
                       fontWeight: FontWeight.w500,
                       letterSpacing: 1.1),
                   ),
@@ -141,7 +116,7 @@ class _RequestLoanState extends State<RequestLoan> {
                           color: Colors.black
                       ),),
                     Container(
-                      width:200,
+                      width:155,
                       child: Flexible(
                         child: TextFormField(
                           textAlign: TextAlign.center,
@@ -167,7 +142,6 @@ class _RequestLoanState extends State<RequestLoan> {
                             this.setState(() {
                               var $convert = int.parse(text);
                               _counter = $convert ;
-
                             });
                           },
                         ),
@@ -185,7 +159,7 @@ class _RequestLoanState extends State<RequestLoan> {
             children: [
               SizedBox(width: 75),
               Container(
-                  alignment: Alignment(0.58, 0.3),
+                alignment: Alignment(0.58, 0.3),
                   child:ElevatedButton(
                     onPressed: _incrementReducer,
                     child: Icon(
@@ -201,7 +175,7 @@ class _RequestLoanState extends State<RequestLoan> {
               Container(
                   alignment: Alignment(0.58, 0.3),
                   child:ElevatedButton(
-                    onPressed: _incrementCounter,
+                  onPressed: _incrementCounter,
                     child: Icon(
                       Icons.add,
                       color: Colors.white,
@@ -220,30 +194,17 @@ class _RequestLoanState extends State<RequestLoan> {
             child: RaisedButton(
               elevation: 5,
               onPressed: () {
-                //Map<String,dynamic> myJson = json.decode(myJson);
                 // Navigator.push(context,
                 //     MaterialPageRoute(builder: (context) {
-                //
-                //       return HomeScreen();
+                //       return SignIn();
                 //     }));
-                    myJson = {...widget.data, "loanAmount":_counter,
-                    };
-                    print(myJson);
-
-
-                    addUser();
-
-                    },
-
-
-
-
+              },
               padding: EdgeInsets.fromLTRB(60, 15, 60, 15),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30)),
               color: kPrimaryColor2,
               child: Text(
-                "Request",
+                "Pay",
                 style:
                 TextStyle(color: Colors.black, fontSize: 18),
               ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:summative/controllers/Constants.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'SignIn.dart';
+import 'package:summative/pages/Authentication/SignIn.dart';
 
 // void main => runApp(HomePage());
 class Direction extends StatelessWidget {

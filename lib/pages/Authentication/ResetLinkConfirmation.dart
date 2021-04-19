@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:summative/controllers/Constants.dart';
-import 'package:summative/pages/SignIn.dart';
-import 'package:summative/pages/SignUp.dart';
+import 'package:summative/pages/Authentication/SignIn.dart';
+import 'package:summative/pages/Authentication/SignUp.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class ResetLink extends StatelessWidget {
