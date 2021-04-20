@@ -104,7 +104,7 @@ class _RequestLoanFormThreeState extends State<RequestLoanFormThree> {
       return Text("No image selected!");
     } else {
       print(imageFile.path);
-      return Image.file(File(imageFile.path), width: 200, height: 200);
+      return Image.file(File(imageFile.path), width: 200, height: 200, );
     }
   }
 
@@ -116,6 +116,7 @@ class _RequestLoanFormThreeState extends State<RequestLoanFormThree> {
       return Text(passportFile.path);
     }
   }
+
 
   // Upload selfie file to Firebase
   Future <String> uploadImageToFirebase(
@@ -322,9 +323,8 @@ class _RequestLoanFormThreeState extends State<RequestLoanFormThree> {
                         Padding(
                           padding: EdgeInsets.all(20.0),
                           child: RaisedButton(
-                            onPressed: () {
-
-                              handleUpdateJSONObject(context);
+                            onPressed: () async{
+                              await handleUpdateJSONObject(context);
                               print(myJson);
                             },
                             child: Text(
@@ -348,8 +348,8 @@ class _RequestLoanFormThreeState extends State<RequestLoanFormThree> {
                         Padding(
                           padding: EdgeInsets.all(20.0),
                           child: RaisedButton(
-                            onPressed: () async{
-                              await handleUpdateJSONObject(context);
+                            onPressed: () {
+                              handleUpdateJSONObject(context);
                               print(myJson);
                               Navigator.push(context,
                                   MaterialPageRoute(builder: (context) {

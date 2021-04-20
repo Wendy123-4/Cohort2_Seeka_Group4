@@ -103,17 +103,25 @@ class _RequestLoanState extends State<RequestLoan> {
           barrierDismissible: false,
           builder: (BuildContext context) {
             return Dialog(
-              child: new Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  new CircularProgressIndicator(),
-                  new Text("Requesting"),
-                ],
+              child: new Container(
+                decoration: new BoxDecoration(
+
+                ),
+                width: 100,
+                height: 100,
+                child: new Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(child: new CircularProgressIndicator(value: null,), height: 50,width: 50,),
+                    new Text("\nRequesting"),
+                  ],
+                ),
               ),
             );
           },
         );
-        new Future.delayed(new Duration(seconds: 3), () {
+        new Future.delayed(new Duration(seconds: 5), () {
           showAlertDialog(context);
         });
       }
