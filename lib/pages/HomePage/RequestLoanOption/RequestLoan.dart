@@ -66,6 +66,57 @@ class _RequestLoanState extends State<RequestLoan> {
   }
   DateTime _now = DateTime.now();
     Widget build(BuildContext context) {
+
+      showAlertDialog(BuildContext context) {
+
+        // set up the button
+        Widget okButton = FlatButton(
+          child: Text("OK"),
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) {
+
+                  return HomeScreen();}));
+          },
+        );
+
+        // set up the AlertDialog
+        AlertDialog alert = AlertDialog(
+          title: Text("Request Processing..."),
+          content: Text("Status of request will be updated on your dashboard"),
+          actions: [
+            okButton,
+          ],
+        );
+
+        // show the dialog
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return alert;
+          },
+        );
+      }
+      void _onLoading() {
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return Dialog(
+              child: new Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  new CircularProgressIndicator(),
+                  new Text("Requesting"),
+                ],
+              ),
+            );
+          },
+        );
+        new Future.delayed(new Duration(seconds: 3), () {
+          showAlertDialog(context);
+        });
+      }
     Future<void> addUser() {
       // Call the user's CollectionReference to add a new user
       return users
@@ -231,10 +282,7 @@ class _RequestLoanState extends State<RequestLoan> {
                     });
                     print(myJson);
                     addUser();
-              Navigator.push(context,
-              MaterialPageRoute(builder: (context) {
-
-              return HomeScreen();}));
+             _onLoading();
 
     },
 
