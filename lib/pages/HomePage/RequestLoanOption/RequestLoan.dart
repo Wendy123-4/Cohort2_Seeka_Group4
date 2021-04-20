@@ -64,19 +64,20 @@ class _RequestLoanState extends State<RequestLoan> {
       }
     });
   }
-  Widget build(BuildContext context) {
+  DateTime _now = DateTime.now();
+    Widget build(BuildContext context) {
     Future<void> addUser() {
       // Call the user's CollectionReference to add a new user
       return users
           .add(
-        myJson
-      )
+          {...myJson})
           .then((value) => print("User Added"))
           .catchError((error) => print("Failed to add user: $error"));
     }
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
+        backgroundColor: kPrimaryColor,
         leading: new IconButton(icon: new Icon(Icons.arrow_back, color: Colors.white,),
           onPressed: ()
           {Navigator.pop(context);},
@@ -221,19 +222,21 @@ class _RequestLoanState extends State<RequestLoan> {
               elevation: 5,
               onPressed: () {
                 //Map<String,dynamic> myJson = json.decode(myJson);
-                // Navigator.push(context,
-                //     MaterialPageRoute(builder: (context) {
-                //
-                //       return HomeScreen();
-                //     }));
-                    myJson = {...widget.data, "loanAmount":_counter,
-                    };
+
+
+                    setState(() {
+                      myJson = {...widget.data, "loanAmount":_counter,
+     "date": "timestamp: ${_now.year}:${_now.month}:${_now.day}"
+                      };
+                    });
                     print(myJson);
-
-
                     addUser();
+              Navigator.push(context,
+              MaterialPageRoute(builder: (context) {
 
-                    },
+              return HomeScreen();}));
+
+    },
 
 
 

@@ -118,7 +118,7 @@ class _RequestLoanFormThreeState extends State<RequestLoanFormThree> {
   }
 
   // Upload selfie file to Firebase
-  Future uploadImageToFirebase(
+  Future <String> uploadImageToFirebase(
       BuildContext context, PickedFile _imageFile) async {
     String fileName = basename(_imageFile.path);
     StorageReference firebaseStorageRef =
@@ -158,8 +158,8 @@ class _RequestLoanFormThreeState extends State<RequestLoanFormThree> {
     setState(() {
       myJson = {
         ...widget.data,
-        'selfieURL': selfieImageUrl,
-        'passportURL': passportImageUrl
+         "selfieURL": selfieImageUrl,
+         "passportURL": passportImageUrl
       };
     });
   }
@@ -169,6 +169,7 @@ class _RequestLoanFormThreeState extends State<RequestLoanFormThree> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
+        backgroundColor: kPrimaryColor,
         title: Text("Verification Information"),
       ),
       body: Stack(
@@ -347,18 +348,14 @@ class _RequestLoanFormThreeState extends State<RequestLoanFormThree> {
                         Padding(
                           padding: EdgeInsets.all(20.0),
                           child: RaisedButton(
-                            onPressed: () {
-
-                              handleUpdateJSONObject(context);
+                            onPressed: () async{
+                              await handleUpdateJSONObject(context);
                               print(myJson);
                               Navigator.push(context,
                                   MaterialPageRoute(builder: (context) {
-
                                     return RequestLoan(data: myJson);
                                   }));
-
-
-                            },
+                              },
                             child: Text(
                               'Next',
                               style: TextStyle(

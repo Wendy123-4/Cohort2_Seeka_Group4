@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:summative/controllers/Constants.dart';
 
 class Help extends StatefulWidget {
   @override
@@ -13,6 +14,7 @@ class _HelpState extends State<Help> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
+        backgroundColor: kPrimaryColor,
         leading: new IconButton(icon: new Icon(Icons.arrow_back, color: Colors.white,),
           onPressed: ()
           {Navigator.pop(context);},

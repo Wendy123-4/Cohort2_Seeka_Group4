@@ -52,6 +52,7 @@ class _PayLoanState extends State<PayLoan> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
+        backgroundColor: kPrimaryColor,
         leading: new IconButton(icon: new Icon(Icons.arrow_back, color: Colors.white,),
           onPressed: ()
           {Navigator.pop(context);},

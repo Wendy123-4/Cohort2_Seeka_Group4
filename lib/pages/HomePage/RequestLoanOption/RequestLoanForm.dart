@@ -69,6 +69,7 @@ class _RequestLoanFormState extends State<RequestLoanForm> {
     return Scaffold(
       //resizeToAvoidBottomInset : false,
       appBar: AppBar(
+        backgroundColor: kPrimaryColor,
         title: Text("Personal Information"),
       ),
       body: SingleChildScrollView(
@@ -276,6 +277,13 @@ class _RequestLoanFormState extends State<RequestLoanForm> {
 
 
                         }else{
+                          myJson = {"fName": fName,
+                            "lName":lName,
+                            "email":email,
+                            "phoneNumber":phoneNumber,
+                            "location":_currentAddress,
+                          };
+                          print(myJson);
 
                           // Put your code here, which you want to execute when Text Field is NOT Empty.
                           Navigator.push(context,
@@ -284,13 +292,6 @@ class _RequestLoanFormState extends State<RequestLoanForm> {
                                 return RequestLoanFormTwo(data : myJson);
                               }));
                         }
-                        myJson = {"fName": fName,
-                          "lName":lName,
-                          "email":email,
-                        "phoneNumber":phoneNumber,
-                        "location":_currentAddress,
-                        };
-                        print(myJson);
 
                       },
                       child: Text(

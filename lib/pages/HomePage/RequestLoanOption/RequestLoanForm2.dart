@@ -48,7 +48,9 @@ class _RequestLoanFormTwoState extends State<RequestLoanFormTwo> {
   Widget build(BuildContext context) {
     return Scaffold(
       //resizeToAvoidBottomInset : false,
-      appBar: AppBar(title: Text("Employment Information"),),
+      appBar: AppBar(
+        backgroundColor: kPrimaryColor,
+        title: Text("Employment Information"),),
       body: SingleChildScrollView(
         child: Stack(
           children: <Widget>[
@@ -196,7 +198,7 @@ class _RequestLoanFormTwoState extends State<RequestLoanFormTwo> {
                       onChanged: (value){
                         earning = value;
                       },
-                      keyboardType: TextInputType.text,
+                      keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                         hintText: 'Monthly Salary',
                         labelText: 'How much do you earn per month? (in RWF)*',
@@ -211,7 +213,7 @@ class _RequestLoanFormTwoState extends State<RequestLoanFormTwo> {
                       onChanged: (value){
                         dependantsNumber = value;
                       },
-                      keyboardType: TextInputType.text,
+                      keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                         hintText: 'Number of dependants',
                         labelText:
@@ -244,6 +246,12 @@ class _RequestLoanFormTwoState extends State<RequestLoanFormTwo> {
 
 
                           }else{
+                            myJson = {...widget.data, "earning":earning,
+                              "dependantsNumber":dependantsNumber,
+                              "occupation":occupation,
+                              "incomeSource":incomeSource};
+                            print(myJson);
+
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
 
@@ -251,11 +259,7 @@ class _RequestLoanFormTwoState extends State<RequestLoanFormTwo> {
                                 }));
 
                           }
-                        myJson = {...widget.data, "earning":earning,
-                          "dependantsNumber":dependantsNumber,
-                        "occupation":occupation,
-                        "incomeSource":incomeSource};
-                        print(myJson);
+
 
                       },
                       child: Text(

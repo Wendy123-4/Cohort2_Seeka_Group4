@@ -22,11 +22,27 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   //function that grabs user data based on email
+  //   getUsersData();
+  // }
+  // getUsersData(){
+  //   FirebaseObj UserData;
+  //   UserData = FirebaseFirestore.instance
+  //       .collection('users')
+  //       .where('email', isEqualTo: userEmail);
+  //       .get();
+  // }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset : false,
       drawer: drawerSection,
-      appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: kPrimaryColor,
+      ),
       body: Stack(
         children: <Widget>[
           //  ===========  I think we should also leave comments in our code to indicate what different items
@@ -76,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 SizedBox(height: 6.0),
                 Text(
-                  "RWF 0",
+                  "RWF 0", //${UserData == null ?? '0' : UserData.cash}
                   style: TextStyle(
                     color: kPrimaryColor3,
                     fontSize: 35,
@@ -323,6 +339,9 @@ class _NewWidgetState extends State<NewWidget> {
           UserAccountsDrawerHeader(
             //accountName: Text("Wendy"),
             accountEmail: Text(userEmail),
+            decoration: BoxDecoration(
+              color: kPrimaryColor,
+            ),
             currentAccountPicture: CircleAvatar(
               backgroundColor: Colors.white,
               child: Text(

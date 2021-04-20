@@ -14,6 +14,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: kPrimaryColor,
         leading: new IconButton(icon: new Icon(Icons.arrow_back, color: Colors.white,),
           onPressed: ()
           {int count = 0;
