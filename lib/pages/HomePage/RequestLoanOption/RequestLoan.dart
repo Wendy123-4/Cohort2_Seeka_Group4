@@ -308,14 +308,11 @@ class _RequestLoanState extends State<RequestLoan> {
 
                     setState(() {
                       myJson = {...widget.data, "loanAmount":_counter,
-     "date": "timestamp: ${_now.year}:${_now.month}:${_now.day} at ${_now.hour}:${_now.minute}"
+     "date": "timestamp: ${_now.day}/${_now.month}/${_now.year} at ${_now.hour}:${_now.minute}",
+                        "AmountPayable": "${(_counter*0.15)+_counter}"
                       };
                     });
                     print(myJson);
-
-
-
-
 
                     addUser1();
                     _onLoading();

@@ -10,12 +10,12 @@ import 'package:summative/pages/HomePage/RequestLoanOption/RequestLoanForm.dart'
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:summative/pages/Authentication/SignIn.dart';
 import 'package:summative/pages/HomePage/PayLoanOption/PayLoan.dart';
-
+import 'package:intl/intl.dart';
 // void main => runApp(HomePage());
 final FirebaseAuth _auth = FirebaseAuth.instance;
 String userEmail = "";
 
-
+final useRef = Firestore.instance.collection("users");
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -24,35 +24,47 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
-  // getUsersData() async{
-  //   var firebaseUser = await FirebaseAuth.instance.currentUser();
-  //   return Firestore.instance
-  //       .collection('users')
-  //       // .where('email', isEqualTo: userEmail)
-  //       // .orderBy('timestamp',descending: true)
-  //       .document(firebaseUser.uid)
-  //       .get()
-  //     .then((data) async {
-  //     Amountpayable = data['loanAmount'];
-  //     //return Amountpayable;
-  //   });
-  // }
-  //var Amountpayable;
 
-  // Future<void> getamount() async {
-  //   //query the user amount
-  //   var firebaseUser = await FirebaseAuth.instance.currentUser();
-  //   await Firestore.instance.collection("users").document(firebaseUser.uid).get().then((data) async {
-  //     Amountpayable = data['loanAmount'];
-  //     //return Amountpayable;
-  //   });
-  // }
+
   void initState() {
-    // TODO: implement initState
+    getuserbyid();
     super.initState();
-    //function that grabs user data based on email
-    //getUsersData()  ;
+
   }
+
+
+
+  double AmountPayable = 0;
+  double loan = 0;
+  double Salary = 0;
+  DateTime  date;
+  String time;
+  DateTime deadline = DateTime(0);
+  DateFormat inputFormat = DateFormat("dd/MM/yyyy");
+  //s = DateFormat.jm().format(date)
+
+
+
+  String documentID = useRef.document().documentID;
+  Future <void> getuserbyid() async{
+    var firebaseUser = await FirebaseAuth.instance.currentUser();
+    documentID = firebaseUser.uid;
+    final DocumentSnapshot doc = await useRef.document(documentID).get();
+     setState(() {
+       AmountPayable = double.parse(doc.data['AmountPayable'].toString());
+       loan = double.parse(doc.data['loanAmount'].toString());
+       Salary = double.parse(doc.data['earning'].toString());
+       time = doc.data['date'].toString();
+       date = inputFormat.parse(time.split(" ")[1].toString());
+       deadline = date.add( Duration(days: 20));
+
+     });
+     //print(deadline);
+  }
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -110,9 +122,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 SizedBox(height: 6.0),
-
                 Text(
-                  "RWF 10000 ", //${getamount() == null ? '0' : Amountpayable }",
+                  "RWF  ${getuserbyid() == null ? '0.0' : (0.2*Salary) < loan ? '0.0' :AmountPayable } ",// ${AmountPayable}", //${getamount() == null ? '0' : Amountpayable }",
                   style: TextStyle(
                     color: kPrimaryColor3,
                     fontSize: 35,
@@ -141,10 +152,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     Column(
                       children: <Widget>[
-                        Text('DAYS LEFT', style: kSubTitlesStyle),
+                        Text('PAYMENT DEADLINE', style: kSubTitlesStyle),
                         SizedBox(height: 6.0),
                         Text(
-                          '20',
+                          "${(0.2*Salary) > loan ? '${deadline.day}/${deadline.month}/${deadline.year}' : '--' }",
                           style: kNumberTextStyle,
                         )
                       ],
@@ -192,7 +203,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       SizedBox(height: 6.0),
                       Text(
-                        "INACTIVE",
+                        "${(0.2*Salary) > loan ? 'ACTIVE' : 'INACTIVE' }",
                         style: TextStyle(
                           color: Colors.green,
                           fontSize: 35,
@@ -314,6 +325,8 @@ Widget header = Container(
     ],
   ),
 );
+
+
 
 Widget drawerSection = NewWidget();
 
