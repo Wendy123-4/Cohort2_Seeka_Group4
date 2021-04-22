@@ -8,6 +8,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:path/path.dart';
 import 'package:summative/controllers/Constants.dart';
 
+
 import 'RequestLoan.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -323,8 +324,8 @@ class _RequestLoanFormThreeState extends State<RequestLoanFormThree> {
                         Padding(
                           padding: EdgeInsets.all(20.0),
                           child: RaisedButton(
-                            onPressed: () async{
-                              await handleUpdateJSONObject(context);
+                            onPressed: () {
+                              handleUpdateJSONObject(context);
                               print(myJson);
                             },
                             child: Text(
@@ -348,8 +349,8 @@ class _RequestLoanFormThreeState extends State<RequestLoanFormThree> {
                         Padding(
                           padding: EdgeInsets.all(20.0),
                           child: RaisedButton(
-                            onPressed: () {
-                              handleUpdateJSONObject(context);
+                            onPressed: () async{
+                              await handleUpdateJSONObject(context);
                               print(myJson);
                               Navigator.push(context,
                                   MaterialPageRoute(builder: (context) {

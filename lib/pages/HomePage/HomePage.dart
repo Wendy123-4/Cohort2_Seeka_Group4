@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,6 +13,7 @@ import 'package:summative/pages/HomePage/PayLoanOption/PayLoan.dart';
 
 // void main => runApp(HomePage());
 final FirebaseAuth _auth = FirebaseAuth.instance;
+String userEmail = "";
 
 
 
@@ -22,19 +24,36 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   super.initState();
-  //   //function that grabs user data based on email
-  //   getUsersData();
-  // }
-  // getUsersData(){
-  //   FirebaseObj UserData;
-  //   UserData = FirebaseFirestore.instance
+  // getUsersData() async{
+  //   var firebaseUser = await FirebaseAuth.instance.currentUser();
+  //   return Firestore.instance
   //       .collection('users')
-  //       .where('email', isEqualTo: userEmail);
-  //       .get();
+  //       // .where('email', isEqualTo: userEmail)
+  //       // .orderBy('timestamp',descending: true)
+  //       .document(firebaseUser.uid)
+  //       .get()
+  //     .then((data) async {
+  //     Amountpayable = data['loanAmount'];
+  //     //return Amountpayable;
+  //   });
   // }
+  //var Amountpayable;
+
+  // Future<void> getamount() async {
+  //   //query the user amount
+  //   var firebaseUser = await FirebaseAuth.instance.currentUser();
+  //   await Firestore.instance.collection("users").document(firebaseUser.uid).get().then((data) async {
+  //     Amountpayable = data['loanAmount'];
+  //     //return Amountpayable;
+  //   });
+  // }
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    //function that grabs user data based on email
+    //getUsersData()  ;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -91,8 +110,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 SizedBox(height: 6.0),
+
                 Text(
-                  "RWF 0", //${UserData == null ?? '0' : UserData.cash}
+                  "RWF 10000 ", //${getamount() == null ? '0' : Amountpayable }",
                   style: TextStyle(
                     color: kPrimaryColor3,
                     fontSize: 35,
@@ -197,6 +217,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: 50.0,
                       child: RaisedButton(
                         onPressed: () {
+
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
                             return RequestLoanForm();
@@ -308,7 +329,7 @@ class NewWidget extends StatefulWidget {
 }
 
 class _NewWidgetState extends State<NewWidget> {
-  String userEmail = "";
+
 
   @override
   void initState() {

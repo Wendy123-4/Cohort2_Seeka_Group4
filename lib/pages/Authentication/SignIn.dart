@@ -26,7 +26,8 @@ class __SignInScreenState extends State<SignIn> {
   bool _success;
   String _userEmail;
   String _password;
-  FirebaseUser user;
+  // final FirebaseUser user = await auth.currentUser();
+  // final userid = user.uid;
 
 
   @override
@@ -248,6 +249,8 @@ class __SignInScreenState extends State<SignIn> {
             .signInWithEmailAndPassword(email: _userEmail, password: _password);
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString('email', _userEmail);
+
+
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => HomeScreen()));
       } catch (e) {
@@ -256,3 +259,4 @@ class __SignInScreenState extends State<SignIn> {
     }
   }
 }
+

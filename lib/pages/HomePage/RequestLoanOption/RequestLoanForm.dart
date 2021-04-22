@@ -6,6 +6,7 @@ import 'package:summative/pages/HomePage/DrawerOptions/History.dart';
 import 'RequestLoanForm2.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter/services.dart';
+import 'package:app_info/app_info.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 

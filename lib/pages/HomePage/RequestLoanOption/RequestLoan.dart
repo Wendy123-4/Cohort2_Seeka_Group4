@@ -1,3 +1,5 @@
+//import 'dart:html';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:summative/pages/Authentication/SignIn.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -6,9 +8,11 @@ import 'package:flutter/services.dart';
 import 'package:summative/controllers/Constants.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:convert';
-
+import 'package:app_info/app_info.dart';
 import 'package:summative/pages/HomePage/HomePage.dart';
+import 'package:summative/pages/Authentication/SignIn.dart';
 
+import '../../../controllers/Auth.dart';
 
 
 
@@ -42,7 +46,15 @@ class _RequestLoanState extends State<RequestLoan> {
   var myJson = {};
   var loanAmount ;
 
+
+
+
+   String UserId;
+
+
   CollectionReference users = Firestore.instance.collection('users');
+
+
 
 
   @override
@@ -51,7 +63,6 @@ class _RequestLoanState extends State<RequestLoan> {
     super.initState();
     test();
   }
-
   void test(){
     FirebaseAuth.instance.onAuthStateChanged
         .listen((FirebaseUser user) {
@@ -125,15 +136,26 @@ class _RequestLoanState extends State<RequestLoan> {
           showAlertDialog(context);
         });
       }
-    Future<void> addUser() {
-      // Call the user's CollectionReference to add a new user
-      return users
-          .add(
-          {...myJson})
-          .then((value) => print("User Added"))
-          .catchError((error) => print("Failed to add user: $error"));
-    }
-    return Scaffold(
+
+
+      String documentID = users.document().documentID;
+
+      Future<void> addUser1() async {
+
+        //add a specific Doc ID for example
+        // firebase auth User ID
+         var firebaseUser = await FirebaseAuth.instance.currentUser();
+         documentID = firebaseUser.uid;
+        users.document(documentID).setData({
+          ...myJson
+        })           .then((value) => print("User Added"))
+                .catchError((error) => print("Failed to add user: $error"));
+          }
+
+
+
+
+         return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: kPrimaryColor,
@@ -191,6 +213,7 @@ class _RequestLoanState extends State<RequestLoan> {
                   ),
                 ),
                 SizedBox(height:20),
+
 
                 Row(
                   children: [
@@ -285,12 +308,17 @@ class _RequestLoanState extends State<RequestLoan> {
 
                     setState(() {
                       myJson = {...widget.data, "loanAmount":_counter,
-     "date": "timestamp: ${_now.year}:${_now.month}:${_now.day}"
+     "date": "timestamp: ${_now.year}:${_now.month}:${_now.day} at ${_now.hour}:${_now.minute}"
                       };
                     });
                     print(myJson);
-                    addUser();
-             _onLoading();
+
+
+
+
+
+                    addUser1();
+                    _onLoading();
 
     },
 
