@@ -302,9 +302,11 @@ class _RequestLoanFormThreeState extends State<RequestLoanFormThree> {
                               child: Align(
                                 alignment: Alignment.center,
                                 child: IconButton(
+                                  visualDensity: VisualDensity(horizontal: 2, vertical: 2),
                                   icon: Icon(
                                     Icons.camera,
                                     size: 80.0,
+
                                   ),
                                   onPressed: () {
                                     _showChoiceDialog(context);
@@ -349,8 +351,8 @@ class _RequestLoanFormThreeState extends State<RequestLoanFormThree> {
                         Padding(
                           padding: EdgeInsets.all(20.0),
                           child: RaisedButton(
-                            onPressed: () async{
-                              await handleUpdateJSONObject(context);
+                            onPressed: () {
+                               handleUpdateJSONObject(context);
                               print(myJson);
                               Navigator.push(context,
                                   MaterialPageRoute(builder: (context) {

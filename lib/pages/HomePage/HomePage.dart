@@ -117,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
               children: <Widget>[
                 SizedBox(height: 30),
                 Text(
-                  "AMOUNT TO PAY",
+                  "TOTAL AMOUNT DUE",
                   style: TextStyle(
                     fontSize: 14,
                   ),

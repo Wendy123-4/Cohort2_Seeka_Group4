@@ -7,6 +7,8 @@ import 'package:summative/controllers/Constants.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:convert';
 
+import '../HomePage.dart';
+
 
 
 
@@ -47,9 +49,65 @@ class _PayLoanState extends State<PayLoan> {
     test();
   }
 
+  showAlertDialog(BuildContext context) {
 
+    // set up the button
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) {
 
+              return HomeScreen();}));
+      },
+    );
 
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Pay Processing..."),
+      content: Text("Status of request will be updated on your dashboard"),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  void _onLoading() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Dialog(
+          child: new Container(
+            decoration: new BoxDecoration(
+
+            ),
+            width: 100,
+            height: 100,
+            child: new Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(child: new CircularProgressIndicator(value: null,), height: 50,width: 50,),
+                new Text("\nPaying"),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+    new Future.delayed(new Duration(seconds: 5), () {
+      showAlertDialog(context);
+    });
+  }
 
 
 
@@ -240,6 +298,8 @@ class _PayLoanState extends State<PayLoan> {
                 //       return SignIn();
                 //     }));
                 getuserbyid();
+                _onLoading();
+
               },
               padding: EdgeInsets.fromLTRB(60, 15, 60, 15),
               shape: RoundedRectangleBorder(
