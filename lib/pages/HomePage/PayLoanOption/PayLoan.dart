@@ -1,10 +1,21 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:summative/controllers/Constants.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:convert';
+
+
+
+
+final useRef = Firestore.instance.collection("users");
+
+
+
+
+
 
 // void main => runApp(HomePage());
 class PayLoan extends StatefulWidget {
@@ -36,6 +47,12 @@ class _PayLoanState extends State<PayLoan> {
     test();
   }
 
+
+
+
+
+
+
   void test(){
     FirebaseAuth.instance.onAuthStateChanged
         .listen((FirebaseUser user) {
@@ -49,6 +66,29 @@ class _PayLoanState extends State<PayLoan> {
     });
   }
   Widget build(BuildContext context) {
+
+
+
+
+    String documentID = useRef.document().documentID;
+    Future <void> getuserbyid() async{
+      var firebaseUser = await FirebaseAuth.instance.currentUser();
+      documentID = firebaseUser.uid;
+      final DocumentSnapshot doc = await useRef.document(documentID).
+      updateData({
+        "Amountpayed": FieldValue.increment(_counter),
+        'Payments' : FieldValue.arrayUnion([{
+          "date": DateTime.now(),
+          "amount": _counter,
+        },])
+      },).then((_) {
+        debugPrint('added successfully');
+      });
+
+      //print(deadline);
+    }
+
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -199,6 +239,7 @@ class _PayLoanState extends State<PayLoan> {
                 //     MaterialPageRoute(builder: (context) {
                 //       return SignIn();
                 //     }));
+                getuserbyid();
               },
               padding: EdgeInsets.fromLTRB(60, 15, 60, 15),
               shape: RoundedRectangleBorder(

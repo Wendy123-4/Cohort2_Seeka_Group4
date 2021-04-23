@@ -37,6 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
   double AmountPayable = 0;
   double loan = 0;
   double Salary = 0;
+  String Amountpayed = '0';
   DateTime  date;
   String time;
   DateTime deadline = DateTime(0);
@@ -57,9 +58,9 @@ class _HomeScreenState extends State<HomeScreen> {
        time = doc.data['date'].toString();
        date = inputFormat.parse(time.split(" ")[1].toString());
        deadline = date.add( Duration(days: 20));
-
+       Amountpayed = doc.data['Amountpayed'].toString();
      });
-     //print(deadline);
+
   }
 
 
@@ -140,12 +141,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     Column(
                       children: <Widget>[
                         Text(
-                          'AMOUNT PAYED',
+                          "Amount payed",
                           style: kSubTitlesStyle,
                         ),
                         SizedBox(height: 6.0),
                         Text(
-                          'RWF 0',
+                          'RWF $Amountpayed',
                           style: kNumberTextStyle,
                         ),
                       ],

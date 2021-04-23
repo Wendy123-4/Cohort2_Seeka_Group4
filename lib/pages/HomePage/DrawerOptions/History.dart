@@ -3,12 +3,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:summative/controllers/Auth.dart';
 import 'package:summative/controllers/Constants.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../HomePage.dart';
 
 // void main => runApp(HomePage());
+
+final db = Firestore.instance ;
+
+
 class HistoryScreen extends StatefulWidget {
   @override
   _HistoryScreenState createState() => _HistoryScreenState();
@@ -18,29 +23,33 @@ class _HistoryScreenState extends State<HistoryScreen> {
   @override
 
 
+
   void initState() {
-    getuserdata();
+    // getuserdata();
+
     super.initState();
 
   }
 
-var time;
-var date;
-DateFormat inputFormat = DateFormat("dd/MM/yyyy");
-  String documentID = useRef.document().documentID;
-  Future <void> getuserdata() async{
-    var firebaseUser = await FirebaseAuth.instance.currentUser();
-    documentID = firebaseUser.uid;
-    final DocumentSnapshot doc = await useRef.document(documentID).get();
-    setState(() {
+// var time;
+// var date;
+// DateFormat inputFormat = DateFormat("dd/MM/yyyy");
+//   String documentID = useRef.document().documentID;
+//   Future <void> getuserdata() async{
+//     var firebaseUser = await FirebaseAuth.instance.currentUser();
+//     documentID = firebaseUser.uid;
+//     final DocumentSnapshot doc = await useRef.document(documentID).get();
+//     setState(() {
+//
+//       time = doc.data['date'].toString();
+//       date = inputFormat.parse(time.split(" ")[1].toString());
+//
+//
+//     });
+//     //print(deadline);
+//   }
 
-      time = doc.data['date'].toString();
-      date = inputFormat.parse(time.split(" ")[1].toString());
 
-
-    });
-    //print(deadline);
-  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -116,62 +125,20 @@ DateFormat inputFormat = DateFormat("dd/MM/yyyy");
                     ),],
                   ),
                   child: Column(
-                      children: <Widget>[
-                        Row(
-                          children: [
-                            Text(
-                              "Amount Paid: 10000",
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                                letterSpacing: 1.1,
-                              ),
+                    children: <Widget>[
+                      Row(
+                        children: [
+                          Text(
+                            "Amount Paid: 10000",
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              letterSpacing: 1.1,
                             ),
-                            SizedBox(width: 60.0),
-                            Text(
-                              "Date:",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                                letterSpacing: 1.1,
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 6.0),
-                        Row(
-                          children: [
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                "Amount left : 30000",
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                  letterSpacing: 1.1,
-                                ),
-                              ),
-                            ),
-                            SizedBox(width: 60.0),
-                            Text(
-                              "${date.day}/${date.month}/${date.year}",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                                letterSpacing: 1.1,
-                              ),
-                            ),
-                          ],
-
-                        ),
-                        SizedBox(height: 6.0),
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            "Rate : 15%",
+                          ),
+                          SizedBox(width: 60.0),
+                          Text(
+                            "Date:",
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 14,
@@ -179,7 +146,49 @@ DateFormat inputFormat = DateFormat("dd/MM/yyyy");
                               letterSpacing: 1.1,
                             ),
                           ),
+                        ],
+                      ),
+                      SizedBox(height: 6.0),
+                      Row(
+                        children: [
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              "Amount left : 30000",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                letterSpacing: 1.1,
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 60.0),
+                          Text(
+                            "3/12/2021",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              letterSpacing: 1.1,
+                            ),
+                          ),
+                        ],
+
+                      ),
+                      SizedBox(height: 6.0),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "Rate : 20%",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            letterSpacing: 1.1,
+                          ),
                         ),
+                      ),
 
 
                     ],
@@ -191,7 +200,7 @@ DateFormat inputFormat = DateFormat("dd/MM/yyyy");
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
-                ],),
+                  ],),
               ],
 
             ),
