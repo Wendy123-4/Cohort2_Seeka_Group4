@@ -7,8 +7,6 @@ import 'SignIn.dart';
 class Direction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
-
     // Category Card
     Widget categoryCard = Container(
       child: Column(
@@ -32,9 +30,15 @@ class Direction extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Apply", style: GoogleFonts.poppins(textStyle: TextStyle(color: Color(0xFFFEB4566))), ),
+                        Text(
+                          "Apply",
+                          style: GoogleFonts.quicksand(
+                            fontWeight: FontWeight.w500,
+                              textStyle: TextStyle(color: Color(0xFFFEB4566))),
+                        ),
                         Text("Fill in personal information within 4 \nminutes",
-                            style: GoogleFonts.poppins()),
+                            style: GoogleFonts.quicksand(
+                                fontWeight: FontWeight.w500)),
                       ],
                     ),
                   ],
@@ -86,14 +90,19 @@ class Direction extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Approve", style: GoogleFonts.poppins(textStyle: TextStyle(color: Color(0xFFFEB4566)))),
-                        Text("Wait about 20 minutes to verify the \nauthenticity of the application",
-                            style: GoogleFonts.poppins()),
+                        Text("Approve",
+                            style: GoogleFonts.quicksand(
+                                textStyle: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    color: Color(0xFFFEB4566)))),
+                        Text(
+                            "Wait about 20 minutes to verify the \nauthenticity of the application",
+                            style: GoogleFonts.quicksand(
+                                fontWeight: FontWeight.w500)),
                       ],
                     ),
                   ],
                 ),
-
               ],
             ),
             decoration: ShapeDecoration(
@@ -141,9 +150,15 @@ class Direction extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Receive Money", style: GoogleFonts.poppins(textStyle: TextStyle(color: Color(0xFFFEB4566)))),
-                        Text("Once the application is approved, \nloan will be sent to account",
-                            style: GoogleFonts.poppins()),
+                        Text("Receive Money",
+                            style: GoogleFonts.quicksand(
+                                textStyle: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    color: Color(0xFFFEB4566)))),
+                        Text(
+                            "Once the application is approved, \nloan will be sent to account",
+                            style: GoogleFonts.quicksand(
+                                fontWeight: FontWeight.w500)),
                       ],
                     ),
                   ],
@@ -195,9 +210,14 @@ class Direction extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Payback", style: GoogleFonts.poppins(textStyle: TextStyle(color: Color(0xFFFEB4566)))),
+                        Text("Payback",
+                            style: GoogleFonts.quicksand(
+                                textStyle: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    color: Color(0xFFFEB4566)))),
                         Text("Fill in personal information within 4 \nminutes",
-                            style: GoogleFonts.poppins()),
+                            style: GoogleFonts.quicksand(
+                                fontWeight: FontWeight.w500)),
                       ],
                     ),
                   ],
@@ -228,7 +248,6 @@ class Direction extends StatelessWidget {
 
     // Next Button
 
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -244,15 +263,20 @@ class Direction extends StatelessWidget {
           inputDecorationTheme: InputDecorationTheme(
               enabledBorder: UnderlineInputBorder(
                   borderSide: BorderSide(
-                    color: kPrimaryColor.withOpacity(.4),
-                  )))),
+            color: kPrimaryColor.withOpacity(.4),
+          )))),
       home: Scaffold(
-
         appBar: AppBar(
-          leading: new IconButton(icon: new Icon(Icons.arrow_back, color: Colors.white,),
-            onPressed: ()
-            {Navigator.pop(context);},
-          ),),
+          leading: new IconButton(
+            icon: new Icon(
+              Icons.arrow_back,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ),
         body: Container(
           child: Center(
             child: Column(
@@ -260,30 +284,29 @@ class Direction extends StatelessWidget {
                 SizedBox(
                   height: 45,
                 ),
-
                 Column(
                   children: [
                     Text("How it works",
-                        style: GoogleFonts.poppins(
-                            textStyle: TextStyle(fontSize: 20, fontWeight: FontWeight.bold ))),
+                        style: GoogleFonts.quicksand(
+                            textStyle: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold))),
                     SizedBox(height: 30),
                     categoryCard,
                     categoryCard1,
                     categoryCard2,
                     categoryCard3,
-
                   ],
                 ),
                 Container(
-                  padding: EdgeInsets.fromLTRB(80, 60, 80, 60),
-                  width: double.infinity,
+                  padding: EdgeInsets.fromLTRB(80, 40, 80, 60),
+                  width: 300.0,
                   child: RaisedButton(
                     elevation: 5,
                     onPressed: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                            return SignIn();
-                          }));
+                        return SignIn();
+                      }));
                     },
                     padding: EdgeInsets.all(15),
                     shape: RoundedRectangleBorder(
@@ -291,21 +314,17 @@ class Direction extends StatelessWidget {
                     color: kPrimaryColor2,
                     child: Text(
                       "Continue",
-                      style:
-                      TextStyle(color: Colors.black, fontSize: 18),
+                      style: GoogleFonts.quicksand(
+                          color: Colors.black,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),
               ],
-
             ),
-
-
           ),
-
-
         ),
-
       ),
     );
   }

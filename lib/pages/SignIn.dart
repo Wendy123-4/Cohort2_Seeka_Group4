@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:summative/controllers/Constants.dart';
 import 'package:summative/pages/ForgotPassword.dart';
 import 'package:summative/pages/SignUp.dart';
@@ -61,7 +63,7 @@ class __SignInScreenState extends State<SignIn> {
                       SizedBox(height: 30),
                       Text(
                         "Sign In",
-                        style: TextStyle(
+                        style: GoogleFonts.quicksand(
                             color: Colors.white,
                             fontSize: 30,
                             fontWeight: FontWeight.bold),
@@ -73,10 +75,10 @@ class __SignInScreenState extends State<SignIn> {
                         children: <Widget>[
                           Text(
                             "Email",
-                            style: TextStyle(
+                            style: GoogleFonts.quicksand(
                                 color: Colors.white,
                                 fontSize: 15,
-                                fontWeight: FontWeight.normal),
+                                fontWeight: FontWeight.w600),
                           ),
                           SizedBox(height: 10),
                           Container(
@@ -94,7 +96,7 @@ class __SignInScreenState extends State<SignIn> {
                             child: TextFormField(
                               controller: _emailController,
                               keyboardType: TextInputType.emailAddress,
-                              style: TextStyle(color: Colors.black87),
+                              style: GoogleFonts.quicksand(color: Colors.black87),
                               validator: (input) {
                                 if (input.isEmpty) {
                                   return 'Email Required';
@@ -110,7 +112,7 @@ class __SignInScreenState extends State<SignIn> {
                                     color: kPrimaryColor,
                                   ),
                                   hintText: "Email Address",
-                                  hintStyle: TextStyle(color: Colors.black87)),
+                                  hintStyle: GoogleFonts.quicksand(color: Colors.black87, fontWeight: FontWeight.w500)),
                             ),
                           )
                         ],
@@ -122,10 +124,10 @@ class __SignInScreenState extends State<SignIn> {
                         children: <Widget>[
                           Text(
                             "Password",
-                            style: TextStyle(
+                            style: GoogleFonts.quicksand(
                                 color: Colors.white,
                                 fontSize: 15,
-                                fontWeight: FontWeight.normal),
+                                fontWeight: FontWeight.w600),
                           ),
                           SizedBox(height: 10),
                           Container(
@@ -142,7 +144,7 @@ class __SignInScreenState extends State<SignIn> {
                             height: 60,
                             child: TextFormField(
                               obscureText: true,
-                              style: TextStyle(color: Colors.black87),
+                              style: GoogleFonts.quicksand(color: Colors.black87),
                               validator: (input) {
                                 if (input.isEmpty) {
                                   return 'Please enter some text';
@@ -158,7 +160,7 @@ class __SignInScreenState extends State<SignIn> {
                                     color: kPrimaryColor,
                                   ),
                                   hintText: "Password",
-                                  hintStyle: TextStyle(color: Colors.black87)),
+                                  hintStyle: GoogleFonts.quicksand(color: Colors.black87, fontWeight: FontWeight.w500)),
                             ),
                           )
                         ],
@@ -176,7 +178,7 @@ class __SignInScreenState extends State<SignIn> {
                           padding: EdgeInsets.only(right: 0),
                           child: Text(
                             'Forgot Password?',
-                            style: TextStyle(
+                            style: GoogleFonts.quicksand(
                                 decoration: TextDecoration.underline,
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold),
@@ -185,7 +187,7 @@ class __SignInScreenState extends State<SignIn> {
                       ),
                       Container(
                         padding: EdgeInsets.fromLTRB(80, 30, 80, 30),
-                        width: double.infinity,
+                        width: 300.0,
                         child: RaisedButton(
                           elevation: 5,
                           onPressed: signIn,
@@ -195,7 +197,7 @@ class __SignInScreenState extends State<SignIn> {
                           color: kPrimaryColor2,
                           child: Text(
                             "SIGN IN",
-                            style: TextStyle(color: Colors.black, fontSize: 18),
+                            style: GoogleFonts.quicksand(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w500),
                           ),
                         ),
                       ),
@@ -214,13 +216,13 @@ class __SignInScreenState extends State<SignIn> {
                             text: TextSpan(children: [
                               TextSpan(
                                   text: "Don't have an account?  ",
-                                  style: TextStyle(
+                                  style: GoogleFonts.quicksand(
                                       color: Colors.white,
                                       fontSize: 15,
                                       fontWeight: FontWeight.w400)),
                               TextSpan(
                                   text: "Sign Up",
-                                  style: TextStyle(
+                                  style: GoogleFonts.quicksand(
                                       decoration: TextDecoration.underline,
                                       color: Colors.white,
                                       fontSize: 15,

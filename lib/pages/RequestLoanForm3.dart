@@ -394,7 +394,7 @@ class _RequestLoanFormThreeState extends State<RequestLoanFormThree> {
   }
 }
 
-// Header with the Seeka name
+// Header with the Seeka namfflutter app
 Widget header = Container(
   margin: EdgeInsets.symmetric(vertical: 70.0),
   child: Column(
