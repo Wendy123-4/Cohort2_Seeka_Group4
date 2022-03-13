@@ -21,4 +21,6 @@ The major features in this system are as below:
 * [Seeka Concept Documentation](https://docs.google.com/document/d/1Urzu7Gfg_soJb17eyhgP_3NMfqEHx0HPe9dQTExGlKY/edit?usp=sharing)
 * [Seeka Group Work Tracker ](https://docs.google.com/spreadsheets/d/1Nh5CxCG8bKqz56Tp6RodIXa1nbsgHCSUbK0ODGjtLf8/edit?usp=sharing)
 * [Seeka High Fidelity Design ](https://www.figma.com/file/d2KO7metjRrthhhuN9B1EP/Seeka-final-High-Fidelity?node-id=3%3A88)
- 
+* [Seeka Flowchart ](https://app.creately.com/diagram/Lwrfkdqh3An/edit)
+* [Seeka Database ](https://console.firebase.google.com/u/0/project/seeka-62a56/overview)
+* [PRESENTATION ](https://drive.google.com/drive/folders/1qnXqAkJF7w9IWdXmQntiVDPhVV058NMw?usp=sharing)
